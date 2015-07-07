@@ -62,13 +62,13 @@ void pit_init_fnc(void)
 /*                     Configure Load Value Registers                */
 /* ----------------------------------------------------------- */
 #if NGV_DMU_SYSCLK == SYSCLK_IRC_16MHZ
-    PIT.CH[0].LDVAL.R  = 16*PIT0_TIMER_GAP; 
+    PIT.CH[0].LDVAL.R  = 16*PIT0_TIMER_GAP;
         /*value loaded in the Timer0: 16000    */
 #elif NGV_DMU_SYSCLK == SYSCLK_PLL_32MHZ
-    PIT.CH[0].LDVAL.R  = 32*PIT0_TIMER_GAP;
+    PIT.CH[0].LDVAL.R  = 32*PIT0_TIMER_GAP; 
         /*value loaded in the Timer0: 32000    */
 #elif NGV_DMU_SYSCLK == SYSCLK_PLL_64MHZ
-    PIT.CH[0].LDVAL.R  = 64*PIT0_TIMER_GAP; // 이 숫자가 0 될 때마다 작동하게 해주는 채널, 고로 10 micro sec 마다 작동
+    PIT.CH[0].LDVAL.R  = 64*PIT0_TIMER_GAP;// 이 숫자가 0 될 때마다 작동하게 해주는 채널, 고로 25 micro sec 마다 작동
         /*value loaded in the Timer0: 64000    */
 #endif
     

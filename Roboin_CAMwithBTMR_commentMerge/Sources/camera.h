@@ -15,13 +15,11 @@ void CAM_Init(void);//calc delay variables
 /* camera Interrupt Service Routine
  * Periodic interrupt timmer channel 0 기준(basetimer.c에) 25us 마다 카메라 run1 or run2  실행시키는 함수
  */
-
-void CAM_ISR(void); 
-
+void CAM_ISR(void);//recall every 10 microsec with btmr
 vuint32_t CAM_MICRO_SEC_RETURN(void);//for recall cam_micro_sec
 void CAM_RESET_TIMER(void);//make cam_micro_sec 0;
 
-void CAM_RUN(void);// running camera
+void CAM_RUN(void);// running camera using inturrupt
 void CAM_Clock(void);//clock pulse
 //void CAM_SI(void);//Triger Pulse
 void CAM_PulseWidth(int16_t PULSEWIDTH);//change camera clock, trig width
@@ -30,7 +28,7 @@ void CAM_PulseWidth(int16_t PULSEWIDTH);//change camera clock, trig width
 uint16_t CAM_MAX(void);//MAX Readed value
 uint16_t CAM_MIN(void);//Min Readed value 
 uint16_t CAM_AVG(void);
-uint16_t CAM_TRESHLOLD(int16_t pixelnum);
+uint16_t CAM_TRESHLOLD(int16_t pixelnum);//Calc mid data of max and min
 
 void CAM_DELAY(int32_t delay_long);//delay using While
 void CAM_RUN2(void);//Non-Inturrupte

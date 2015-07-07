@@ -222,7 +222,7 @@ void siu_portA_init_fnc(void)
     /* ----------------------------------------------------------- */
     /*      Pad Configuration Register PCR[11]  eMIOS_0_11_SCL_0_RXD_2_ADC_1_ANS3_PA11 (108) */
     /* ----------------------------------------------------------- */
-       SIU.PCR[11].R = 0x0201;
+       SIU.PCR[11].R = 0x0103;//0x0201;
              /*	Selected Function : PA11 O          */
              /*	Output Buffers : Enabled          */
              /*	Input Buffers : Disabled          */
@@ -270,7 +270,6 @@ void siu_portA_init_fnc(void)
              /*	Weak Pull Up/Down : Disabled      */
              /*	Weak Pull Up/Down Select : Up     */
              /*	Safe Mode Control: Disabled       */
-
     /* ----------------------------------------------------------- */
     /*      Pad Configuration Register PCR[15]  PCS_0.0_SCK_0_eMIOS_0_1_PA15 (40) */
     /* ----------------------------------------------------------- */

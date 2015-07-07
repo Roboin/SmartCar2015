@@ -8,6 +8,7 @@
 C_SRCS_QUOTED += \
 "../Sources/Exceptions.c" \
 "../Sources/IntcInterrupts.c" \
+"../Sources/adc_drv.c" \
 "../Sources/adc_init.c" \
 "../Sources/adc_trigger_init.c" \
 "../Sources/basetimer.c" \
@@ -54,6 +55,7 @@ C_SRCS_QUOTED += \
 C_SRCS += \
 ../Sources/Exceptions.c \
 ../Sources/IntcInterrupts.c \
+../Sources/adc_drv.c \
 ../Sources/adc_init.c \
 ../Sources/adc_trigger_init.c \
 ../Sources/basetimer.c \
@@ -100,6 +102,7 @@ C_SRCS += \
 OBJS += \
 ./Sources/Exceptions_c.obj \
 ./Sources/IntcInterrupts_c.obj \
+./Sources/adc_drv_c.obj \
 ./Sources/adc_init_c.obj \
 ./Sources/adc_trigger_init_c.obj \
 ./Sources/basetimer_c.obj \
@@ -146,6 +149,7 @@ OBJS += \
 OBJS_QUOTED += \
 "./Sources/Exceptions_c.obj" \
 "./Sources/IntcInterrupts_c.obj" \
+"./Sources/adc_drv_c.obj" \
 "./Sources/adc_init_c.obj" \
 "./Sources/adc_trigger_init_c.obj" \
 "./Sources/basetimer_c.obj" \
@@ -192,6 +196,7 @@ OBJS_QUOTED += \
 C_DEPS += \
 ./Sources/Exceptions_c.d \
 ./Sources/IntcInterrupts_c.d \
+./Sources/adc_drv_c.d \
 ./Sources/adc_init_c.d \
 ./Sources/adc_trigger_init_c.d \
 ./Sources/basetimer_c.d \
@@ -238,6 +243,7 @@ C_DEPS += \
 OBJS_OS_FORMAT += \
 ./Sources/Exceptions_c.obj \
 ./Sources/IntcInterrupts_c.obj \
+./Sources/adc_drv_c.obj \
 ./Sources/adc_init_c.obj \
 ./Sources/adc_trigger_init_c.obj \
 ./Sources/basetimer_c.obj \
@@ -284,6 +290,7 @@ OBJS_OS_FORMAT += \
 C_DEPS_QUOTED += \
 "./Sources/Exceptions_c.d" \
 "./Sources/IntcInterrupts_c.d" \
+"./Sources/adc_drv_c.d" \
 "./Sources/adc_init_c.d" \
 "./Sources/adc_trigger_init_c.d" \
 "./Sources/basetimer_c.d" \
@@ -350,9 +357,17 @@ Sources/IntcInterrupts_c.obj: ../Sources/IntcInterrupts.c
 	@echo 'Finished building: $<'
 	@echo ' '
 
-Sources/adc_init_c.obj: ../Sources/adc_init.c
+Sources/adc_drv_c.obj: ../Sources/adc_drv.c
 	@echo 'Building file: $<'
 	@echo 'Executing target #3 $<'
+	@echo 'Invoking: PowerPC Compiler'
+	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/adc_drv.args" -o "Sources/adc_drv_c.obj" "$<" -MD -gccdep
+	@echo 'Finished building: $<'
+	@echo ' '
+
+Sources/adc_init_c.obj: ../Sources/adc_init.c
+	@echo 'Building file: $<'
+	@echo 'Executing target #4 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/adc_init.args" -o "Sources/adc_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -360,7 +375,7 @@ Sources/adc_init_c.obj: ../Sources/adc_init.c
 
 Sources/adc_trigger_init_c.obj: ../Sources/adc_trigger_init.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #4 $<'
+	@echo 'Executing target #5 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/adc_trigger_init.args" -o "Sources/adc_trigger_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -368,7 +383,7 @@ Sources/adc_trigger_init_c.obj: ../Sources/adc_trigger_init.c
 
 Sources/basetimer_c.obj: ../Sources/basetimer.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #5 $<'
+	@echo 'Executing target #6 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/basetimer.args" -o "Sources/basetimer_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -376,7 +391,7 @@ Sources/basetimer_c.obj: ../Sources/basetimer.c
 
 Sources/camera_c.obj: ../Sources/camera.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #6 $<'
+	@echo 'Executing target #7 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/camera.args" -o "Sources/camera_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -384,7 +399,7 @@ Sources/camera_c.obj: ../Sources/camera.c
 
 Sources/cansp_init_c.obj: ../Sources/cansp_init.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #7 $<'
+	@echo 'Executing target #8 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/cansp_init.args" -o "Sources/cansp_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -392,7 +407,7 @@ Sources/cansp_init_c.obj: ../Sources/cansp_init.c
 
 Sources/charlcd_c.obj: ../Sources/charlcd.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #8 $<'
+	@echo 'Executing target #9 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/charlcd.args" -o "Sources/charlcd_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -400,7 +415,7 @@ Sources/charlcd_c.obj: ../Sources/charlcd.c
 
 Sources/demoled_c.obj: ../Sources/demoled.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #9 $<'
+	@echo 'Executing target #10 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/demoled.args" -o "Sources/demoled_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -408,7 +423,7 @@ Sources/demoled_c.obj: ../Sources/demoled.c
 
 Sources/demoswitch_c.obj: ../Sources/demoswitch.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #10 $<'
+	@echo 'Executing target #11 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/demoswitch.args" -o "Sources/demoswitch_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -416,7 +431,7 @@ Sources/demoswitch_c.obj: ../Sources/demoswitch.c
 
 Sources/dspi_init_c.obj: ../Sources/dspi_init.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #11 $<'
+	@echo 'Executing target #12 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/dspi_init.args" -o "Sources/dspi_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -424,7 +439,7 @@ Sources/dspi_init_c.obj: ../Sources/dspi_init.c
 
 Sources/dspi_var_c.obj: ../Sources/dspi_var.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #12 $<'
+	@echo 'Executing target #13 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/dspi_var.args" -o "Sources/dspi_var_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -432,7 +447,7 @@ Sources/dspi_var_c.obj: ../Sources/dspi_var.c
 
 Sources/edma_init_c.obj: ../Sources/edma_init.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #13 $<'
+	@echo 'Executing target #14 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/edma_init.args" -o "Sources/edma_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -440,7 +455,7 @@ Sources/edma_init_c.obj: ../Sources/edma_init.c
 
 Sources/emios_init_c.obj: ../Sources/emios_init.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #14 $<'
+	@echo 'Executing target #15 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/emios_init.args" -o "Sources/emios_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -448,7 +463,7 @@ Sources/emios_init_c.obj: ../Sources/emios_init.c
 
 Sources/flash_init_c.obj: ../Sources/flash_init.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #15 $<'
+	@echo 'Executing target #16 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/flash_init.args" -o "Sources/flash_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -456,7 +471,7 @@ Sources/flash_init_c.obj: ../Sources/flash_init.c
 
 Sources/flexcan_init_c.obj: ../Sources/flexcan_init.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #16 $<'
+	@echo 'Executing target #17 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/flexcan_init.args" -o "Sources/flexcan_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -464,7 +479,7 @@ Sources/flexcan_init_c.obj: ../Sources/flexcan_init.c
 
 Sources/freerunadc_c.obj: ../Sources/freerunadc.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #17 $<'
+	@echo 'Executing target #18 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/freerunadc.args" -o "Sources/freerunadc_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -472,7 +487,7 @@ Sources/freerunadc_c.obj: ../Sources/freerunadc.c
 
 Sources/freerunusonic_c.obj: ../Sources/freerunusonic.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #18 $<'
+	@echo 'Executing target #19 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/freerunusonic.args" -o "Sources/freerunusonic_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -480,7 +495,7 @@ Sources/freerunusonic_c.obj: ../Sources/freerunusonic.c
 
 Sources/i2c_init_c.obj: ../Sources/i2c_init.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #19 $<'
+	@echo 'Executing target #20 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/i2c_init.args" -o "Sources/i2c_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -488,7 +503,7 @@ Sources/i2c_init_c.obj: ../Sources/i2c_init.c
 
 Sources/i2c_util_c.obj: ../Sources/i2c_util.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #20 $<'
+	@echo 'Executing target #21 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/i2c_util.args" -o "Sources/i2c_util_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -496,7 +511,7 @@ Sources/i2c_util_c.obj: ../Sources/i2c_util.c
 
 Sources/intc_init_c.obj: ../Sources/intc_init.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #21 $<'
+	@echo 'Executing target #22 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/intc_init.args" -o "Sources/intc_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -504,7 +519,7 @@ Sources/intc_init_c.obj: ../Sources/intc_init.c
 
 Sources/ivor_branch_table_c.obj: ../Sources/ivor_branch_table.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #22 $<'
+	@echo 'Executing target #23 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/ivor_branch_table.args" -o "Sources/ivor_branch_table_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -512,7 +527,7 @@ Sources/ivor_branch_table_c.obj: ../Sources/ivor_branch_table.c
 
 Sources/linflex_init_c.obj: ../Sources/linflex_init.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #23 $<'
+	@echo 'Executing target #24 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/linflex_init.args" -o "Sources/linflex_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -520,7 +535,7 @@ Sources/linflex_init_c.obj: ../Sources/linflex_init.c
 
 Sources/linflex_var_c.obj: ../Sources/linflex_var.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #24 $<'
+	@echo 'Executing target #25 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/linflex_var.args" -o "Sources/linflex_var_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -528,7 +543,7 @@ Sources/linflex_var_c.obj: ../Sources/linflex_var.c
 
 Sources/main_c.obj: ../Sources/main.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #25 $<'
+	@echo 'Executing target #26 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/main.args" -o "Sources/main_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -536,7 +551,7 @@ Sources/main_c.obj: ../Sources/main.c
 
 Sources/motorcontrol_c.obj: ../Sources/motorcontrol.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #26 $<'
+	@echo 'Executing target #27 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/motorcontrol.args" -o "Sources/motorcontrol_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -544,7 +559,7 @@ Sources/motorcontrol_c.obj: ../Sources/motorcontrol.c
 
 Sources/mpu_init_c.obj: ../Sources/mpu_init.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #27 $<'
+	@echo 'Executing target #28 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/mpu_init.args" -o "Sources/mpu_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -552,7 +567,7 @@ Sources/mpu_init_c.obj: ../Sources/mpu_init.c
 
 Sources/msr_init_c.obj: ../Sources/msr_init.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #28 $<'
+	@echo 'Executing target #29 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/msr_init.args" -o "Sources/msr_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -560,7 +575,7 @@ Sources/msr_init_c.obj: ../Sources/msr_init.c
 
 Sources/myuart_c.obj: ../Sources/myuart.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #29 $<'
+	@echo 'Executing target #30 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/myuart.args" -o "Sources/myuart_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -568,7 +583,7 @@ Sources/myuart_c.obj: ../Sources/myuart.c
 
 Sources/pcu_init_c.obj: ../Sources/pcu_init.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #30 $<'
+	@echo 'Executing target #31 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/pcu_init.args" -o "Sources/pcu_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -576,7 +591,7 @@ Sources/pcu_init_c.obj: ../Sources/pcu_init.c
 
 Sources/pit_init_c.obj: ../Sources/pit_init.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #31 $<'
+	@echo 'Executing target #32 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/pit_init.args" -o "Sources/pit_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -584,7 +599,7 @@ Sources/pit_init_c.obj: ../Sources/pit_init.c
 
 Sources/rappid_utils_c.obj: ../Sources/rappid_utils.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #32 $<'
+	@echo 'Executing target #33 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/rappid_utils.args" -o "Sources/rappid_utils_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -592,7 +607,7 @@ Sources/rappid_utils_c.obj: ../Sources/rappid_utils.c
 
 Sources/rchw_init_c.obj: ../Sources/rchw_init.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #33 $<'
+	@echo 'Executing target #34 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/rchw_init.args" -o "Sources/rchw_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -600,7 +615,7 @@ Sources/rchw_init_c.obj: ../Sources/rchw_init.c
 
 Sources/rgm_init_c.obj: ../Sources/rgm_init.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #34 $<'
+	@echo 'Executing target #35 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/rgm_init.args" -o "Sources/rgm_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -608,7 +623,7 @@ Sources/rgm_init_c.obj: ../Sources/rgm_init.c
 
 Sources/romcopy_c.obj: ../Sources/romcopy.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #35 $<'
+	@echo 'Executing target #36 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/romcopy.args" -o "Sources/romcopy_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -616,7 +631,7 @@ Sources/romcopy_c.obj: ../Sources/romcopy.c
 
 Sources/rotaryencoder_c.obj: ../Sources/rotaryencoder.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #36 $<'
+	@echo 'Executing target #37 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/rotaryencoder.args" -o "Sources/rotaryencoder_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -624,7 +639,7 @@ Sources/rotaryencoder_c.obj: ../Sources/rotaryencoder.c
 
 Sources/rtc_init_c.obj: ../Sources/rtc_init.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #37 $<'
+	@echo 'Executing target #38 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/rtc_init.args" -o "Sources/rtc_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -632,7 +647,7 @@ Sources/rtc_init_c.obj: ../Sources/rtc_init.c
 
 Sources/serialdebug_c.obj: ../Sources/serialdebug.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #38 $<'
+	@echo 'Executing target #39 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/serialdebug.args" -o "Sources/serialdebug_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -640,7 +655,7 @@ Sources/serialdebug_c.obj: ../Sources/serialdebug.c
 
 Sources/siu_init_c.obj: ../Sources/siu_init.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #39 $<'
+	@echo 'Executing target #40 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/siu_init.args" -o "Sources/siu_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -648,7 +663,7 @@ Sources/siu_init_c.obj: ../Sources/siu_init.c
 
 Sources/stm_init_c.obj: ../Sources/stm_init.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #40 $<'
+	@echo 'Executing target #41 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/stm_init.args" -o "Sources/stm_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -656,7 +671,7 @@ Sources/stm_init_c.obj: ../Sources/stm_init.c
 
 Sources/swt_init_c.obj: ../Sources/swt_init.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #41 $<'
+	@echo 'Executing target #42 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/swt_init.args" -o "Sources/swt_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -664,7 +679,7 @@ Sources/swt_init_c.obj: ../Sources/swt_init.c
 
 Sources/sys_init_c.obj: ../Sources/sys_init.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #42 $<'
+	@echo 'Executing target #43 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/sys_init.args" -o "Sources/sys_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -672,7 +687,7 @@ Sources/sys_init_c.obj: ../Sources/sys_init.c
 
 Sources/sysclk_init_c.obj: ../Sources/sysclk_init.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #43 $<'
+	@echo 'Executing target #44 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/sysclk_init.args" -o "Sources/sysclk_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -680,7 +695,7 @@ Sources/sysclk_init_c.obj: ../Sources/sysclk_init.c
 
 Sources/youruart_c.obj: ../Sources/youruart.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #44 $<'
+	@echo 'Executing target #45 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/youruart.args" -o "Sources/youruart_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'

@@ -155,12 +155,12 @@
 <booleanAttribute key="org.eclipse.cdt.launch.ENABLE_RESTORE_WATCHPOINTS" value="true"/>
 <booleanAttribute key="org.eclipse.cdt.launch.ENABLE_VARIABLE_BOOKKEEPING" value="false"/>
 <stringAttribute key="org.eclipse.cdt.launch.PROGRAM_NAME" value="RAM/NGV_DMU_BASE.elf"/>
-<stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value="Roboin_CAMwithBTMR"/>
+<stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value="Roboin_CAMwithBTMR_commentMerge"/>
 <stringAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_ID_ATTR" value="com.freescale.ppc.debug.toolchain.configuration.352298004"/>
 <intAttribute key="org.eclipse.cdt.launch.SET_REGULAR_BREAKPOINT_TYPE_AS" value="0"/>
 <booleanAttribute key="org.eclipse.cdt.launch.USE_SET_REGULAR_BREAKPOINT_TYPE_AS" value="false"/>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/Roboin_CAMwithBTMR"/>
+<listEntry value="/Roboin_CAMwithBTMR_commentMerge"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="4"/>
