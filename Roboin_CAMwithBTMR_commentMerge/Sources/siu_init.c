@@ -270,7 +270,6 @@ void siu_portA_init_fnc(void)
              /*	Weak Pull Up/Down : Disabled      */
              /*	Weak Pull Up/Down Select : Up     */
              /*	Safe Mode Control: Disabled       */
-
     /* ----------------------------------------------------------- */
     /*      Pad Configuration Register PCR[15]  PCS_0.0_SCK_0_eMIOS_0_1_PA15 (40) */
     /* ----------------------------------------------------------- */

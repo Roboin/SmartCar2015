@@ -12,7 +12,7 @@
 
 
 vuint32_t btmr_msec = 0; 				// runtime 저장 변수, 32bit이므로 2^32-1 msec까지 측정 가능
-vuint32_t btmr_micro_sec = 0; 				//  base timer runtime 저장 변수, 
+vuint32_t btmr_micro_sec = 0; 			//  base timer runtime 저장 변수, 
 vuint32_t btmr_tstart0, btmr_tstart1; 	// timer0, timer1의 시작시의 runtime 저장용
 vuint32_t btmr_tset0, btmr_tset1;     	// timer0, timer1의 설정 시간
 

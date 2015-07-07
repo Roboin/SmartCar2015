@@ -14,7 +14,7 @@
 
 
 //####### Pin Guide ##########
-int16_t CAM_DATA_PIN1 = 4;//4=pd0//
+int16_t CAM_DATA_PIN1 = 4;//4=pd0
 int16_t CAM_DATA_PIN2 = 5;//5=pd1//
 int16_t CAM_SI_PIN= GPIO_PF0;//GPIO_PD12;
 int16_t CAM_CLK_PIN= GPIO_PF1;//GPIO_PF1;
@@ -54,6 +54,7 @@ void CAM_Init(void)
 	CAM_TIME_TOT= DELAY_CLK*128*2*2 + DELAY_WAIT; //128*2 cause up & down//micro sec 
 	CAM_RESET_TIMER();
 }
+
 //Camera Interrupt Service Routine
 void CAM_ISR(void){
 	CAM_MICRO_SEC += PIT0_TIMER_GAP;//10;//recall every 10 microsec
@@ -78,9 +79,10 @@ void CAM_SI_ON(void){
 		CAM_SI_FLAG = 1;
 	}
 }
+
 void CAM_RUN(void)
-{	
-	/*signal(trigger)신호(카메라 작동 시작신호) 내보내기*/
+{
+	//CAM_SI();/*signal(trigger)신호(카메라 작동 시작신호) 내보내기*/
 	if(CAM_SI_FLAG==1){
 		GPIO_Set(CAM_SI_PIN,1);
 		t0_CAM_SI = CAM_MICRO_SEC; // 현재 시각 가져오기
@@ -94,8 +96,10 @@ void CAM_RUN(void)
 		//CAM_Clock(); // For 128 + 1 Clock Pulse
 		CAM_Clock();
 	}
-
+	
 	//CAM_Clock(); // For 128 + 1 Clock Pulse
+	
+	
 	//CAM Restart	
 	if(CAM_SI_FLAG==0){
 		GPIO_Set(CAM_SI_PIN,0);
@@ -106,6 +110,7 @@ void CAM_RUN(void)
 		}
 	}
 }
+
 void CAM_Clock(void)
 {
 	if(CAM_CLK_COUNTER < (NUM_OF_PIXEL + 1) ){
@@ -183,7 +188,6 @@ uint16_t CAM_DATA1(int16_t pixelnum){//기울기 크면 데이터 처리.
 		return CAM_READ[pixelnum];*/
 	return CAM_READ1[pixelnum];
 }
-
 uint16_t CAM_DATA2(int16_t pixelnum){
 	return CAM_READ2[pixelnum];
 }
@@ -225,10 +229,11 @@ uint16_t CAM_AVG(void)
 	uint16_t CAM_READ_AVG = (CAM_MIN()+CAM_MAX())/2;
 	return CAM_READ_AVG;// + 20;//+10 to too dark
 }
+
 void CAM_DELAY(int32_t delay_long)
 {
 	int32_t delay_val = 0;
-	delay_long = delay_long * (16 << NGV_DMU_SYSCLK)/PIT0_TIMER_GAP; 
+	delay_long = delay_long *(16 << NGV_DMU_SYSCLK)/PIT0_TIMER_GAP; 
 	while(delay_val < delay_long)
 		delay_val++;
 }

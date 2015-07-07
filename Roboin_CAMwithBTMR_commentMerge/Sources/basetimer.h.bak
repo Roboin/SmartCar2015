@@ -24,4 +24,6 @@ uint32_t BTMR_GetRuntime_Micros(void);
 
 void BMTR_SetRuntime(uint32_t msec);
 
+#define PIT0_TIMER_GAP 10
+
 #endif /* BASETIMER_H_ */
