@@ -57,13 +57,13 @@ void CAM_Init(void)
 
 //Camera Interrupt Service Routine
 void CAM_ISR(void){
-	CAM_MICRO_SEC += PIT0_TIMER_GAP;//10;//recall every 10 microsec
-	if(CAM_RUN_MODE == 1){
-		CAM_RUN();
-	}
-	else{//if(CAM_RUN_MODE == 2){
+	CAM_MICRO_SEC += PIT0_TIMER_GAP;//10;   /*recall every PIT0_TIMER_GAP usec*/
+	//if(CAM_RUN_MODE == 1){
+	//	CAM_RUN();
+	//}
+	//else{//if(CAM_RUN_MODE == 2){
 		//CAM_RUN2();
-	}
+	//}
 }
 
 vuint32_t CAM_MICRO_SEC_RETURN(void){
@@ -80,6 +80,7 @@ void CAM_SI_ON(void){
 	}
 }
 
+/* cam ISR의해 주기적으로 불러와 져서 PIT0 따라 상태 확인하는 식으로 카메라 작동 시키는 함수*/
 void CAM_RUN(void)
 {
 	//CAM_SI();/*signal(trigger)신호(카메라 작동 시작신호) 내보내기*/
@@ -110,7 +111,7 @@ void CAM_RUN(void)
 		}
 	}
 }
-
+/*clock 신호(필셀 값 읽어오는 신호) 내보내기*/
 void CAM_Clock(void)
 {
 	if(CAM_CLK_COUNTER < (NUM_OF_PIXEL + 1) ){
