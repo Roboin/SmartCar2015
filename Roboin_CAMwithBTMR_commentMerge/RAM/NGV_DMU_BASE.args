@@ -44,7 +44,6 @@
 "./Sources/basetimer_c.obj"
 "./Sources/adc_trigger_init_c.obj"
 "./Sources/adc_init_c.obj"
-"./Sources/adc_drv_c.obj"
 "./Sources/IntcInterrupts_c.obj"
 "./Sources/Exceptions_c.obj"
 -sym dwarf-2

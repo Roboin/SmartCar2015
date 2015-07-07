@@ -102,7 +102,7 @@ void DoMainLoop(void)
 		CAM_RUN_MODE_SETUP(2);//up
 		DLED_Set(DLED_LED1,0);
 		blinking_LED= DLED_LED2;
-		//CAM_RUN2(); 재학은 보시오. 이거 왜 살아 있는 거냠. 실수냐, 없애도 !.은 잘작동 하더라
+		CAM_RUN2();
 	}
 	else{
 		CAM_RUN_MODE_SETUP(1);//down
@@ -156,7 +156,6 @@ void DoMainLoop(void)
 		
 		//ENCODER TEST
 		//*/
-		/*
 		enc1_current = RENC_Get1();
 		enc2_current = RENC_Get2();
 		enc1_rate = enc1_current - enc1_old;
@@ -171,7 +170,7 @@ void DoMainLoop(void)
 		MCTL_DC_L(DC_Speed);
 		SDBG_Printf("\n%u: Speed : %4d Rval : %4d RATE : %4d", cnt++, DC_Speed,RENC_Get1(), enc1_rate);
 		//SDBG_Printf("\n%u: US : %8u  IR : %4d", cnt++, FUSS_GetMm(FUSS_CH0),FADC_Get(6));//adc6 = pd2 = IR
-		*/
+		/**/
 		
 		//Servo test
 		//MCTL_Servo(sAngle);
@@ -184,7 +183,7 @@ void DoMainLoop(void)
 		
 		//if(dipsw & 0x8){//sw4, SDBG
 			if(flag==0){
-				flag = 1;
+				//flag = 1;
 			}
 		//}
 	}
