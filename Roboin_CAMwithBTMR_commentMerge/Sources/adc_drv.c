@@ -66,7 +66,7 @@ uint16_t A2D_GetSingleCh_12bit(uint32_t ch)
 /******************************************************************************
 *   Function: A2D_GetSingleCh_10bit
 *
-*   Description: Sets up, starts, and returns a conversion for a single channel
+*   Description: Sets up, starts, and returns a conversion(디지털로 변환된 값?) for a single channel
 *
 ******************************************************************************/
 uint16_t A2D_GetSingleCh_10bit(uint32_t ch)

@@ -51,7 +51,7 @@ C_DEPS_QUOTED += \
 # Each subdirectory must supply rules for building sources it contributes
 Project_Settings/Startup_Code/MPC5606B_HWInit_c.obj: ../Project_Settings/Startup_Code/MPC5606B_HWInit.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #45 $<'
+	@echo 'Executing target #46 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Project_Settings/Startup_Code/MPC5606B_HWInit.args" -o "Project_Settings/Startup_Code/MPC5606B_HWInit_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -64,7 +64,7 @@ Project_Settings/Startup_Code/%.d: ../Project_Settings/Startup_Code/%.c
 
 Project_Settings/Startup_Code/MPC5606B_Startup_c.obj: ../Project_Settings/Startup_Code/MPC5606B_Startup.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #46 $<'
+	@echo 'Executing target #47 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Project_Settings/Startup_Code/MPC5606B_Startup.args" -o "Project_Settings/Startup_Code/MPC5606B_Startup_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -72,7 +72,7 @@ Project_Settings/Startup_Code/MPC5606B_Startup_c.obj: ../Project_Settings/Startu
 
 Project_Settings/Startup_Code/MPC5606B_init_ram_c.obj: ../Project_Settings/Startup_Code/MPC5606B_init_ram.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #47 $<'
+	@echo 'Executing target #48 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Project_Settings/Startup_Code/MPC5606B_init_ram.args" -o "Project_Settings/Startup_Code/MPC5606B_init_ram_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -80,7 +80,7 @@ Project_Settings/Startup_Code/MPC5606B_init_ram_c.obj: ../Project_Settings/Start
 
 Project_Settings/Startup_Code/__ppc_eabi_init_c.obj: ../Project_Settings/Startup_Code/__ppc_eabi_init.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #48 $<'
+	@echo 'Executing target #49 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Project_Settings/Startup_Code/__ppc_eabi_init.args" -o "Project_Settings/Startup_Code/__ppc_eabi_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
