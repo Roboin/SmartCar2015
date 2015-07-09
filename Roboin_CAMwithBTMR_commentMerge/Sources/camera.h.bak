@@ -34,15 +34,8 @@ void CAM_DELAY(int32_t delay_long);//delay using While
 void CAM_RUN2(void);//Non-Inturrupte
 void CAM_UPDATE_DATA(void);//CAM_TEMP to CAM_READ
 
-/*Processed CAM_READ of camera 1
- * parameter: index of pixel
- * return: value of brightness of that pixel */
-uint16_t CAM_DATA1(int16_t pixelnum);
-
-/*Processed CAM_READ of camera 2
- * parameter: index of pixel
- * return: value of brightness of that pixel */
-uint16_t CAM_DATA2(int16_t pixelnum);
+uint16_t CAM_DATA1(int16_t pixelnum);//Processed CAM_READ
+uint16_t CAM_DATA2(int16_t pixelnum);//Processed CAM_READ
 
 void CAM_RUN_MODE_SETUP(int16_t mode);
 void CAM_SI_ON(void);
