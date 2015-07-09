@@ -12,19 +12,18 @@
 
 
 vuint32_t btmr_msec = 0; 				// runtime 저장 변수, 32bit이므로 2^32-1 msec까지 측정 가능
-vuint32_t btmr_micro_sec = 0; 			//  base timer runtime 저장 변수, 
+vuint32_t btmr_micro_sec = 0; 				// runtime 저장 변수, 
 vuint32_t btmr_tstart0, btmr_tstart1; 	// timer0, timer1의 시작시의 runtime 저장용
 vuint32_t btmr_tset0, btmr_tset1;     	// timer0, timer1의 설정 시간
 
-//- Base Timer PIT0(periodic interrupt timer channel 0) ISR(Interrupt Service Routine) 
-// 이 함수는 IntcInterrupt.c 의 한 함수로 연결되있고 최종적으로는  PIT0 ( 시스템 클럭에 따라 카운트해서 10us 마다 작동 ) 을 기준으로 작동됨
-//	  Recall every 10? micro sec
+//- PIT0 ISR(Interrupt Service Routine)
+//	  Recoll every 1 micro sec
 void BTMR_PIT0_ISR (void)
 {
 	//btmr_msec++;
 	btmr_micro_sec += PIT0_TIMER_GAP;//10;
 	CAM_ISR();
-	PIT.CH[0].TFLG.R = 0x00000001; // 타이머(periodic interrupt Timer) ch 0 리셋
+	PIT.CH[0].TFLG.R = 0x00000001;
 }
 
 

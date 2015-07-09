@@ -180,7 +180,6 @@ void SDBG_PutStr(char* pstr)
 
 
 //- Tx queue에 printf 명령어로 문자열 대입, 출력할 문자가 SDBG_PRINTF_BUF_SIZE가 넘으면 책임 못짐!
-//- simply saying print string to computer by serial communication  
 void SDBG_Printf(const char* format, ...)
 {
 	char buf[SDBG_PRINTF_BUF_SIZE];

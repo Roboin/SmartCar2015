@@ -6531,7 +6531,7 @@ struct ME_tag {
 #define ME        (*(volatile struct ME_tag *)        0xC3FDC000UL)
 #define MPU       (*(volatile struct MPU_tag *)       0xFFF10000UL)
 #define PCU       (*(volatile struct PCU_tag *)       0xC3FE8000UL)
-#define PIT       (*(volatile struct PIT_tag *)       0xC3FF0000UL)// PIT_tag 에 내용 있음
+#define PIT       (*(volatile struct PIT_tag *)       0xC3FF0000UL)
 #define RGM       (*(volatile struct RGM_tag *)       0xC3FE4000UL)
 #define RTC       (*(volatile struct RTC_tag *)       0xC3FEC000UL)
 #define SIU       (*(volatile struct SIU_tag *)       0xC3F90000UL)

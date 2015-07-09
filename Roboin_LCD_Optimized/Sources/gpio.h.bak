@@ -142,10 +142,8 @@
 //#define GPIO_PH9 	121
 //#define GPIO_PH10	122
 
-/*- Genral pin out
- * 핀으로 Digital Output
- * ch는 위 GPIO_Pxn 참조, val이 1이면 H 출력, 0이면 L 출력
- */
+//- Digital Output
+//    ch는 위 GPIO_Pxn 참조, val이 1이면 H 출력, 0이면 L 출력
 #define GPIO_Set(ch, val)	SIU.GPDO[(ch)].B.PDO = (val)
 
 //- GPIO_Set으로 출력한 값 읽기

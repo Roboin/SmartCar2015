@@ -12,9 +12,6 @@
 
 void CAM_Init(void);//calc delay variables
 
-/* camera Interrupt Service Routine
- * Periodic interrupt timmer channel 0 기준(basetimer.c에) 25us 마다 카메라 run1 or run2  실행시키는 함수
- */
 void CAM_ISR(void);//recall every 10 microsec with btmr
 vuint32_t CAM_MICRO_SEC_RETURN(void);//for recall cam_micro_sec
 void CAM_RESET_TIMER(void);//make cam_micro_sec 0;

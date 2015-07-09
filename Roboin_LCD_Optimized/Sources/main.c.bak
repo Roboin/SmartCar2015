@@ -109,12 +109,7 @@ void DoMainLoop(void)
 {
 	//COUNT FOR TIMER
 	static uint32_t t_current, t_old=(uint32_t)-1, t_test,cnt=0;
-	//DIPSW - 1-Camera Run / 2-cam_th / 3-.! or %3d / 4-cam_pulsewidth(exposuretime)
-	//dipsw = DSW_GetDipAll();
-	//RUN CAMERA //with dip sw 1
-	/*CAM RUN mode 1 or 2
-	 * main loop 돌때 마다 스위치 값 읽어서 camera run mode를 바꿔주는거
-	 * 카메라를 돌리는건 periodic interrupt timer channel 0 기준 */
+	//CAM RUN mode 1 or 2
 	if(dipsw & 0b0001){//sw1 //0x1
 		CAM_RUN_MODE_SETUP(2);//up
 		DLED_Set(DLED_LED1,0);
@@ -165,12 +160,7 @@ void DoMainLoop(void)
 		LCD_string(4, 1, LCD_MAX_BUFF);
 		LCD_string(12, 1, LCD_MIN_BUFF);
 		
-		/*DIP SWitch
-		 *1-Camera Run Mode
-		 *2-cam_threshold
-		 *3- .! or %3d 로 카메라 pixel 중 라인 위치, 명암값 출력 
-		 *4-cam_pulsewidth(exposure time)*/
-
+		//DIPSW - 1-Camera Run / 2-cam_th / 3-.! or %3d / 4-cam_pulsewidth(exposuretime)
 		dipsw = DSW_GetDipAll();
 		
 		//Threshold
