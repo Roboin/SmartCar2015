@@ -11,7 +11,7 @@
 #include "gpio.h"
 #include "adc_drv.h"
 #include "basetimer.h"
-
+#include "stdlib.h"
 
 //####### Pin Guide ##########
 int16_t CAM_DATA_PIN1 = 4;//4=pd0
@@ -39,7 +39,9 @@ int16_t CAM_CLK_COUNTER= 0;
 int8_t CAM_SI_FLAG= 1;
 int8_t CAM_CLK_FLAG= 1;
 int16_t CAM_RUN_MODE = 1;
+int8_t CAM_RAN_FLAG = 0; /* 128pixel 읽은 후 1 되고 읽는동안 0인 flag*/
 
+/* camera read value storage in camera.c */
 vuint16_t CAM_TEMP1[NUM_OF_PIXEL+1] = {};
 vuint16_t CAM_READ1[NUM_OF_PIXEL] = {};
 vuint16_t CAM_TEMP2[NUM_OF_PIXEL+1] = {};
@@ -115,6 +117,7 @@ void CAM_RUN(void)
 void CAM_Clock(void)
 {
 	if(CAM_CLK_COUNTER < (NUM_OF_PIXEL + 1) ){
+		CAM_RAN_FLAG = 0;
 		if( CAM_CLK_FLAG == 1 ){
 			GPIO_Set(CAM_CLK_PIN,1);
 			if( (CAM_MICRO_SEC - t0_CAM_CLK) >= DELAY_CLK){
@@ -140,7 +143,7 @@ void CAM_Clock(void)
 		t0_CAM_WAIT = CAM_MICRO_SEC;
 		CAM_SI_FLAG=0;
 		CAM_UPDATE_DATA();//temp to data (cam_read[])
-		
+		CAM_RAN_FLAG = 1;
 		// put signal process function, steering function here. we can do that right after camera read 128 pixcel. triggered by PIT
 		// but if that process take longer that unit PIT time interrupt can be overlapped.
 	}
@@ -262,4 +265,71 @@ void CAM_RUN_MODE_SETUP(int16_t mode)
 {
 	CAM_RUN_MODE = mode;
 }
+/* with camera data array CAM_READ change LANE_PIXEL_INDEX 1 and 2 value
+ * and change lane status flags*/
+void laneProcess( int8_t flag )
+{
+	if ( flag )
+	{
+		int8_t dSIndex = 0; /* drop start index */
+		int8-t dEIndex = 0; /* drop end index*/
+		int8_t sucFlag = 0; /* successiveness flag */
+		int8_t i;
+		uint16_t maxPhoto = 0, minPhoto = 1000; /* max and min vlaue of 128 pixels*/
+		unit16_t maxDiff = 0; /* difference between maxphoto and minPhoto */
+		
+		/*find max and min vlaue of 128 pixels of camera 1 */
+		for ( i = 0; i < NUM_OF_PIXEL; i++ )
+		{
+			if ( minPhoto > CAM_READ1[i] ) min_value = CAM_READ1[i];
+	
+			if ( maxPhoto < CAM_READ[i] ) maxPhoto = CAM_READ[i];
+		}
+		maxDiff = maxPhoto - minPhoto;
+		
+		/* find location of line in pixel*/
+		for ( i = 1; i < NUM_OF_PIXEL; i++ )
+		{
+			if ( sucFlag )
+			{
+				if ( /* successive pixel diff > max diff 1/6*/ )
+				else
+				{
+					sucFlag = 0;
+					dSIndex = ;
+					if ( /* local differ > 1/2global differ*/)
+					{
+						// if 1/20 of global differ continous for more than 4pixel and another rise occur it is line
+						// save location of 평균 index to variable
+						//  if variable is more than 3 go to error
+					}
+				}
+			}
+			else
+			{
+				if ( abs( CAM_DATA1(i - 1) - CAM_DATA(i) ) > (maxDiff / 6.0) ) /* successive pixel diff > max diff 1/6*/ 
+				{
+					// cur index save, sucflag up
+				}
+			}
+		}
 
+		/* cam 2대해 똑같이*/
+
+		//if 문 다발 겸 출력
+
+	}
+}
+
+/* efficient cameara max and min
+ * find max and min value of pixels together and change global variable 하려 했으나 global variable 넘 많아지는거 같아서 line process */
+void eff_CAM_MAXMIN ( void )
+ {
+	 uint16_t min_value = CAM_READ1[0];
+	 uint16_t max_value = CAM_READ1[0];
+	 	for(i_cam=0; i_cam < (NUM_OF_PIXEL); i_cam++){
+	 		if(min_value > CAM_READ1[i_cam])
+	 			min_value = CAM_READ1[i_cam];
+	 	}
+	 	return min_value;
+ }
