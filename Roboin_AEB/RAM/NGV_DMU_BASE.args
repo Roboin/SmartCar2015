@@ -1,0 +1,76 @@
+"./Project_Settings/Startup_Code/__ppc_eabi_init_c.obj"
+"./Project_Settings/Startup_Code/MPC5606B_init_ram_c.obj"
+"./Project_Settings/Startup_Code/MPC5606B_Startup_c.obj"
+"./Project_Settings/Startup_Code/MPC5606B_HWInit_c.obj"
+"./Sources/youruart_c.obj"
+"./Sources/sysclk_init_c.obj"
+"./Sources/sys_init_c.obj"
+"./Sources/swt_init_c.obj"
+"./Sources/stm_init_c.obj"
+"./Sources/siu_init_c.obj"
+"./Sources/serialdebug_c.obj"
+"./Sources/rtc_init_c.obj"
+"./Sources/rotaryencoder_c.obj"
+"./Sources/romcopy_c.obj"
+"./Sources/rgm_init_c.obj"
+"./Sources/rchw_init_c.obj"
+"./Sources/rappid_utils_c.obj"
+"./Sources/pit_init_c.obj"
+"./Sources/pcu_init_c.obj"
+"./Sources/myuart_c.obj"
+"./Sources/msr_init_c.obj"
+"./Sources/mpu_init_c.obj"
+"./Sources/motorcontrol_c.obj"
+"./Sources/main_c.obj"
+"./Sources/linflex_var_c.obj"
+"./Sources/linflex_init_c.obj"
+"./Sources/ivor_branch_table_c.obj"
+"./Sources/intc_init_c.obj"
+"./Sources/i2c_util_c.obj"
+"./Sources/i2c_init_c.obj"
+"./Sources/freerunusonic_c.obj"
+"./Sources/freerunadc_c.obj"
+"./Sources/flexcan_init_c.obj"
+"./Sources/flash_init_c.obj"
+"./Sources/emios_init_c.obj"
+"./Sources/edma_init_c.obj"
+"./Sources/dspi_var_c.obj"
+"./Sources/dspi_init_c.obj"
+"./Sources/demoswitch_c.obj"
+"./Sources/demoled_c.obj"
+"./Sources/charlcd_c.obj"
+"./Sources/cansp_init_c.obj"
+"./Sources/camera_c.obj"
+"./Sources/basetimer_c.obj"
+"./Sources/adc_trigger_init_c.obj"
+"./Sources/adc_init_c.obj"
+"./Sources/IntcInterrupts_c.obj"
+"./Sources/Exceptions_c.obj"
+-sym dwarf-2
+-sym full
+-msgstyle parseable
+-proc zen
+-big
+-fp soft
+-model absolute
+-abi eabi
+-sdata 8
+-sdata2 8
+-nostdlib
+-lcf
+"$(ProjDirPath)/Project_Settings/Linker_Files/MPC5606B_RAM.lcf"
+-m __startup
+-L"$(MCUToolsBaseDirEnv)/PA_Support/ewl/lib"
+-char unsigned
+-application
+-heapsize 32
+-stacksize 32
+-map
+-listclosure
+-mapunused
+-genbinary none
+-srec
+-sreclength 26
+-sreceol dos 
+-l"$(MCUToolsBaseDirEnv)/PA_Support/ewl/lib/libc_E200z0_VLE_Soft.a"
+-l"$(MCUToolsBaseDirEnv)/PA_Support/ewl/lib/librt_E200z0_VLE_Soft.a"
