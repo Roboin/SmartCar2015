@@ -49,6 +49,16 @@
 #include "basetimer.h"
 #include "lcd.h"
 
+#define US 64
+#define MS 64000
+
+vuint32_t pit0cycle = 20*US;
+vuint32_t pit1cycle = 200*MS;
+vuint32_t pit2cycle = 1*MS;
+vuint32_t pit3cycle = 20*MS;
+vuint32_t pit4cycle = 500*MS;
+vuint32_t pit5cycle = 1000*MS;
+
 
 
 /********************* Initialization Function(s) *********************** */
@@ -102,7 +112,7 @@ void pit_init_fnc(void)
     PIT.CH[3].LDVAL.R  = 0x00271000;//1280000;    
         /*value loaded in the Timer3: 1280000    */
 #elif NGV_DMU_SYSCLK == SYSCLK_PLL_64MHZ
-    PIT.CH[3].LDVAL.R  = 2560000;//0x00271000;    
+    PIT.CH[3].LDVAL.R  = pit3cycle;//2560000;//0x00271000;    
         /*value loaded in the Timer3: 2560000    */
 #endif
 

@@ -121,7 +121,7 @@ void DoMainLoop(void)
 	
 	//##################  AEB  #####################
 	FUSS_VALUE = FUSS_GetMm();
-	//SDBG_Printf("\nUS : %8u  IR : %4d", FUSS_VALUE,FADC_Get(IR_ADC_NUM));
+	
 	if( FUSS_VALUE < 300){// Near 60cm
 		//GPIO_Set(DLED_LED3,0);
 		Proposal_Speed = 0;
@@ -145,11 +145,14 @@ void DoMainLoop(void)
 	time_gap = 500;
 	t_current = BTMR_GetRuntime()/time_gap;
 	if (t_current != t_old) {
+		t_old = t_current;
+		DLED_Toggle(blinking_LED);
+		
 		t_test = CAM_MICRO_SEC_RETURN();
 		//SDBG_Printf("\n%u: %d", cnt++, t_test);
 		
-		t_old = t_current;
-		DLED_Toggle(blinking_LED);
+		//AEB Sensor Value
+		SDBG_Printf("\nUS : %8u  IR : %4d", FUSS_VALUE,FADC_Get(IR_ADC_NUM));
 		
 		//LCD Test
 		/*LCD_ON();//x, y,*string
@@ -185,7 +188,7 @@ void DoMainLoop(void)
 		enc2_rate = enc2_current - enc2_old;
 		enc1_old = enc1_current;
 		enc2_old = enc2_current;
-		SDBG_Printf("\n%u: Speed : %4d Rval : %4d %4d    RATE : %4d %4d", cnt++, DC_Speed,RENC_Get1(),RENC_Get2(), enc1_rate, enc2_rate);
+		//SDBG_Printf("\n%u: Speed : %4d Rval : %4d %4d    RATE : %4d %4d", cnt++, DC_Speed,RENC_Get1(),RENC_Get2(), enc1_rate, enc2_rate);
 		
 		//Speed_Control(3);//3cm/s
 		//DC_Speed = (FADC_Get(1)-800)*10;//(A2D_GetChResult_10bit(1)-800)*10;

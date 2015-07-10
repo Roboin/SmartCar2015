@@ -96,6 +96,7 @@ void CAM_RUN(void)
 	
 	//CAM_Clock(); // For 128 + 1 Clock Pulse
 	
+	
 	//CAM Restart	
 	if(CAM_SI_FLAG==0){
 		GPIO_Set(CAM_SI_PIN,0);

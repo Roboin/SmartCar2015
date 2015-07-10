@@ -15,4 +15,10 @@ Sources/freerunusonic_c.obj: C:\Freescale\workspace\Roboin_AEB\Sources\freerunus
 	C:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\limits_api.h \
 	C:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\ewl_lib_ext1.h \
 	C:\Freescale\workspace\Roboin_AEB\Sources\ngv_dmu.h \
-	C:\Freescale\workspace\Roboin_AEB\Sources\gpio.h 
+	C:\Freescale\workspace\Roboin_AEB\Sources\gpio.h \
+	C:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\stdlib.h \
+	C:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\cstdlib \
+	C:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\div_t.h \
+	C:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\null.h \
+	C:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\size_t.h \
+	C:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\ewl_rsize_t.h 
