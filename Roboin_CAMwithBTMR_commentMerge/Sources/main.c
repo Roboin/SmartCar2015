@@ -106,8 +106,8 @@ void DoMainLoop(void)
 	}
 	else{
 		CAM_RUN_MODE_SETUP(1);//down
-		DLED_Set(DLED_LED2,0);
-		blinking_LED= DLED_LED1;
+		//DLED_Set(DLED_LED2,0);
+		//blinking_LED= DLED_LED1;
 	}
 	
 	//SERIAL COMMUNICATE
@@ -134,7 +134,7 @@ void DoMainLoop(void)
 		t_test = CAM_MICRO_SEC_RETURN();
 		SDBG_Printf("\n%u: %d", cnt++, t_test);
 		t_old = t_current;
-		DLED_Toggle(blinking_LED);
+		//DLED_Toggle(blinking_LED);
 		
 		/*DIP SWitch
 		 *1-Camera Run Mode
@@ -155,21 +155,21 @@ void DoMainLoop(void)
 			CAM_PulseWidth(50);
 		
 		//ENCODER TEST
-		//*/
-		enc1_current = RENC_Get1();
-		enc2_current = RENC_Get2();
-		enc1_rate = enc1_current - enc1_old;
-		enc2_rate = enc2_current - enc2_old;
-		enc1_old = enc1_current;
-		enc2_old = enc2_current;
+//		//*/
+//		enc1_current = RENC_Get1();
+//		enc2_current = RENC_Get2();
+//		enc1_rate = enc1_current - enc1_old;
+//		enc2_rate = enc2_current - enc2_old;
+//		enc1_old = enc1_current;
+//		enc2_old = enc2_current;
 		//SDBG_Printf("\n%u: Speed : %4d Rval : %4d %4d    RATE : %4d %4d", cnt++, DC_Speed,RENC_Get1(),RENC_Get2(), enc1_rate, enc2_rate);
-		
-		Speed_Control(3);//3cm/s
-		//DC_Speed = (FADC_Get(1)-800)*10;//(A2D_GetChResult_10bit(1)-800)*10;
-		MCTL_DC_R(DC_Speed);
-		MCTL_DC_L(DC_Speed);
-		SDBG_Printf("\n%u: Speed : %4d Rval : %4d RATE : %4d", cnt++, DC_Speed,RENC_Get1(), enc1_rate);
-		//SDBG_Printf("\n%u: US : %8u  IR : %4d", cnt++, FUSS_GetMm(FUSS_CH0),FADC_Get(6));//adc6 = pd2 = IR
+//		
+//		Speed_Control(3);//3cm/s
+//		//DC_Speed = (FADC_Get(1)-800)*10;//(A2D_GetChResult_10bit(1)-800)*10;
+//		MCTL_DC_R(DC_Speed);
+//		MCTL_DC_L(DC_Speed);
+//		SDBG_Printf("\n%u: Speed : %4d Rval : %4d RATE : %4d", cnt++, DC_Speed,RENC_Get1(), enc1_rate);
+//		//SDBG_Printf("\n%u: US : %8u  IR : %4d", cnt++, FUSS_GetMm(FUSS_CH0),FADC_Get(6));//adc6 = pd2 = IR
 		/**/
 		
 		//Servo test
@@ -183,40 +183,42 @@ void DoMainLoop(void)
 		
 		//if(dipsw & 0x8){//sw4, SDBG
 			if(flag==0){
-				//flag = 1;
+				flag = 1;
 			}
 		//}
 	}
 	
 	if(flag){
-		SDBG_Printf("\n %4d TH:%3d,%3d,%3d\t",t_current,cam_th,CAM_MAX(),CAM_MIN());
-		for(i_serial = 0; i_serial < NUM_OF_PIXEL; i_serial+=2){//i_serial++){
-			if(dipsw & 0b0100){//up//0x04
-				if(CAM_DATA1(i_serial) > cam_th){
-					SDBG_Printf(".");
-				}
-				else{ //if(CAM_READ(i_serial) , cam_th)
-					SDBG_Printf("!");
-				}
-			}
-			else{//down
-				SDBG_Printf("%3d ",CAM_DATA1(i_serial));
-			}
-		}
-		SDBG_Printf("||");
-		for(i_serial = 0; i_serial < NUM_OF_PIXEL; i_serial+=2){//i_serial++){
-			if(dipsw & 0b0100){//up//0x04
-				if(CAM_DATA2(i_serial) > cam_th){
-					SDBG_Printf(".");
-				}
-				else{ //if(CAM_READ(i_serial) , cam_th)
-					SDBG_Printf("!");
-				}
-			}
-			else{//down
-				SDBG_Printf("%3d ",CAM_DATA2(i_serial));
-			}
-		}
+		//SDBG_Printf("\n %4d TH:%3d,%3d,%3d\t",t_current,cam_th,CAM_MAX(),CAM_MIN());
+		
+		laneProcess();
+//		for(i_serial = 0; i_serial < NUM_OF_PIXEL; i_serial+=2){//i_serial++){
+//			if(dipsw & 0b0100){//up//0x04
+//				if(CAM_DATA1(i_serial) > cam_th){
+//					SDBG_Printf(".");
+//				}
+//				else{ //if(CAM_READ(i_serial) , cam_th)
+//					SDBG_Printf("!");
+//				}
+//			}
+//			else{//down
+//				SDBG_Printf("%3d ",CAM_DATA1(i_serial));
+//			}
+//		}
+//		SDBG_Printf("||");
+//		for(i_serial = 0; i_serial < NUM_OF_PIXEL; i_serial+=2){//i_serial++){
+//			if(dipsw & 0b0100){//up//0x04
+//				if(CAM_DATA2(i_serial) > cam_th){
+//					SDBG_Printf(".");
+//				}
+//				else{ //if(CAM_READ(i_serial) , cam_th)
+//					SDBG_Printf("!");
+//				}
+//			}
+//			else{//down
+//				SDBG_Printf("%3d ",CAM_DATA2(i_serial));
+//			}
+//		}
 		flag = 0;
 	}
 }

@@ -34,6 +34,7 @@ void CAM_DELAY(int32_t delay_long);//delay using While
 void CAM_RUN2(void);//Non-Inturrupte
 void CAM_UPDATE_DATA(void);//CAM_TEMP to CAM_READ
 
+
 /*Processed CAM_READ of camera 1
  * parameter: index of pixel
  * return: value of brightness of that pixel */
@@ -44,7 +45,27 @@ uint16_t CAM_DATA1(int16_t pixelnum);
  * return: value of brightness of that pixel */
 uint16_t CAM_DATA2(int16_t pixelnum);
 
+
 void CAM_RUN_MODE_SETUP(int16_t mode);
 void CAM_SI_ON(void);
+
+/* lane detecting constants*/
+#define START_PIXEL 10 /*start pixel to find max and min luminosity */  
+#define END_PIXEL 118 /* end pixel to find max and min luminosity */  
+#define EDGE_RATIO 0.166666 /* ratio of difference between two successive pixels luminosity to max difference of 128 pixel, which determine that two points are along edge or not*/
+#define TOTAL_EDGE_RATIO 0.5 /* ratio of difference between pixels luminosity to max difference of 128 pixel, which determine that two points are along edge or not*/
+#define LANE_RATIO 0.05 /*  ratio of difference between two successive pixels luminosity to max difference of 128 pixel, which determine that two points are along lane or not*/
+#define CAM_MAX_LANE_NUM 3/*number of lane valid per one camera*/
+
+/* line detecting function */
+void laneProcess( void );
+void laneStatusUpdate( void );
+
+/*data out function*/
+double cam1LanePositionReturn ( void );
+double cam2LanePositionReturn ( void );
+int8_t ifSchoolZone ( void );
+int8_t ifCrossSection (void);
+int8_t ifLaneProcessEnd ( void );
 
 #endif /* CAMERA_H_ */

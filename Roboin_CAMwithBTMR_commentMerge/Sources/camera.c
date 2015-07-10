@@ -12,6 +12,7 @@
 #include "adc_drv.h"
 #include "basetimer.h"
 #include "stdlib.h"
+#include "demoled.h"
 
 //####### Pin Guide ##########
 int16_t CAM_DATA_PIN1 = 4;//4=pd0
@@ -46,6 +47,16 @@ vuint16_t CAM_TEMP1[NUM_OF_PIXEL+1] = {};
 vuint16_t CAM_READ1[NUM_OF_PIXEL] = {};
 vuint16_t CAM_TEMP2[NUM_OF_PIXEL+1] = {};
 vuint16_t CAM_READ2[NUM_OF_PIXEL] = {};
+
+/* lane status*/
+double cam1LanePosition[CAM_MAX_LANE_NUM] = {};
+double cam2LanePosition[CAM_MAX_LANE_NUM] = {};
+int8_t cam1LaneNum = 0;
+int8_t cam2LaneNum = 0;
+int8_t crossSectionFlag = 0;
+int8_t schoolZoneFlag = 0;
+
+int8_t laneProccessEndFlag = 0;
 
 void CAM_Init(void)
 {	
@@ -267,62 +278,274 @@ void CAM_RUN_MODE_SETUP(int16_t mode)
 }
 /* with camera data array CAM_READ change LANE_PIXEL_INDEX 1 and 2 value
  * and change lane status flags*/
-void laneProcess( int8_t flag )
+void laneProcess( void )
 {
-	if ( flag )
+	if ( CAM_RAN_FLAG )
 	{
-		int8_t dSIndex = 0; /* drop start index */
-		int8-t dEIndex = 0; /* drop end index*/
-		int8_t sucFlag = 0; /* successiveness flag */
-		int8_t i;
+		uint8_t dSIndex = 0; /* drop start index */
+		uint8_t dEIndex = 0; /* drop end index*/
+		int8_t dSucFlag = 0; /* drop successiveness flag */
+		int8_t lanePixelCount = 0;
+		int8_t laneEndFlag = 0;
+		uint8_t laneStartIndex = 0;
+		uint8_t laneEndIndex = 0;
+		uint8_t i;
 		uint16_t maxPhoto = 0, minPhoto = 1000; /* max and min vlaue of 128 pixels*/
-		unit16_t maxDiff = 0; /* difference between maxphoto and minPhoto */
+		uint16_t maxDiff = 0; /* difference between maxphoto and minPhoto */
+		
+		crossSectionFlag = 0;
+		schoolZoneFlag = 0;
 		
 		/*find max and min vlaue of 128 pixels of camera 1 */
-		for ( i = 0; i < NUM_OF_PIXEL; i++ )
+		for ( i = START_PIXEL + 1; i < END_PIXEL + 1; i++ )
 		{
-			if ( minPhoto > CAM_READ1[i] ) min_value = CAM_READ1[i];
-	
-			if ( maxPhoto < CAM_READ[i] ) maxPhoto = CAM_READ[i];
+			if ( minPhoto > CAM_READ1[i] ) minPhoto = CAM_READ1[i];
+			if ( maxPhoto < CAM_READ1[i] ) maxPhoto = CAM_READ1[i];
 		}
 		maxDiff = maxPhoto - minPhoto;
 		
-		/* find location of line in pixel*/
+		/* find location of line in pixel in camera 1*/
 		for ( i = 1; i < NUM_OF_PIXEL; i++ )
 		{
-			if ( sucFlag )
+			if ( lanePixelCount == 0 )
 			{
-				if ( /* successive pixel diff > max diff 1/6*/ )
+				if ( dSucFlag )
+				{
+					if ( abs( CAM_DATA1(i - 1) - CAM_DATA1(i) ) > (maxDiff) * EDGE_RATIO ) {}
+					else
+					{
+						dSucFlag = 0;
+						dEIndex = i;
+						
+						if ( abs( CAM_DATA1(dSIndex - 1) - CAM_DATA1(dEIndex - 1) ) > (maxDiff * TOTAL_EDGE_RATIO ) )
+						{
+							
+							// if 1/20 of global differ continous for more than 4pixel and another rise occur it is line
+							if ( abs(( CAM_DATA1(i - 1) - CAM_DATA1(i) )) < (maxDiff * LANE_RATIO) )
+							{
+								if ( laneEndFlag )
+								{
+									laneEndIndex = dSIndex;
+									cam1LaneNum ++;
+									if ( cam1LaneNum > 6 ) 
+									{
+										GPIO_Set( DLED_LED4, 0 );
+										return; //경우의 수 밖!!!
+									}
+									else
+									{
+										cam1LanePosition[cam1LaneNum - 1] = ( (laneEndIndex - laneStartIndex) / 2.0 );
+										
+										laneStartIndex = 0;
+										laneEndIndex = 0;
+										laneEndFlag = 0;
+										lanePixelCount = 0;
+										dSIndex = 0;
+										dEIndex = 0;
+									}
+								}
+								else
+								{
+									lanePixelCount ++;
+								}
+							}
+							else
+							{
+								//dSIndex = 0;
+								//dEIndex = 0;
+							}
+						}
+					}
+				}
 				else
 				{
-					sucFlag = 0;
-					dSIndex = ;
-					if ( /* local differ > 1/2global differ*/)
+					if ( abs( CAM_DATA1(i - 1) - CAM_DATA1(i) ) > (maxDiff * EDGE_RATIO) ) /* successive pixel diff > max diff 1/6*/ 
 					{
-						// if 1/20 of global differ continous for more than 4pixel and another rise occur it is line
-						// save location of 평균 index to variable
-						//  if variable is more than 3 go to error
+						/* cur index save, dSucFlag up */
+						dSIndex = i;
+						dSucFlag = 1;
+					
 					}
 				}
 			}
+			
+			else if ( lanePixelCount < 4 )
+			{
+				if ( abs( (CAM_DATA1(i - 1) - CAM_DATA1(i) ) < (maxDiff * LANE_RATIO) ) )
+				{
+					lanePixelCount ++;
+				}
+				else
+				{
+					dSIndex = 0;
+					dEIndex = 0;
+					lanePixelCount = 0;
+				}
+				
+				
+			}
 			else
 			{
-				if ( abs( CAM_DATA1(i - 1) - CAM_DATA(i) ) > (maxDiff / 6.0) ) /* successive pixel diff > max diff 1/6*/ 
-				{
-					// cur index save, sucflag up
-				}
+				laneEndFlag = 1;
+				laneStartIndex = dEIndex;
+				
+				dEIndex = 0;
+				dSIndex = 0;
+				lanePixelCount = 0;
 			}
 		}
+		
+		
 
-		/* cam 2대해 똑같이*/
-
-		//if 문 다발 겸 출력
+		/* find location of line in pixel in camera 2*/
+		for ( i = 1; i < NUM_OF_PIXEL; i++ )
+				{
+					if ( lanePixelCount == 0 )
+					{
+						if ( dSucFlag )
+						{
+							if ( abs( CAM_DATA2(i - 1) - CAM_DATA2(i) ) > (maxDiff) * EDGE_RATIO ) {}
+							else
+							{
+								dSucFlag = 0;
+								dEIndex = i;
+								
+								if ( abs( CAM_DATA2(dSIndex - 1) - CAM_DATA2(dEIndex - 1) ) > (maxDiff * TOTAL_EDGE_RATIO ) )
+								{
+									
+									// if 1/20 of global differ continous for more than 4pixel and another rise occur it is line
+									if ( abs(( CAM_DATA2(i - 1) - CAM_DATA2(i) )) < (maxDiff * LANE_RATIO) )
+									{
+										if ( laneEndFlag )
+										{
+											laneEndIndex = dSIndex;
+											cam2LaneNum ++;
+											if ( cam2LaneNum > 6 ) 
+											{
+												GPIO_Set( DLED_LED4, 0 );
+												return; //경우의 수 밖!!!
+											}
+											else
+											{
+												/* There is drop and continuous lane part and up again and low pixel diff appear*/
+												cam2LanePosition[cam2LaneNum] = ( (laneEndIndex - laneStartIndex) ) / 2.0;
+												
+												//laneStartIndex = 0;
+												//laneEndIndex = 0;
+												laneEndFlag = 0;
+												lanePixelCount = 0;
+												//dSIndex = 0;
+												//dEIndex = 0;
+											}
+										}
+										else
+										{
+											lanePixelCount ++;
+										}
+									}
+									else
+									{
+										//dSIndex = 0;
+										//dEIndex = 0;
+									}
+								}
+							}
+						}
+						else
+						{
+							if ( abs( CAM_DATA2(i - 1) - CAM_DATA2(i) ) > (maxDiff * EDGE_RATIO) ) /* successive pixel diff > max diff 1/6*/ 
+							{
+								/* current index save, dSucFlag up */
+								dSIndex = i;
+								dSucFlag = 1;
+							
+							}
+						}
+					}
+					
+					else if ( lanePixelCount < 4 )
+					{
+						if ( abs( (CAM_DATA2(i - 1) - CAM_DATA2(i) ) < (maxDiff * LANE_RATIO) ) )
+						{
+							lanePixelCount ++;
+						}
+						else
+						{
+							//dSIndex = 0;
+							//dEIndex = 0;
+							lanePixelCount = 0;
+						}
+						
+						
+					}
+					else
+					{
+						laneEndFlag = 1;
+						laneStartIndex = dEIndex;
+						
+						//dEIndex = 0;
+						//dSIndex = 0;
+						lanePixelCount = 0;
+					}
+				}
+		
+		laneStatusUpdate();
 
 	}
+	
+	return;
+}
+
+/*test 포함
+ * lane : LED1
+ * school: LED2
+ * 교차로: LED3
+ * 예외경우: LED4
+ */
+void laneStatusUpdate( void )
+{
+	if ( cam1LaneNum + cam2LaneNum == 0 ) 
+	{
+		crossSectionFlag = 1;
+		GPIO_Set( DLED_LED2, 0);
+	}
+	else if ( cam1LaneNum + cam2LaneNum  < 2 ) GPIO_Set( DLED_LED4, 0 ); //경우의 수 밖!!!
+	else if ( cam1LaneNum == 1 && cam2LaneNum == 1 ) GPIO_Set( DLED_LED1, 0 );//정상적 lane
+	else if ( cam1LaneNum == cam2LaneNum )  schoolZoneFlag = 1;
+	else GPIO_Set( DLED_LED4, 0 ); //경우의 수 밖!!!
+	
+}
+
+double cam1LanePositionReturn ( void )
+{
+	if ( cam1LaneNum == 1) return cam1LanePosition[0];
+	else if ( cam2LaneNum == 0 ) return -1;
+}
+
+double cam2LanePositionReturn ( void )
+{
+	if ( cam2LaneNum == 1) return cam2LanePosition[0];
+	else if ( cam2LaneNum == 0 ) return -1;
+}
+
+int8_t ifLaneProcessEnd ( void )
+{
+	return laneProccessEndFlag;
+}
+
+int8_t ifSchoolZone ( void )
+{
+	return schoolZoneFlag;
+}
+
+int8_t ifCrossSection ( void )
+{
+	return crossSectionFlag;
 }
 
 /* efficient cameara max and min
  * find max and min value of pixels together and change global variable 하려 했으나 global variable 넘 많아지는거 같아서 line process */
+/*
 void eff_CAM_MAXMIN ( void )
  {
 	 uint16_t min_value = CAM_READ1[0];
@@ -332,4 +555,4 @@ void eff_CAM_MAXMIN ( void )
 	 			min_value = CAM_READ1[i_cam];
 	 	}
 	 	return min_value;
- }
+ }*/
