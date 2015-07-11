@@ -56,7 +56,7 @@ int32_t USval = 1200;
 /*********************  Initialization Function(s) ************************/
 void init_peripherals(void){
 	sys_init_fnc();
-	LedSetAll(0);
+	Led_Set_All(0);
 	TIMER_Init();
 	UartBufInit();
 	LCD_initialize();
@@ -67,10 +67,10 @@ void init_peripherals(void){
 /*********************  DoMainLoop ************************/
 void DoMainLoop(){
 	
-	LedSet(1,flag);
-	LedSet(2,1-flag);
-	LedSet(3,flag);
-	LedSet(4,1-flag);
+	Led_Set(1,flag);
+	Led_Set(2,1-flag);
+	Led_Set(3,flag);
+	Led_Set(4,1-flag);
 	USval = (int32_t)US_Get();
 	time_gap = 250;//(ADC_Get(POT_1);
 	t_current = TIMER_GetRuntime()/time_gap;

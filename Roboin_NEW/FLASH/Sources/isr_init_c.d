@@ -18,4 +18,5 @@ Sources/isr_init_c.obj: C:\Freescale\workspace\Roboin_NEW\Sources\isr_init.c \
 	C:\Freescale\workspace\Roboin_NEW\Sources\lcd.h \
 	C:\Freescale\workspace\Roboin_NEW\Sources\gpio.h \
 	C:\Freescale\workspace\Roboin_NEW\Sources\ultra_sonic.h \
+	C:\Freescale\workspace\Roboin_NEW\Sources\camera.h \
 	C:\Freescale\workspace\Roboin_NEW\Sources\encoder.h 

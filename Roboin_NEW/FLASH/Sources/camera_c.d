@@ -15,5 +15,4 @@ Sources/camera_c.obj: C:\Freescale\workspace\Roboin_NEW\Sources\camera.c \
 	C:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\limits_api.h \
 	C:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\ewl_lib_ext1.h \
 	C:\Freescale\workspace\Roboin_NEW\Sources\gpio.h \
-	C:\Freescale\workspace\Roboin_NEW\Sources\adc_drv.h \
-	C:\Freescale\workspace\Roboin_NEW\Sources\timer.h 
+	C:\Freescale\workspace\Roboin_NEW\Sources\adc_drv.h 

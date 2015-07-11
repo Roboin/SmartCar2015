@@ -39,16 +39,17 @@ uint8_t flag_PIT(uint8_t ch){
 	flag_PIT_ARRAY[3] = !flag_PIT_ARRAY[3];
     PIT.CH[3].TFLG.R = 0x00000001;
 }*/
-
+/*
 void CAM_PIT4_ISR (void){
 	flag_PIT_ARRAY[4] = !flag_PIT_ARRAY[4];
     PIT.CH[4].TFLG.R = 0x00000001;
-}
+}*/
 
-void MOTOR_PIT5_ISR (void){
+
+/*void MOTOR_PIT5_ISR (void){
 	flag_PIT_ARRAY[5] = !flag_PIT_ARRAY[5];
     PIT.CH[5].TFLG.R = 0x00000001;
-}
+}*/
 
 //##### intc_siu.c
 #include "encoder.h"
