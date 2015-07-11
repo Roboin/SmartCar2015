@@ -8,15 +8,11 @@
 #include "ultra_sonic.h"
 #include "stdlib.h"
 
-vuint8_t flag_US = 1;
 vuint32_t us_echo;
 vuint32_t us_tmeans;
-vuint32_t us_a, us_b;
+vuint32_t us_t1, us_t2;
 vuint32_t us_val = 0;
 vuint32_t us_val_old = 0;
-
-
-
 
 void US_PIT3_ISR(void){
 	vuint32_t t0;
@@ -32,22 +28,23 @@ void US_EMIOS1_F10_11_ISR(void)
 {
 	EMIOS_1.CH[10].CSR.B.FLAG = 1;
 	if (EMIOS_1.CH[11].CSR.B.FLAG == 1) {
-		us_a = (uint32_t)EMIOS_1.CH[11].CADR.R;
-		us_b = (uint32_t)EMIOS_1.CH[11].CBDR.R;
-		us_tmeans = us_a - us_b;
+		us_t1 = (uint32_t)EMIOS_1.CH[11].CADR.R;
+		us_t2 = (uint32_t)EMIOS_1.CH[11].CBDR.R;
+		us_tmeans = us_t1 - us_t2;
 		EMIOS_1.CH[11].CSR.B.FLAG = 1;
 	}
 }
 
 void US_Init(void){
-	us_val = 0;
+	us_val = 1500;
 }
 
 uint32_t US_Get(void){
+	uint16_t us_filtering_val = 1500;
 	us_val = (us_tmeans * 2785 + 2048) >> 12;  // 0.34 mm/usec * 4 usec/count * 4096 / 2(นÝป็) 
 	if(us_val > 3500)
 		us_val = 3500;
-	if( abs((int)(us_val_old - us_val)) > 1000)
+	if( abs((int)(us_val_old - us_val)) > us_filtering_val)
 		us_val = us_val_old;
 	
 	us_val_old = us_val;

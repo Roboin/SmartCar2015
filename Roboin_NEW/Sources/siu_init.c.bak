@@ -1737,12 +1737,12 @@ void siu_general_init_fnc(void)
     /* ----------------------------------------------------------- */
     /*   Interrupt Request Enable Register- IRER    */
     /* ----------------------------------------------------------- */
-        SIU.IRER.R = 0x00030010;
+        SIU.IRER.R = 0x00030000;
              /* Edge Trigger External Interrupt 0 Enable :-Disabled */
              /* Edge Trigger External Interrupt 1 Enable :-Disabled */
              /* Edge Trigger External Interrupt 2 Enable :-Disabled */
              /* Edge Trigger External Interrupt 3 Enable :-Disabled */
-             /* Edge Trigger External Interrupt 4 Enable :-Enabled */
+             /* Edge Trigger External Interrupt 4 Enable :-Disabled */
              /* Edge Trigger External Interrupt 5 Enable :-Disabled */
              /* Edge Trigger External Interrupt 6 Enable :-Disabled */
              /* Edge Trigger External Interrupt 7 Enable :-Disabled */
@@ -1766,14 +1766,14 @@ void siu_general_init_fnc(void)
     /* ----------------------------------------------------------- */
     /*   External IRQ Rising-Edge Event Enable Register - IREER    */
     /* ----------------------------------------------------------- */
-        SIU.IREER.R = 0x00030010;
+        SIU.IREER.R = 0x00030000;
 
              /* NMI Rising-Edge Event : Disabled */
              /* IRQ 0 Rising-Edge Event : Disabled */
              /* IRQ 1 Rising-Edge Event : Disabled */
              /* IRQ 2 Rising-Edge Event : Disabled */
              /* IRQ 3 Rising-Edge Event : Disabled */
-             /* IRQ 4 Rising-Edge Event : Enabled */
+             /* IRQ 4 Rising-Edge Event : Disabled */
              /* IRQ 5 Rising-Edge Event : Disabled */
              /* IRQ 6 Rising-Edge Event : Disabled */
              /* IRQ 7 Rising-Edge Event : Disabled */
@@ -1797,14 +1797,14 @@ void siu_general_init_fnc(void)
     /* ----------------------------------------------------------- */
     /*   External IRQ Falling-Edge Event Enable Register - IFEER   */
     /* ----------------------------------------------------------- */
-        SIU.IFEER.R = 0x00030010;
+        SIU.IFEER.R = 0x00030000;
 
              /* NMI Falling-Edge Event : Disabled */
              /* IRQ 0 Falling-Edge Event : Disabled */
              /* IRQ 1 Falling-Edge Event : Disabled */
              /* IRQ 2 Falling-Edge Event : Disabled */
              /* IRQ 3 Falling-Edge Event : Disabled */
-             /* IRQ 4 Falling-Edge Event : Enabled */
+             /* IRQ 4 Falling-Edge Event : Disabled */
              /* IRQ 5 Falling-Edge Event : Disabled */
              /* IRQ 6 Falling-Edge Event : Disabled */
              /* IRQ 7 Falling-Edge Event : Disabled */

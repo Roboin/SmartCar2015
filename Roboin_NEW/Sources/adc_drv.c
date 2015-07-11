@@ -3,7 +3,12 @@
 #include "gpio.h"
 
 uint16_t ADC_Get(uint32_t pinName){
-	return A2D_GetSingleCh_10bit( pinName - POT_1 );//POT_1 = ADC 0
+	uint32_t ch = 0;
+	if(pinName == POT_1)
+		ch = 0;
+	else//if(pinName != POT_1)
+		ch = pinName - GPIO_PD0 + 4;
+	return A2D_GetSingleCh_10bit( ch );//POT_1 = ADC 0, pb4
 }
 
 uint16_t A2D_GetSingleCh_12bit(uint32_t ch)

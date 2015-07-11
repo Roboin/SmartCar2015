@@ -8,15 +8,15 @@
 #include "onBoardLedSwitch.h"
 
 //LED
-void LedSet(uint16_t led_num, uint8_t onoff){
+void Led_Set(uint16_t led_num, uint8_t onoff){
 	uint16_t led_pin = LED_1 + led_num - 1;
 	GPIO_Set(led_pin, !onoff);
 }
-void LedSetAll(uint8_t onoff){
-	GPIO_Set(1, !onoff);
-	GPIO_Set(2, !onoff);
-	GPIO_Set(3, !onoff);
-	GPIO_Set(4, !onoff);
+void Led_Set_All(uint8_t onoff){
+	GPIO_Set(LED_1, !onoff);
+	GPIO_Set(LED_2, !onoff);
+	GPIO_Set(LED_3, !onoff);
+	GPIO_Set(LED_4, !onoff);
 }
 
 //SW

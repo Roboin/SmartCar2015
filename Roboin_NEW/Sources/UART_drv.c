@@ -264,6 +264,22 @@ void itoa(int32_t num, char *pStr){//Int to string
     *pStr = '\0';
 }
 
+void UART_print(char *stringIn){// print string, it takes long time
+	int i = 0;
+	int length = 0;
+	for(i=0;i<100;i++){
+		if( stringIn[i] == NULL){
+			length = i;
+			break;
+		}
+	}
+	for(i = 0; i < length; i++){
+		UartTxMsg((unsigned char *)stringIn,1);
+		stringIn++;
+	}
+	*stringIn = NULL;	
+}
+
 void UART_println(char *stringIn){// print string, it takes long time
 	int i = 0;
 	int length = 0;
@@ -280,4 +296,3 @@ void UART_println(char *stringIn){// print string, it takes long time
 	*stringIn = NULL;
 	UartTxMsg((unsigned char *)NewLine,2);
 }
-

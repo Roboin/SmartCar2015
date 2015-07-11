@@ -25,8 +25,8 @@
 #define DIP_3	GPIO_PG8
 #define DIP_4	GPIO_PG9
 
-void LedSet(uint16_t led_num, uint8_t onoff);
-void LedSetAll(uint8_t onoff);
+void Led_Set(uint16_t led_num, uint8_t onoff);
+void Led_Set_All(uint8_t onoff);
 uint16_t BUTTON_Read(void);
 uint16_t DIP_Read(void);
 

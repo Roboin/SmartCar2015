@@ -52,6 +52,7 @@ vuint8_t flag = 1;
 vuint32_t i = 0;
 vuint32_t t_current = 0, t_old = 0;
 vuint32_t time_gap = 500;
+int32_t USval = 1200;
 /*********************  Initialization Function(s) ************************/
 void init_peripherals(void){
 	sys_init_fnc();
@@ -70,14 +71,15 @@ void DoMainLoop(){
 	LedSet(2,1-flag);
 	LedSet(3,flag);
 	LedSet(4,1-flag);
-	
-	time_gap = 100;//(ADC_Get(POT_1);
+	USval = (int32_t)US_Get();
+	time_gap = 250;//(ADC_Get(POT_1);
 	t_current = TIMER_GetRuntime()/time_gap;
 	if (t_current != t_old) {
-		int32_t USval = (int32_t)US_Get();
+		t_old = t_current;
+		
 		itoa((int32_t)USval, stringtest);//US_Get()
 		UART_println(stringtest);
-		t_old = t_current;
+		
 		
 		if(flag == 1){
 			flag = 0;

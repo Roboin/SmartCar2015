@@ -14,7 +14,8 @@ vint32_t enc_val2;
 
 void ENC1_EIRQ16_23_ISR(void)
 {
-	SIU.ISR.R = 0x000F0000;
+	SIU.ISR.R = 0x00FF0000;
+	
 	if (GPIO_Get(ENC1_A) == 1) {
 		if (GPIO_Get(ENC1_B) == 1) {
 			enc_val1++;
@@ -36,7 +37,6 @@ void ENC1_EIRQ16_23_ISR(void)
 
 void ENC2_EIRQ0_7_ISR(void)
 {
-	SIU.ISR.R = 0x000000F0;
 	if (GPIO_Get(ENC2_B) == 1) {
 		if (GPIO_Get(ENC2_A) == 1) {
 			enc_val2++;

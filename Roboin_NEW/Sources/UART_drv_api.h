@@ -73,6 +73,7 @@ void UartRxFillBuf(void);
 uint8_t UartRxBufEmpty(void);
 
 void itoa(int32_t num, char *pStr);//int to string
+void UART_print(char *stringIn);// print string, it takes long time
 void UART_println(char *stringIn);// print string, it takes long time
 
 #define NewLine "\r\n"
