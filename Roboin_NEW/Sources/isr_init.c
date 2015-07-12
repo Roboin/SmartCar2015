@@ -19,11 +19,6 @@ void ADC0_EOC_ISR (void){
 }*/
 
 //##### intc_pit.c
-						//ch X 1 2 3 4 5
-uint8_t flag_PIT_ARRAY[6] = {0,0,0,0,0,0};
-uint8_t flag_PIT(uint8_t ch){
-	return flag_PIT_ARRAY[ch];
-}
 /*void TIMER_PIT0_ISR (void)
 {
     PIT.CH[0].TFLG.R = 0x00000001;
@@ -34,7 +29,9 @@ uint8_t flag_PIT(uint8_t ch){
 	flag_PIT_ARRAY[1] = !flag_PIT_ARRAY[1];
     PIT.CH[1].TFLG.R = 0x00000001;
 }*/
-
+void PIT2_ISR(void){
+	PIT.CH[2].TFLG.R = 0x00000001;
+}
 /*void US_PIT3_ISR (void){
 	flag_PIT_ARRAY[3] = !flag_PIT_ARRAY[3];
     PIT.CH[3].TFLG.R = 0x00000001;

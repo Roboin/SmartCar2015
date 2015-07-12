@@ -295,7 +295,7 @@ void intc_init_fnc (void)
 /* -------------------------------------------------------------------*/
 /*	           Priority Set Register for interrupt vector 42          */
 /* -------------------------------------------------------------------*/
-    INTC.PSR[42].R = 0x0D;
+    INTC.PSR[42].R = 0;//0x0D;
     /* SIU External IRQ 8-15 Priority is: 13        */
 
 /* -------------------------------------------------------------------*/
@@ -367,8 +367,8 @@ void intc_init_fnc (void)
 /* -------------------------------------------------------------------*/
 /*	           Priority Set Register for interrupt vector 59          */
 /* -------------------------------------------------------------------*/
-    INTC.PSR[59].R = 0x04;
-    /* PIT Channel 0 Priority is: 4        */
+    INTC.PSR[59].R = 0x05;
+    /* PIT Channel 0 Priority is: 5        */
 
 /* -------------------------------------------------------------------*/
 /*	           Priority Set Register for interrupt vector 60          */
@@ -379,14 +379,14 @@ void intc_init_fnc (void)
 /* -------------------------------------------------------------------*/
 /*	           Priority Set Register for interrupt vector 61          */
 /* -------------------------------------------------------------------*/
-    INTC.PSR[61].R = 0x00;
-    /* PIT Channel 2 Priority is: 0        */
+    INTC.PSR[61].R = 0x01;
+    /* PIT Channel 2 Priority is: 1        */
 
 /* -------------------------------------------------------------------*/
 /*	           Priority Set Register for interrupt vector 62          */
 /* -------------------------------------------------------------------*/
-    INTC.PSR[62].R = 0x03;
-    /* ADC_0_EOC Priority is: 3        */
+    INTC.PSR[62].R = 0x04;
+    /* ADC_0_EOC Priority is: 4       */
 
 /* -------------------------------------------------------------------*/
 /*	           Priority Set Register for interrupt vector 64          */
@@ -475,14 +475,14 @@ void intc_init_fnc (void)
 /* -------------------------------------------------------------------*/
 /*	           Priority Set Register for interrupt vector 79          */
 /* -------------------------------------------------------------------*/
-    INTC.PSR[79].R = 0x08;
-    /* LINFlex_0_RXI Priority is: 8        */
+    INTC.PSR[79].R = 0x00;
+    /* LINFlex_0_RXI Priority is: 0        */
 
 /* -------------------------------------------------------------------*/
 /*	           Priority Set Register for interrupt vector 80          */
 /* -------------------------------------------------------------------*/
-    INTC.PSR[80].R = 0x01;
-    /* LINFlex_0_TXI Priority is: 1        */
+    INTC.PSR[80].R = 0x00;
+    /* LINFlex_0_TXI Priority is: 0        */
 
 /* -------------------------------------------------------------------*/
 /*	           Priority Set Register for interrupt vector 81          */
@@ -583,13 +583,13 @@ void intc_init_fnc (void)
 /* -------------------------------------------------------------------*/
 /*	           Priority Set Register for interrupt vector 99          */
 /* -------------------------------------------------------------------*/
-    INTC.PSR[99].R = 0x08;
+    INTC.PSR[99].R = 0x00;
     /* LINFlex_1_RXI Priority is: 8        */
 
 /* -------------------------------------------------------------------*/
 /*	           Priority Set Register for interrupt vector 100          */
 /* -------------------------------------------------------------------*/
-    INTC.PSR[100].R = 0x02;
+    INTC.PSR[100].R = 0x00;
     /* LINFlex_1_TXI Priority is: 2        */
 
 /* -------------------------------------------------------------------*/
@@ -728,13 +728,13 @@ void intc_init_fnc (void)
 /*	           Priority Set Register for interrupt vector 128          */
 /* -------------------------------------------------------------------*/
     INTC.PSR[128].R = 0x03;
-    /* PIT Channel 4 Priority is: 4        */
+    /* PIT Channel 4 Priority is: 3        */
 
 /* -------------------------------------------------------------------*/
 /*	           Priority Set Register for interrupt vector 129          */
 /* -------------------------------------------------------------------*/
-    INTC.PSR[129].R = 0x05;
-    /* PIT Channel 5 Priority is: 5        */
+    INTC.PSR[129].R = 0x06;
+    /* PIT Channel 5 Priority is: 6        */
 
 /* -------------------------------------------------------------------*/
 /*	           Priority Set Register for interrupt vector 130          */

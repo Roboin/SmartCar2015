@@ -127,7 +127,7 @@ uint32_t IntcIsrVectorTable[] = {
     (uint32_t)&interrupt_handler,    /* Vector - 58    Reserved */
     (uint32_t)&TIMER_PIT0_ISR,    /* Vector - 59    TIMER_PIT0_ISR*/
     (uint32_t)&LCD_PIT1_ISR,    /* Vector - 60    LCD_PIT1_ISR*/
-    (uint32_t)&interrupt_handler,    /* Vector - 61    interrupt_handler*/
+    (uint32_t)&PIT2_ISR,    /* Vector - 61    PIT2_ISR*/
     (uint32_t)&ADC0_EOC_ISR,    /* Vector - 62    ADC0_EOC_ISR*/
     (uint32_t)&interrupt_handler,    /* Vector - 63    Reserved */
     (uint32_t)&interrupt_handler,    /* Vector - 64    interrupt_handler*/

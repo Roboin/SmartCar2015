@@ -11,8 +11,6 @@
 
 vint32_t enc_val1 = 1;
 vint32_t enc_val2 = 1;
-vint32_t enc_val1_old = 1;
-vint32_t enc_val2_old = 1;
 vint32_t enc_rate1 = 1;
 vint32_t enc_rate2 = 1;
 
@@ -79,10 +77,10 @@ int32_t ENC_Get2(void)
 }
 
 void ENC_SPEED_PIT5_ISR(void){
-	enc_rate1 = enc_val1 - enc_val1_old;
-	enc_rate2 = enc_val2 - enc_val2_old;
-	enc_val1_old = enc_val1;//ReNew enc_old
-	enc_val2_old = enc_val2;
+	enc_rate1 = enc_val1;// - enc_val1_old;
+	enc_rate2 = enc_val2;// - enc_val2_old;
+	enc_val1 = 0;
+	enc_val2 = 0;
 	PIT.CH[5].TFLG.R = 0x00000001;
 }
 

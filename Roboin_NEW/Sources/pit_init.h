@@ -47,7 +47,7 @@ void pit_init_fnc (void);
 #define MS 64000
 #define pit0cycle 	MS//for timer
 #define pit1cycle	200*MS 
-#define pit2cycle 	1*MS
+#define pit2cycle 	5*MS
 #define pit3cycle 	20*MS// for Ultra Sonic
 #define pit4cycle 	20*US// for camera
 #define pit5cycle 	40*MS//for Motor(Encoder Speed Check) - ENC_SPEED_PIT5_ISR

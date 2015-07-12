@@ -29,7 +29,7 @@ void LCD_PIT1_ISR (void)
 	else  {
 		PIT.CH[1].TCTRL.B.TIE = 0;
 	}*/
-	LCD_timer_ms++;
+	LCD_timer_ms += 200;
 	PIT.CH[1].TFLG.R = 0x00000001;
 }
 

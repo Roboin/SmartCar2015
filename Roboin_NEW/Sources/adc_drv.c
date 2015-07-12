@@ -31,6 +31,7 @@ uint16_t A2D_GetSingleCh_12bit(uint32_t ch)
 uint16_t A2D_GetSingleCh_10bit(uint32_t ch)
 {
     uint16_t result;
+    uint16_t time_limit = 1280;//;3200; 20us
 
     ADC_0.NCMR0.R = (uint32_t)(0x00000001 << ch);
     if (ch >= 32)
@@ -46,6 +47,9 @@ uint16_t A2D_GetSingleCh_10bit(uint32_t ch)
 
     while (ADC_0.CDR[ch].B.VALID != 1)
     {
+    	time_limit--;
+    	if(!time_limit)
+    		break;
     }
     result = (uint16_t)((ADC_0.CDR[ch].B.CDATA));
 

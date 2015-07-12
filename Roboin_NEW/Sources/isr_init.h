@@ -19,10 +19,10 @@ void ADC0_EOC_ISR(void);
 //##### intc_pit
 #include "timer.h" //void TIMER_PIT0_ISR(void);
 #include "lcd.h"//void LCD_PIT1_ISR(void);
+void PIT2_ISR(void);
 #include "ultra_sonic.h"//void US_PIT3_ISR(void);
 #include "camera.h"//void CAM_PIT4_ISR(void);
-//void MOTOR_PIT5_ISR(void);
-uint8_t flag_PIT(uint8_t ch);
+//void ENC_SPEED_PIT5_ISR(void);
 
 //##### intc_siu
 #include "encoder.h"
