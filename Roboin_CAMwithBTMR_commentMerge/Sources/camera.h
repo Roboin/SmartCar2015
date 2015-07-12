@@ -25,10 +25,10 @@ void CAM_Clock(void);//clock pulse
 void CAM_PulseWidth(int16_t PULSEWIDTH);//change camera clock, trig width
 
 #define NUM_OF_PIXEL 128
-uint16_t CAM_MAX(void);//MAX Readed value
-uint16_t CAM_MIN(void);//Min Readed value 
-uint16_t CAM_AVG(void);
-uint16_t CAM_TRESHLOLD(int16_t pixelnum);//Calc mid data of max and min
+//uint16_t CAM_MAX(void);//MAX Readed value
+//uint16_t CAM_MIN(void);//Min Readed value 
+//uint16_t CAM_AVG(void);
+//uint16_t CAM_TRESHLOLD(int16_t pixelnum);//Calc mid data of max and min
 
 void CAM_DELAY(int32_t delay_long);//delay using While
 void CAM_RUN2(void);//Non-Inturrupte

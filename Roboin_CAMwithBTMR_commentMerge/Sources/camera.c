@@ -210,7 +210,7 @@ uint16_t CAM_DATA2(int16_t pixelnum){
 	return CAM_READ2[pixelnum];
 }
 
-
+/*
 uint16_t CAM_MAX(void){
 	uint16_t max_value = CAM_READ1[0];
 	for(i_cam=0; i_cam < (NUM_OF_PIXEL); i_cam++){
@@ -228,8 +228,8 @@ uint16_t CAM_MIN(void){
 	}
 	return min_value;
 }
-
-uint16_t CAM_TRESHLOLD(int16_t pixelnum)
+*/
+/*uint16_t CAM_TRESHLOLD(int16_t pixelnum)
 {
 	uint16_t CAM_READ_AVG = (CAM_MIN()+CAM_MAX())/2;
 	if(pixelnum < pt1)
@@ -247,7 +247,7 @@ uint16_t CAM_AVG(void)
 	uint16_t CAM_READ_AVG = (CAM_MIN()+CAM_MAX())/2;
 	return CAM_READ_AVG;// + 20;//+10 to too dark
 }
-
+*/
 void CAM_DELAY(int32_t delay_long)
 {
 	int32_t delay_val = 0;

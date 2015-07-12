@@ -144,11 +144,11 @@ void DoMainLoop(void)
 		dipsw = DSW_GetDipAll();
 		
 		//Threshold
-		if(dipsw & 0b0010)//sw2 //0x2
+		/*if(dipsw & 0b0010)//sw2 //0x2
 			cam_th = (uint16_t)(FADC_Get(1)-800)*5;
 		else
 			cam_th = CAM_AVG();
-		//camera exposure time
+		//camera exposure time*/
 		if(dipsw & 0b1000)//sw4//0x8
 			CAM_PulseWidth(100);//up
 		else//down
@@ -189,9 +189,9 @@ void DoMainLoop(void)
 	}
 	
 	if(flag){
-		//SDBG_Printf("\n %4d TH:%3d,%3d,%3d\t",t_current,cam_th,CAM_MAX(),CAM_MIN());
 		
 		laneProcess();
+		SDBG_Printf("\n %4d 1: %3lf, 2: %3lf\t",t_current,cam1LanePositionReturn(), cam2LanePositionReturn() );
 //		for(i_serial = 0; i_serial < NUM_OF_PIXEL; i_serial+=2){//i_serial++){
 //			if(dipsw & 0b0100){//up//0x04
 //				if(CAM_DATA1(i_serial) > cam_th){
