@@ -95,7 +95,7 @@ void init_peripherals(void){
 }
 /*********************  DoMainLoop ************************/
 void DoMainLoop(){
-	int16_t i;
+	//int16_t i;
 	
 	//Select Mode with Tact switch button
 	Button_Select_RunMode();

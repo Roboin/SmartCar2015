@@ -236,20 +236,20 @@ uint16_t maxPhoto = 0;
 uint16_t minPhoto = 1000;
 int16_t i_cam=0;// for for반복문
 uint16_t CAM_MAX(void){
-	uint16_t max_value = maxPhoto;//CAM_READ1[0];
-	/*for(i_cam=0; i_cam < (NUM_OF_PIXEL); i_cam++){
+	uint16_t max_value = CAM_READ1[0];//maxPhoto;//
+	for(i_cam= START_PIXEL-2 ; i_cam < (END_PIXEL+1); i_cam++){
 		if(max_value < CAM_READ1[i_cam])
 			max_value = CAM_READ1[i_cam];
-	}*/
+	}
 	return max_value;
 }
 
 uint16_t CAM_MIN(void){
-	uint16_t min_value = minPhoto;//CAM_READ1[0];
-	/*for(i_cam=0; i_cam < (NUM_OF_PIXEL); i_cam++){
+	uint16_t min_value = CAM_READ1[0]; //minPhoto;//
+	for(i_cam= START_PIXEL-2 ; i_cam < (END_PIXEL+1); i_cam++){
 		if(min_value > CAM_READ1[i_cam])
 			min_value = CAM_READ1[i_cam];
-	}*/
+	}
 	return min_value;
 }
 /*###############  Lane Detecting  ####################*/
@@ -319,7 +319,7 @@ void laneProcess( void )
 			UART_print(camOutTest1); UART_print(", ");
 			
 								
-			if ( (i > (START_PIXEL - 2) ) && (i < (END_PIXEL + 1)) )
+			/*if ( ((START_PIXEL - 2) < i ) && ( i < (END_PIXEL + 1)) )
 			{
 				UART_println("in range");
 				if ( minPhoto > CAM_READ1_STORE[i] )
@@ -335,11 +335,12 @@ void laneProcess( void )
 					UART_println("max: "); UART_print(camOutTest2); UART_println(" ");
 					maxPhoto = CAM_READ1_STORE[i];
 				}
-			}
+			}*/
 		}
 		
 		UART_println("");
-		
+		minPhoto = CAM_MIN();
+		maxPhoto = CAM_MAX();
 		maxDiff = maxPhoto - minPhoto;//최대-최소 밝기차
 		
 		//test print
