@@ -66,7 +66,14 @@ uint32_t IRval = 1;
 
 int16_t DC_Power_R = 500;
 int16_t DC_Power_L = 500;
-int16_t Proposal_Speed = 5;
+int16_t Speed_Proposal = 5;
+			// 0123456789012345
+char strA[] = "Mode:            ";
+char strB[] = "TIME:           ";
+char LCD_BUFF1[8];
+char LCD_BUFF2[8];
+char LCD_BUFF3[8];
+char LCD_BUFF4[8];
 
 /*##### Flags ##########################*/
 uint8_t flag = 1;
@@ -110,18 +117,21 @@ void DoMainLoop(){
 			Led_Set(1,flag);
 			itoa((int32_t)cnt, string_temp);
 			UART_print(string_temp);
+			
+			LCD_ON();//x, y,*string
+			LCD_string(0, 0, strA);
+			itoa((int32_t)run_mode,LCD_BUFF1);
+			LCD_string(5, 0, LCD_BUFF1);
+			LCD_string(7, 0, "Start           ");
+			LCD_string(0, 1, "TIME:           ");
+			itoa((int32_t)cnt,LCD_BUFF2);
+			LCD_string(6, 1, LCD_BUFF2);
 		}
 		
 		/*##################  Lane Detecting test #####################*/
 		else if(run_mode == 1){
 			Led_Set(1,flag);
 			UART_println(" CAM DATA");
-			/*for(i=0;i<128;i++){
-				itoa((int32_t)CAM_DATA1(i), string_temp);
-				UART_print(string_temp);
-				UART_print(",");
-			}*/
-			UART_println(" ");
 			
 			laneProcess();
 			UART_print("  LANE1 : ");//string_temp);
@@ -130,6 +140,18 @@ void DoMainLoop(){
 			UART_print(",  LANE2 : ");//string_temp);
 			itoa((int32_t)cam2LanePositionReturn(), string_temp);
 			UART_println(string_temp);
+			
+			LCD_ON();//x, y,*string
+			LCD_string(0, 0, strA);
+			itoa((int32_t)run_mode,LCD_BUFF1);
+			LCD_string(5, 0, LCD_BUFF1);
+			LCD_string(7, 0, "CAM Lane        ");
+			LCD_string(0, 1, "L1:             ");
+			itoa((int32_t)cam1LanePositionReturn(),LCD_BUFF2);
+			LCD_string(3, 1, LCD_BUFF2);
+			LCD_string(8, 1, "L2:             ");
+			itoa((int32_t)cam2LanePositionReturn(),LCD_BUFF3);
+			LCD_string(11, 1, LCD_BUFF3);
 		}
 			
 		else if(run_mode == 2){	
@@ -137,7 +159,7 @@ void DoMainLoop(){
 			/*##################  AEB  #####################*/
 			USval = US_Get();
 			if(USval < 500){// Near 50cm
-				Proposal_Speed = 0;
+				Speed_Proposal = 0;
 				flag_US = 1;
 				AEB();
 			}
@@ -146,15 +168,28 @@ void DoMainLoop(){
 				flag_US = 0;
 				flag_Wall = 0;
 				flag_Slope = 0;
-				Proposal_Speed = 5;
+				Speed_Proposal = 5;
 			}
 			Led_Set(LED_3,flag_Slope);
 			Led_Set(LED_4,flag_Wall);
+			
+			LCD_ON();//x, y,*string
+			LCD_string(0, 0, strA);
+			itoa((int32_t)run_mode,LCD_BUFF1);
+			LCD_string(5, 0, LCD_BUFF1);
+			LCD_string(7, 0, "AEB             ");
+			LCD_string(0, 1, "US:             ");
+			itoa((int32_t)USval,LCD_BUFF2);
+			LCD_string(3, 1, LCD_BUFF2);
+			LCD_string(8, 1, "IR:             ");
+			itoa((int32_t)IRval,LCD_BUFF3);
+			LCD_string(11, 1, LCD_BUFF3);
 		}
 		
 		else if(run_mode == 3){
 			Led_Set(3,flag);
 		/*##################  UART Print  #####################*/
+			USval = US_Get();
 			UART_print(" US : ");
 			itoa((int32_t)USval, string_temp);//US_Get()//sprintf(string_temp, "%d", ENC_Rate1_Return());
 			UART_print(string_temp);
@@ -163,6 +198,18 @@ void DoMainLoop(){
 			UART_print(",  IR : ");
 			itoa((int32_t)IRval, string_temp);
 			UART_print(string_temp);
+			
+			LCD_ON();//x, y,*string
+			LCD_string(0, 0, strA);
+			itoa((int32_t)run_mode,LCD_BUFF1);
+			LCD_string(5, 0, LCD_BUFF1);
+			LCD_string(7, 0, "SensorTest   ");
+			LCD_string(0, 1, "US:             ");
+			itoa((int32_t)USval,LCD_BUFF2);
+			LCD_string(3, 1, LCD_BUFF2);
+			LCD_string(8, 1, "IR:             ");
+			itoa((int32_t)IRval,LCD_BUFF3);
+			LCD_string(11, 1, LCD_BUFF3);
 		}
 		
 		else if(run_mode == 4){
@@ -181,6 +228,18 @@ void DoMainLoop(){
 			UART_print("  SPD2 : ");//string_temp);
 			itoa((int32_t)MOTOR_Current_Speed_L(), string_temp);
 			UART_print(string_temp);
+			
+			LCD_ON();//x, y,*string
+			LCD_string(0, 0, strA);
+			itoa((int32_t)run_mode,LCD_BUFF1);
+			LCD_string(5, 0, LCD_BUFF1);
+			LCD_string(7, 0, "Speed            ");
+			LCD_string(0, 1, "SR:              ");
+			itoa((int32_t)MOTOR_Current_Speed_R(),LCD_BUFF2);
+			LCD_string(3, 1, LCD_BUFF2);
+			LCD_string(8, 1, "SL:              ");
+			itoa((int32_t)MOTOR_Current_Speed_L(),LCD_BUFF3);
+			LCD_string(11, 1, LCD_BUFF3);
 		}
 		
 		UART_println(" ");//Newline
@@ -225,9 +284,9 @@ void AEB(){				//0    10   20   30   40   50   60
 	uint16_t IR_POINT[] ={500, 500, 500, 420, 330, 250, 210};//ADC value data for 10-50cm
 	int16_t ReverseSpeed = -2047;
 	int16_t AEB_Distance = 30;
-	uint16_t IR_val = ADC_Get(IR_PIN);
+	IRval = ADC_Get(IR_PIN);
 	if(flag_US){
-		if( IR_val > IR_POINT[4] ){//a2d(6) = PD1, NEED CONFIRM!
+		if( IRval > IR_POINT[4] ){//a2d(6) = PD1, NEED CONFIRM!
 			//Stop the car.
 			MOTOR_DC_R(ReverseSpeed);
 			MOTOR_DC_L(ReverseSpeed);
