@@ -49,7 +49,7 @@ void CAM_SI_ON(void);
 #define START_PIXEL	10 			/*start pixel to find max and min luminosity */  
 #define END_PIXEL 	115		//118 /* end pixel to find max and min luminosity */  
 #define EDGE_RATIO 	8//6			//0.166666 /* 기울기,이거보다 급해야 확인, 얕으면 conti// ratio of difference between two successive pixels luminosity to max difference of 128 pixel, which determine that two points are along edge or not*/
-#define TOTAL_EDGE_RATIO 1//비트이동1=2//0.5	/* 최대비, 절반보다 어두움 ratio of difference between pixels luminosity to max difference of 128 pixel, which determine that two points are along edge or not*/
+#define TOTAL_EDGE_RATIO 2	/* 최대비, 절반보다 어두움 ratio of difference between pixels luminosity to max difference of 128 pixel, which determine that two points are along edge or not*/
 #define LANE_RATIO 	4			//0.05 /* 어두운상태에서 밝기진폭 전체 5% 이하 ratio of difference between two successive pixels luminosity to max difference of 128 pixel, which determine that two points are along lane or not*/
 #define CAM_MAX_LANE_NUM 3		/*number of lane valid per one camera*/
 #define LANE_WIDTH_PIXEL 3 //LANE_WIDTH in PIXEL
