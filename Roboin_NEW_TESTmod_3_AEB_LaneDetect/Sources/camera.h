@@ -54,6 +54,8 @@ void CAM_SI_ON(void);
 #define CAM_MAX_LANE_NUM 3		/*number of lane valid per one camera*/
 #define LANE_WIDTH_PIXEL 3 //LANE_WIDTH in PIXEL
 #define THICK_LANE_WIDTH_PIXEL 14 // Thick LANE_WIDTH in PIXEL
+#define K_CAMCAM_DISTANCE 15 // proportional constant for gap between camera1 and 2 in pixel
+#define CROSS_SCHOOL_RATIO 3 // ratio between gap which determine cross and total view range 
 
 /*data out function*/
 int16_t cam1LanePositionReturn ( int8_t laneNum );

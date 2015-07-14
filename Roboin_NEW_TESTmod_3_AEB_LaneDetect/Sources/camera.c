@@ -690,17 +690,15 @@ void laneStatusUpdate( void )
 		crossSectionFlag = 1;
 		GPIO_Set( LED_2, 0);
 	}
-	else if ( cam1LaneNum + cam2LaneNum  < 2 ) ;//errorFlag = 1; //GPIO_Set( LED_4, 0 ); //경우의 수 밖!!! 1개여도 따라가면 그만.
+	else if ( cam1LaneNum + cam2LaneNum  < 2 ); //errorFlag = 1; //GPIO_Set( LED_4, 0 );  1개여도 따라가면 그만.
 	else if ( (cam1LaneNum == 1) && (cam2LaneNum == 1) ) ;//GPIO_Set( LED_1, 0 );//정상적 lane
-	else if ( !schoolZoneFlag && !crossSectionFlag ) // 두꺼운거 잡혔을 때는 라인 여러개 생각해야 하므로
+	else if ( !schoolZoneFlag && !crossSectionFlag && (cam1LaneNum > 2 || cam2LaneNum > 2) // 일반 도로인데 3개 이상 감지
+			|| (cam1LaneNum == 0 && cam2LaneNum == 3 ) || (cam1LaneNum == 3 && cam2LaneNum == 0)) // 스쿨존 등인데 3개 0개 감지
 	{
-		if ( cam1LaneNum > 2 || cam2LaneNum > 2 ) errorFlag = 1; //경우의 수 밖!!!
-		else if ( cam1LaneNum == 2 || cam2LaneNum == 2 ) 
-		{
-			cam1LanePosition[0] = cam1LanePosition[cam1LaneNum - 1];
-			cam2LanePosition[0] = cam2LanePosition[cam2LaneNum - 1];
-		}	 
+		errorFlag = 1; //경우의 수 밖!!!
+		cam2LanePosition[0] = cam2LanePosition[cam2LaneNum - 1];
 	}
+	else if ( cam1LaneNum > 2 || cam2LaneNum > 2 ) cam2LanePosition[0] = cam2LanePosition[cam2LaneNum - 1];
 }
 
 int16_t cam1LanePositionReturn ( int8_t laneNum )
