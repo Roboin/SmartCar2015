@@ -20,7 +20,7 @@
 
 #define MOTOR_SWHEEL_MAX		(36)//(45)
 #define MOTOR_SWHEEL_MIN		(-36)//(-45)
-#define MOTOR_SWHEEL_OFFSET		(-3)
+#define MOTOR_SWHEEL_OFFSET		-5//(-3)
 
 #define MOTOR_ENGINE_MAX	(2047)
 #define MOTOR_ENGINE_MIN	(-2047)

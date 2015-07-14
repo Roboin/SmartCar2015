@@ -1,6 +1,0 @@
-p.37 camera test
-base timer 수정. 
-pit ch 0 주기를 320(10 micro) 로 바꿈, 10마이크로마다 BTMR_PIT0_ISR 불러옴.
-또한 BTMR_PIT0_ISR 에 camera run 추가....
-
-==================================

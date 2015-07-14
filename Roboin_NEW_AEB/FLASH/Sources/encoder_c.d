@@ -14,4 +14,5 @@ Sources/encoder_c.obj: C:\Freescale\workspace\Roboin_NEW_AEB\Sources\encoder.c \
 	C:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\cstdint \
 	C:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\limits_api.h \
 	C:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\ewl_lib_ext1.h \
-	C:\Freescale\workspace\Roboin_NEW_AEB\Sources\gpio.h 
+	C:\Freescale\workspace\Roboin_NEW_AEB\Sources\gpio.h \
+	C:\Freescale\workspace\Roboin_NEW_AEB\Sources\motor.h 
