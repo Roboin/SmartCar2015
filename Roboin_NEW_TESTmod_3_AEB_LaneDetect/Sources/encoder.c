@@ -104,7 +104,7 @@ void ENC_SPEED_PIT5_ISR(void){
 	PIT.CH[5].TFLG.R = 0x00000001;
 }
 
-void Speed_Propsal_Update(int16_t proposal_speed, int16_t select, int16_t k_in){
+void Speed_Propsal_Update(int16_t proposal_speed, int16_t select, int16_t k_in){ /* speed(cm/s) select는 왼쪽 오른쪽 모터 비례상수 선택, k_in은 비례상수 그러나 지금은 다 무시됨*/
 	Speed_Proposal = proposal_speed;
 	//kp = kp_in;
 	if(select == 1)
@@ -129,9 +129,9 @@ void Speed_Control(){
 	int32_t error_R = Speed_Proposal - Speed_R;
 	int32_t error_L = Speed_Proposal - Speed_L;
 	
-	kpR = 10;
-	kpL = 10;
-	ki = 1;
+	kpR = 10;//10;//4
+	kpL = 10;//10;//4
+	ki = 3;//1;//3
 	
 	cont_val_P_R = error_R*kpR;//(error_R<<10)/kp;
 	cont_val_P_L = error_L*kpL;//(error_L<<10)/kp;

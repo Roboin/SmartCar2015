@@ -20,24 +20,38 @@ void MOTOR_Init(void)
 //- RC Servo Control with angle
 void MOTOR_Servo(int16_t angle)
 {
-	angle += MOTOR_SWHEEL_OFFSET;
-	if (angle < MOTOR_SWHEEL_MIN)
-		angle = MOTOR_SWHEEL_MIN;
+	angle += MOTOR_SERVO_OFFSET;
+	if (angle < MOTOR_SERVO_MIN)
+		angle = MOTOR_SERVO_MIN;
 	
-	if (angle > MOTOR_SWHEEL_MAX)
-		angle = MOTOR_SWHEEL_MAX;
+	if (angle > MOTOR_SERVO_MAX)
+		angle = MOTOR_SERVO_MAX;
 
-	EMIOS_0.CH[1].CADR.R = (uint32_t)((angle<<5) + MOTOR_SWHEEL_RAW_MID);
+	EMIOS_0.CH[1].CADR.R = (uint32_t)((angle<<5) + MOTOR_SERVO_RAW_MID);
+//	EMIOS_0.CH[1].CADR.R = (angle*(MCTL_SWHEEL_RAW_MAX-MCTL_SWHEEL_RAW_MID)/MCTL_SWHEEL_MAX)+MCTL_SWHEEL_RAW_MID;
+}
+
+void MOTOR_Servo_withPWM(int32_t pulsewidth)//input -3200~+3200
+{
+	pulsewidth += MOTOR_SERVO_RAW_MID;
+	pulsewidth += MOTOR_SERVO_RAW_OFFSET;
+	if (pulsewidth < MOTOR_SERVO_RAW_MIN)
+		pulsewidth = MOTOR_SERVO_RAW_MIN;
+	
+	if (pulsewidth > MOTOR_SERVO_RAW_MAX)
+		pulsewidth = MOTOR_SERVO_RAW_MAX;
+
+	EMIOS_0.CH[1].CADR.R = pulsewidth;
 //	EMIOS_0.CH[1].CADR.R = (angle*(MCTL_SWHEEL_RAW_MAX-MCTL_SWHEEL_RAW_MID)/MCTL_SWHEEL_MAX)+MCTL_SWHEEL_RAW_MID;
 }
 
 //DC Motor Cotrol, Speed 0~2047
 void MOTOR_DC_R(int16_t speed)
 {
-	if (speed > MOTOR_ENGINE_MAX)
-		speed = MOTOR_ENGINE_MAX;//2047
-	if (speed < MOTOR_ENGINE_MIN)
-		speed = MOTOR_ENGINE_MIN;//-2047
+	if (speed > MOTOR_DC_MAX)
+		speed = MOTOR_DC_MAX;//2047
+	if (speed < MOTOR_DC_MIN)
+		speed = MOTOR_DC_MIN;//-2047
 	
 	if(speed > 0){
 		GPIO_Set(H_A_IN2, 0);//HA IN2
@@ -51,10 +65,10 @@ void MOTOR_DC_R(int16_t speed)
 
 void MOTOR_DC_L(int16_t speed)
 {
-	if (speed > MOTOR_ENGINE_MAX)
-		speed = MOTOR_ENGINE_MAX;//2047
-	if (speed < MOTOR_ENGINE_MIN)
-		speed = MOTOR_ENGINE_MIN;//-2047
+	if (speed > MOTOR_DC_MAX)
+		speed = MOTOR_DC_MAX;//2047
+	if (speed < MOTOR_DC_MIN)
+		speed = MOTOR_DC_MIN;//-2047
 	
 	if(speed > 0){
 		GPIO_Set(H_B_IN2, 0);//HB IN2

@@ -58,9 +58,12 @@ void CAM_SI_ON(void);
 /*data out function*/
 int16_t cam1LanePositionReturn ( int8_t laneNum );
 int16_t cam2LanePositionReturn ( int8_t laneNum );
+int8_t cam1LaneNumReturn (void);
+int8_t cam2LaneNumReturn ( void );
 int8_t ifSchoolZone ( void );
 int8_t ifCrossSection (void);
 int8_t ifLaneProcessEnd ( void );
+int8_t ifError ( void ); // up when some occasion out of our thinking happens
 
 /* line detecting function */
 void laneProcess( void );

@@ -53,7 +53,7 @@ void DoMainLoop(void);
 //void Speed_Control(int16_t proposal_speed);
 void AEB(void);
 void Button_Select_RunMode(void);
-void Servo_Control(void);
+void Servo_Control(int16_t* current_servo_angle_pt);//void);
 
 /**********************  Variables, Parameters *************************/
 char string_temp[256] = " ";//"abcd1234";
@@ -67,7 +67,7 @@ uint32_t USval = 1500;
 uint32_t IRval = 1;
 
 //SPEED
-int16_t Speed_Proposal_inMain = 0;
+int16_t Speed_Proposal_inMain = 300;
 int16_t k_test = 0;
 
 //LCD		   0123456789012345
@@ -98,13 +98,14 @@ void init_peripherals(void){
 }
 /*********************  DoMainLoop ************************/
 void DoMainLoop(){
+	int16_t current_servo_angle = -1;
 	
 	//Select Mode with Tact switch button
 	Button_Select_RunMode();
 	
 	//AEB();
 	
-	time_gap = 1000;//(ADC_Get(POT_1);
+	time_gap = 250;//(ADC_Get(POT_1);
 	t_current = TIMER_GetRuntime()/time_gap;
 	if (t_current != t_old) {
 		/*##################  Timer Count  #####################*/
@@ -140,14 +141,47 @@ void DoMainLoop(){
 			//UART_println(" CAM datum");
 			
 			laneProcess();
-			/*UART_print("  LANE1 : ");//string_temp);
+			Servo_Control(&current_servo_angle);
+			MOTOR_Servo(current_servo_angle);
+			
+			LCD_ON();//x, y,*string
+			LCD_string(0, 0, "CSA:              ");
+			itoa((int32_t)current_servo_angle,LCD_BUFF2);
+			LCD_string(4, 0, LCD_BUFF2);
+						
+			LCD_string(0, 1, "1:              ");
+			itoa((int32_t)cam1LanePositionReturn(0),LCD_BUFF2);
+			LCD_string(2, 1, LCD_BUFF2);
+			/*itoa((int32_t)cam1LanePositionReturn(1),LCD_BUFF2);
+			LCD_string(6, 0, LCD_BUFF2);
+			itoa((int32_t)cam1LanePositionReturn(2),LCD_BUFF2);
+			LCD_string(10, 0, LCD_BUFF2);*/
+			
+			LCD_string(8, 1, "2:              ");
+			itoa((int32_t)cam2LanePositionReturn(0),LCD_BUFF3);
+			LCD_string(10, 1, LCD_BUFF3);
+			/*itoa((int32_t)cam2LanePositionReturn(1),LCD_BUFF3);
+			LCD_string(6, 1, LCD_BUFF3);
+			itoa((int32_t)cam2LanePositionReturn(2),LCD_BUFF4);
+			LCD_string(10, 1, LCD_BUFF4);*/
+			
+			
+			UART_print("  LANE1 : ");//string_temp);
 			itoa((int32_t)cam1LanePositionReturn(0), string_temp);
 			UART_print(string_temp);
 			UART_print(",  LANE2 : ");//string_temp);
 			itoa((int32_t)cam2LanePositionReturn(0), string_temp);
 			UART_println(string_temp);
-			*/
-			UART_println("");
+			
+			
+			
+			itoa((int32_t)current_servo_angle, string_temp);
+			UART_println(string_temp);
+			
+			//MOTOR_Servo( current_servo_angle );
+			
+			/*
+			 * UART_println("");
 			UART_println("cam1 lane");
 			itoa((int32_t)cam1LanePositionReturn(0),LCD_BUFF2);
 			UART_print(LCD_BUFF2); UART_print(" ");
@@ -168,31 +202,7 @@ void DoMainLoop(){
 			UART_println("");
 			
 			UART_println("");
-			UART_println("------------------------------------------------------");
-
-			LCD_ON();//x, y,*string
-			//LCD_string(0, 0, strA);
-			//itoa((int32_t)run_mode,LCD_BUFF1);
-			//LCD_string(5, 0, LCD_BUFF1);
-			//LCD_string(7, 0, "CAM Lane        ");
-			LCD_string(0, 0, "1:              ");
-			itoa((int32_t)cam1LanePositionReturn(0),LCD_BUFF2);
-			LCD_string(2, 0, LCD_BUFF2);
-			itoa((int32_t)cam1LanePositionReturn(1),LCD_BUFF2);
-			LCD_string(6, 0, LCD_BUFF2);
-			itoa((int32_t)cam1LanePositionReturn(2),LCD_BUFF2);
-			LCD_string(10, 0, LCD_BUFF2);
-			
-			LCD_string(0, 1, "2:              ");
-			itoa((int32_t)cam2LanePositionReturn(0),LCD_BUFF3);
-			LCD_string(2, 1, LCD_BUFF3);
-			itoa((int32_t)cam2LanePositionReturn(1),LCD_BUFF3);
-			LCD_string(6, 1, LCD_BUFF3);
-			itoa((int32_t)cam2LanePositionReturn(2),LCD_BUFF4);
-			LCD_string(10, 1, LCD_BUFF4);
-			
-			Servo_Control();
-							
+			UART_println("------------------------------------------------------");				
 		}
 			
 		else if(run_mode == 2){	
@@ -394,22 +404,25 @@ void Button_Select_RunMode(void){
 }
 
 
-void Servo_Control(void){/*cam1LanePositionReturn(), cam1LanePositionReturn(), flag*/
+void Servo_Control( int16_t* current_servo_angle_pt  ){/*cam1LanePositionReturn(), cam1LanePositionReturn(), flag*/
 	int16_t ServoAngle = 0;
-	int16_t Ldatum = 43;//30; 정상 상태 왼쪽 선 위치
-	int16_t Rdatum = 74;//100; 정상 상태 오른쪽 선 위치
+	int32_t ServoPulse = 0;
+	int16_t Ldatum = 71;//43;//30; 정상 상태 왼쪽 선 위치
+	int16_t Rdatum = 91;//74;//100; 정상 상태 오른쪽 선 위치
 	int16_t datumline = (Ldatum+Rdatum)/2; 
-	int16_t kpServo=1;
-	int16_t kpServo_speed_and_servoWheelRatio=10;
+	int16_t kpServo=10;//000;
+	int16_t kpServo_speed_and_servoWheelRatio = 10;
 	int16_t RCurrent = 0;
 	int16_t LCurrent = 0;
 	int16_t currentLine = 0;
+	int16_t error_center = 0;
 	char temptStr[8] = " ";
 	
 	/*atan 모드*/
 	
-	if( (ifSchoolZone==0) && (ifCrossSection==0) )
-	{/*정상경우*/
+	if( (ifSchoolZone()==0) && (ifCrossSection()==0)
+	/*두꺼운거 잡혔는데 1개만 잡힌경우*/ || (cam1LanePositionReturn(0) == -1 || cam2LanePositionReturn(0) == -1) && (cam1LanePositionReturn(0) == -1 || cam2LanePositionReturn(0) == -1) )
+	{//정상경우
 		RCurrent = cam1LanePositionReturn(0);
 		LCurrent = cam2LanePositionReturn(0);
 		
@@ -427,38 +440,41 @@ void Servo_Control(void){/*cam1LanePositionReturn(), cam1LanePositionReturn(), f
 		}
 
 		ServoAngle = kpServo_speed_and_servoWheelRatio * (Speed_Proposal_inMain * Speed_Proposal_inMain ) * ( 312 / 10000 * ((datumline - currentLine)* kpServo )*((datumline - currentLine)* kpServo ) + 4321 / 10000 * ((datumline - currentLine)* kpServo ));
-		itoa( ServoAngle * 1000, temptStr );
+		
+		error_center = (datumline - currentLine);
+		
+		
+		kpServo=2;
+		//atan 모드
+		//ServoAngle = kpServo_speed_and_servoWheelRatio * (Speed_Proposal_inMain * Speed_Proposal_inMain ) * ( 312 / 10000 * (error_center* kpServo )*(error_center* kpServo ) + 4321 / 10000 * (error_center* kpServo ));
+		
+		//정비례 모드
+		ServoAngle = error_center/kpServo;//(Speed_Proposal_inMain * Speed_Proposal_inMain )*error_center/kpServo;//*kpServo;
+		
+		ServoPulse = kpServo_speed_and_servoWheelRatio * (Speed_Proposal_inMain * Speed_Proposal_inMain ) * ( 312 / 10000 * (error_center* kpServo )*(error_center* kpServo ) + 4321 / 10000 * (error_center* kpServo ));
+		//itoa( ServoAngle * 1000, temptStr );
+		itoa( ServoPulse * 1000, temptStr );
 		UART_print(temptStr);
 	}
-//	 정 비례모드
-//	if( (ifSchoolZone==0) && (ifCrossSection==0) ){/*정상경우*/
-//		RCurrent = cam1LanePositionReturn(0);
-//		LCurrent = cam2LanePositionReturn(0);
-//		
-//		if ( RCurrent == -1 ) //&& LCurrent != -1
-//	{
-//		currentLine = LCurrent / 2;
-//	}
-//	else if ( LCurrent == -1 ) //&& RCurrent != -1
-//	{
-//		currentLine = (RCurrent + NUM_OF_PIXEL) / 2;
-//	}
-//	else
-//	{
-//		currentLine = (LCurrent+RCurrent) / 2;
-//	}
-
-//		ServoAngle = (Speed_Proposal_inMain * Speed_Proposal_inMain )*(datumline - currentLine)*kpServo;
-//	}
-	
-	else if( ifCrossSection() )
-	{
-		ServoAngle = 0;
+	if( ifCrossSection() && ifSchoolZone() ) //두꺼운거 잡힌 경우
+	{	
+		// 근데 2개 이상 인식된 경우 
+		{
+			ServoAngle = 0;
+		}
 	}
-	else if(ifSchoolZone())
+	if( ifSchoolZone() )
 	{
 		ServoAngle = 0;//?
 	}
+	*current_servo_angle_pt = ServoAngle;
+	//MOTOR_Servo(ServoAngle);
+}
+
+void cameraSpeedControl ( int8_t schoolZoneFlag, int8_t crossSectionFlag ) /*camera서 오는 값으로 속도 조절*/
+{
+	if ( schoolZoneFlag && crossSectionFlag ) Speed_Propsal_Update(20,0,0);
+	else 
 }
 
 /*

@@ -78,10 +78,10 @@ void MOTOR_BrakeEngine(void)
 int32_t current_speed_r = 1;
 int32_t current_speed_l = 1;
 int32_t MOTOR_Current_Speed_R(void){// cm/s = enc_rate*1000/40/11 = enc_rate*2.273 = enc_rate * (2048+256+16+8)/1024
-	current_speed_r = ((ENC_Rate1_Return()<<11)+(ENC_Rate1_Return()<<8)+(ENC_Rate1_Return()<<4)+(ENC_Rate1_Return()<<3))>>10;//ENC_Rate1_Return()*2.273
+	current_speed_r = (ENC_Rate1_Return()<<10)/pit5cycle/Pulse_Per_CM;//((ENC_Rate1_Return()<<11)+(ENC_Rate1_Return()<<8)+(ENC_Rate1_Return()<<4)+(ENC_Rate1_Return()<<3))>>10;//ENC_Rate1_Return()*2.273
 	return current_speed_r;
 }
 int32_t MOTOR_Current_Speed_L(void){
-	current_speed_l = ((ENC_Rate2_Return()<<11)+(ENC_Rate2_Return()<<8)+(ENC_Rate2_Return()<<4)+(ENC_Rate2_Return()<<3))>>10;
+	current_speed_l = (ENC_Rate2_Return()<<10)/pit5cycle/Pulse_Per_CM;//((ENC_Rate2_Return()<<11)+(ENC_Rate2_Return()<<8)+(ENC_Rate2_Return()<<4)+(ENC_Rate2_Return()<<3))>>10;
 	return current_speed_l;
 }
