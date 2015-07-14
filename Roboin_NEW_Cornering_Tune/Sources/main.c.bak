@@ -55,8 +55,6 @@ void AEB(void);
 void Button_Select_RunMode(void);
 void Servo_Control(int16_t* current_servo_angle_pt);//void);
 
-void cameraSpeedControl ( int8_t schoolZoneFlag, int8_t crossSectionFlag);
-
 /**********************  Variables, Parameters *************************/
 char string_temp[256] = " ";//"abcd1234";
 
