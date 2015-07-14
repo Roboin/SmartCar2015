@@ -71,4 +71,6 @@ int8_t ifError ( void ); // up when some occasion out of our thinking happens
 void laneProcess( void );
 void laneStatusUpdate( void );
 
+void laneProcess2( void );
+
 #endif /* CAMERA_H_ */

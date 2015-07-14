@@ -80,6 +80,8 @@ char LCD_BUFF2[8] = "";
 char LCD_BUFF3[8] = "";
 char LCD_BUFF4[8] = "";
 
+int16_t kServo_for_LCD = -1;
+
 /*##### Flags ##########################*/
 uint8_t flag = 1;
 uint8_t flag_US = 0;
@@ -107,6 +109,10 @@ void DoMainLoop(){
 	
 	//AEB();
 	
+	laneProcess();
+	Servo_Control(&current_servo_angle);
+	MOTOR_Servo(current_servo_angle);
+	
 	time_gap = 250;//(ADC_Get(POT_1);
 	t_current = TIMER_GetRuntime()/time_gap;
 	if (t_current != t_old) {
@@ -123,7 +129,8 @@ void DoMainLoop(){
 		// Is it working?? LED	############################
 		if(run_mode == 0){
 			Led_Set(1,flag);
-			Speed_Propsal_Update(Speed_Proposal_inMain,1,k_test);
+			Speed_Proposal_inMain = 0;
+			Speed_Propsal_Update(Speed_Proposal_inMain,0,k_test);
 			itoa((int32_t)cnt, string_temp);
 			UART_print(string_temp);
 			
@@ -140,48 +147,37 @@ void DoMainLoop(){
 		/*##################  Lane Detecting test #####################*/
 		else if(run_mode == 1){
 			Led_Set(1,flag);
-			//UART_println(" CAM datum");
-			
-			laneProcess();
-			Servo_Control(&current_servo_angle);
-			MOTOR_Servo(current_servo_angle);
+			Speed_Proposal_inMain = 25;
+			Speed_Propsal_Update(Speed_Proposal_inMain,0,k_test);
+//			laneProcess();
+//			Servo_Control(&current_servo_angle);
+//			MOTOR_Servo(current_servo_angle);
 			
 			LCD_ON();//x, y,*string
-			LCD_string(0, 0, "CSA:              ");
+			LCD_string(0, 0, "SP   CSA   kS      ");
+			itoa((int32_t)Speed_Proposal_inMain,LCD_BUFF2);
+			LCD_string(2, 0, LCD_BUFF2);
 			itoa((int32_t)current_servo_angle,LCD_BUFF2);
-			LCD_string(4, 0, LCD_BUFF2);
+			LCD_string(8, 0, LCD_BUFF2);
+			itoa((int32_t)kServo_for_LCD,LCD_BUFF2);
+			LCD_string(13, 0, LCD_BUFF2);
 						
 			LCD_string(0, 1, "1:              ");
 			itoa((int32_t)cam1LanePositionReturn(0),LCD_BUFF2);
 			LCD_string(2, 1, LCD_BUFF2);
-			/*itoa((int32_t)cam1LanePositionReturn(1),LCD_BUFF2);
-			LCD_string(6, 0, LCD_BUFF2);
-			itoa((int32_t)cam1LanePositionReturn(2),LCD_BUFF2);
-			LCD_string(10, 0, LCD_BUFF2);*/
+			itoa((int32_t)cam1LanePositionReturn(1),LCD_BUFF2);
+			LCD_string(5, 1, LCD_BUFF2);
+			//itoa((int32_t)cam1LanePositionReturn(2),LCD_BUFF2);
+			//LCD_string(10, 0, LCD_BUFF2);
 			
 			LCD_string(8, 1, "2:              ");
 			itoa((int32_t)cam2LanePositionReturn(0),LCD_BUFF3);
 			LCD_string(10, 1, LCD_BUFF3);
-			/*itoa((int32_t)cam2LanePositionReturn(1),LCD_BUFF3);
-			LCD_string(6, 1, LCD_BUFF3);
-			itoa((int32_t)cam2LanePositionReturn(2),LCD_BUFF4);
-			LCD_string(10, 1, LCD_BUFF4);*/
+			itoa((int32_t)cam2LanePositionReturn(1),LCD_BUFF3);
+			LCD_string(13, 1, LCD_BUFF3);
+			//itoa((int32_t)cam2LanePositionReturn(2),LCD_BUFF4);
+			//LCD_string(10, 1, LCD_BUFF4);
 			
-			
-			UART_print("  LANE1 : ");//string_temp);
-			itoa((int32_t)cam1LanePositionReturn(0), string_temp);
-			UART_print(string_temp);
-			UART_print(",  LANE2 : ");//string_temp);
-			itoa((int32_t)cam2LanePositionReturn(0), string_temp);
-			UART_println(string_temp);
-			
-			
-			
-			itoa((int32_t)current_servo_angle, string_temp);
-			UART_println(string_temp);
-			
-			//MOTOR_Servo( current_servo_angle );
-			/*
 			UART_println("");
 			UART_println("cam1 lane");
 			itoa((int32_t)cam1LanePositionReturn(0),LCD_BUFF2);
@@ -201,113 +197,44 @@ void DoMainLoop(){
 			itoa((int32_t)cam2LanePositionReturn(2),LCD_BUFF2);
 			UART_print(LCD_BUFF2); UART_print(" ");
 			UART_println("");
-			*/
+			
 			UART_println("");
 			UART_println("------------------------------------------------------");				
 		}
 			
 		else if(run_mode == 2){	
 			Led_Set(2,flag);
-			/*##################  KPR  #####################*/
-			/*P control TEST*/
-			MOTOR_Servo(0);
-			k_test = (int16_t)ADC_Get(POT_1)/50;
-			Speed_Propsal_Update(Speed_Proposal_inMain,1,k_test);
+			Speed_Proposal_inMain = 100;
+			Speed_Propsal_Update(Speed_Proposal_inMain,0,k_test);
+//			laneProcess();
+//			Servo_Control(&current_servo_angle);
+//			MOTOR_Servo(current_servo_angle);
 			
 			LCD_ON();//x, y,*string
-			LCD_string(0, 0, "SP:            ");
-			itoa((int32_t)Speed_Proposal_inMain,LCD_BUFF1);
-			LCD_string(3, 0, LCD_BUFF1);
-			LCD_string(7, 0, "kpR:        ");
-			itoa((int32_t)k_test,LCD_BUFF2);
-			LCD_string(11, 0, LCD_BUFF2);
-			
-			LCD_string(0, 1, "SR:              ");
-			itoa((int32_t)MOTOR_Current_Speed_R(),LCD_BUFF2);
-			LCD_string(3, 1, LCD_BUFF2);
-			LCD_string(8, 1, "SL:              ");
-			itoa((int32_t)MOTOR_Current_Speed_L(),LCD_BUFF3);
-			LCD_string(11, 1, LCD_BUFF3);
-			
-		}
-		
-		else if(run_mode == 3){
-			int16_t s_angle = ADC_Get(POT_1)/14 - 37;
-			Led_Set(3,flag);
-		/*##################  KPL  #####################*/
-			/*P control TEST*/
-			//MOTOR_Servo(0);
-			/*k_test = (int16_t)ADC_Get(POT_1)/50;
-			Speed_Propsal_Update(Speed_Proposal_inMain,2,k_test);
-			
-			LCD_ON();//x, y,*string
-			LCD_string(0, 0, "SP:            ");
-			itoa((int32_t)Speed_Proposal_inMain,LCD_BUFF1);
-			LCD_string(3, 0, LCD_BUFF1);
-			LCD_string(7, 0, "kpL:        ");
-			itoa((int32_t)k_test,LCD_BUFF2);
-			LCD_string(11, 0, LCD_BUFF2);
-			
-			LCD_string(0, 1, "SR:              ");
-			itoa((int32_t)MOTOR_Current_Speed_R(),LCD_BUFF2);
-			LCD_string(3, 1, LCD_BUFF2);
-			LCD_string(8, 1, "SL:              ");
-			itoa((int32_t)MOTOR_Current_Speed_L(),LCD_BUFF3);
-			LCD_string(11, 1, LCD_BUFF3);*/
-			
-			Speed_Propsal_Update(0,0,k_test);
-			
-			MOTOR_Servo(s_angle);
-			
-			LCD_ON();//x, y,*string
-			LCD_string(0, 0, "Servo Tune:             ");
-			//itoa((int32_t)Speed_Proposal_inMain,LCD_BUFF1);
-			//LCD_string(3, 0, LCD_BUFF1);
-			//LCD_string(7, 0, "kp:        ");
-			//itoa((int32_t)k_test,LCD_BUFF2);
+			LCD_string(0, 0, "SP   CSA   kS      ");
+			itoa((int32_t)Speed_Proposal_inMain,LCD_BUFF2);
+			LCD_string(2, 0, LCD_BUFF2);
+			itoa((int32_t)current_servo_angle,LCD_BUFF2);
+			LCD_string(8, 0, LCD_BUFF2);
+			itoa((int32_t)kServo_for_LCD,LCD_BUFF2);
+			LCD_string(13, 0, LCD_BUFF2);
+						
+			LCD_string(0, 1, "1:              ");
+			itoa((int32_t)cam1LanePositionReturn(0),LCD_BUFF2);
+			LCD_string(2, 1, LCD_BUFF2);
+			itoa((int32_t)cam1LanePositionReturn(1),LCD_BUFF2);
+			LCD_string(5, 1, LCD_BUFF2);
+			//itoa((int32_t)cam1LanePositionReturn(2),LCD_BUFF2);
 			//LCD_string(10, 0, LCD_BUFF2);
 			
-			LCD_string(0, 1, "SA:              ");
-			itoa((int32_t)s_angle,LCD_BUFF2);
-			LCD_string(3, 1, LCD_BUFF2);
-		}
-		
-		else if(run_mode == 4){
-			Led_Set(4,flag);
-			//####################  KPI  ####################
-			/*P control TEST 300*/
-			MOTOR_Servo(0);
-			k_test = (int16_t)ADC_Get(POT_1)/50;
-			Speed_Propsal_Update(Speed_Proposal_inMain,3,k_test);
+			LCD_string(8, 1, "2:              ");
+			itoa((int32_t)cam2LanePositionReturn(0),LCD_BUFF3);
+			LCD_string(10, 1, LCD_BUFF3);
+			itoa((int32_t)cam2LanePositionReturn(1),LCD_BUFF3);
+			LCD_string(13, 1, LCD_BUFF3);
+			//itoa((int32_t)cam2LanePositionReturn(2),LCD_BUFF4);
+			//LCD_string(10, 1, LCD_BUFF4);
 			
-			LCD_ON();//x, y,*string
-			LCD_string(0, 0, "SP:            ");
-			itoa((int32_t)Speed_Proposal_inMain,LCD_BUFF1);
-			LCD_string(3, 0, LCD_BUFF1);
-			LCD_string(7, 0, "ki:        ");
-			itoa((int32_t)k_test,LCD_BUFF2);
-			LCD_string(10, 0, LCD_BUFF2);
-			
-			LCD_string(0, 1, "SR:              ");
-			itoa((int32_t)MOTOR_Current_Speed_R(),LCD_BUFF2);
-			LCD_string(3, 1, LCD_BUFF2);
-			LCD_string(8, 1, "SL:              ");
-			itoa((int32_t)MOTOR_Current_Speed_L(),LCD_BUFF3);
-			LCD_string(11, 1, LCD_BUFF3);
-						
-			UART_print("  ENC1 : ");
-			itoa((int32_t)ENC_Rate1_Return(), string_temp);
-			UART_print(string_temp);
-			UART_print("  ENC2 : ");
-			itoa((int32_t)ENC_Rate2_Return(), string_temp);
-			UART_print(string_temp);
-			//Speed Return test
-			UART_print("  SPD1 : ");//string_temp);
-			itoa((int32_t)MOTOR_Current_Speed_R(), string_temp);
-			UART_print(string_temp);
-			UART_print("  SPD2 : ");//string_temp);
-			itoa((int32_t)MOTOR_Current_Speed_L(), string_temp);
-			UART_print(string_temp);
 		}
 		
 		UART_println(" ");//Newline
@@ -404,13 +331,13 @@ void Button_Select_RunMode(void){
 	}
 }
 
-
 void Servo_Control( int16_t* current_servo_angle_pt  ){/*cam1LanePositionReturn(), cam1LanePositionReturn(), flag*/
 	int16_t ServoAngle = 0;
 	int32_t ServoPulse = 0;
 	int16_t Ldatum = 71;//43;//30; 정상 상태 왼쪽 선 위치
 	int16_t Rdatum = 91;//74;//100; 정상 상태 오른쪽 선 위치
-	int16_t datumline = (Ldatum+Rdatum)/2; 
+	int16_t datumline = (Ldatum+Rdatum)/2;
+	int16_t datumOffset = (Ldatum+Rdatum)/2 - (0+128)/2;
 	int16_t kpServo=10;//000;
 	int16_t kpServo_speed_and_servoWheelRatio = 10;
 	int16_t RCurrent = 0;
@@ -424,8 +351,7 @@ void Servo_Control( int16_t* current_servo_angle_pt  ){/*cam1LanePositionReturn(
 
 	if( ifCrossSection() && !ifSchoolZone() ) //두꺼운거 잡힌 경우
 	{	 
-		ServoAngle = 0;
-
+		ServoAngle = 0;		
 	}
 	
 	/* schoolZone flag만 올라가는 경우는 없다.*/
