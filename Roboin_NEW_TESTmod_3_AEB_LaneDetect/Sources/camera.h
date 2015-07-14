@@ -29,8 +29,8 @@ void CAM_Clock(void);//clock pulse
 void CAM_PulseWidth(int16_t PULSEWIDTH);//change camera clock, trig width
 
 #define NUM_OF_PIXEL 128
-int16_t CAM_MAX(void);//MAX Readed value
-int16_t CAM_MIN(void);//Min Readed value 
+//int16_t CAM_MAX(void);//MAX Readed value
+//int16_t CAM_MIN(void);//Min Readed value 
 //uint16_t CAM_AVG(void);//Calc mid data of max and min
 //uint16_t CAM_TRESHLOLD(void);//(int16_t pixelnum);
 
@@ -53,6 +53,7 @@ void CAM_SI_ON(void);
 #define LANE_RATIO 	4			//0.05 /* 어두운상태에서 밝기진폭 전체 5% 이하 ratio of difference between two successive pixels luminosity to max difference of 128 pixel, which determine that two points are along lane or not*/
 #define CAM_MAX_LANE_NUM 3		/*number of lane valid per one camera*/
 #define LANE_WIDTH_PIXEL 3 //LANE_WIDTH in PIXEL
+#define THICK_LANE_WIDTH_PIXEL 14 // Thick LANE_WIDTH in PIXEL
 
 /*data out function*/
 int16_t cam1LanePositionReturn ( int8_t laneNum );

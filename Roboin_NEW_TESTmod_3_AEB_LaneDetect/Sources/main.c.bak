@@ -50,33 +50,30 @@ void init_peripherals(void);
 
 void DoMainLoop(void);
 
-//void Speed_Control(int16_t proposal_speed);
+void Speed_Control(int16_t proposal_speed);
 void AEB(void);
 void Button_Select_RunMode(void);
-void Servo_Control(void);
 
 /**********************  Variables, Parameters *************************/
-//UART
+char string_temp[256] = " ";//"abcd1234";
+
 vuint32_t i = 0;
 vuint32_t t_current = 0, t_old = 0, cnt=0;
 vuint32_t time_gap = 500;
 
-//SENSOR
 uint32_t USval = 1500;
 uint32_t IRval = 1;
 
-//SPEED
-int16_t Speed_Proposal_inMain = 0;
-int16_t k_test = 0;
-
-//LCD		   0123456789012345
-char strA[] = "Mode:           ";
+int16_t DC_Power_R = 500;
+int16_t DC_Power_L = 500;
+int16_t Speed_Proposal = 5;
+			// 0123456789012345
+char strA[] = "Mode:            ";
 char strB[] = "TIME:           ";
-char string_temp[256] = " ";//"abcd1234";
-char LCD_BUFF1[8];
-char LCD_BUFF2[8];
-char LCD_BUFF3[8];
-char LCD_BUFF4[8];
+char LCD_BUFF1[8] = "";
+char LCD_BUFF2[8] = "";
+char LCD_BUFF3[8] = "";
+char LCD_BUFF4[8] = "";
 
 /*##### Flags ##########################*/
 uint8_t flag = 1;
@@ -101,8 +98,6 @@ void DoMainLoop(){
 	
 	//Select Mode with Tact switch button
 	Button_Select_RunMode();
-	
-	AEB();
 	
 	time_gap = 1000;//(ADC_Get(POT_1);
 	t_current = TIMER_GetRuntime()/time_gap;
@@ -133,31 +128,63 @@ void DoMainLoop(){
 			LCD_string(6, 1, LCD_BUFF2);
 		}
 		
-		/*##################  Speed test #####################*/
+		/*##################  Lane Detecting test #####################*/
 		else if(run_mode == 1){
 			Led_Set(1,flag);
-			Speed_Proposal_inMain = (int16_t)ADC_Get(POT_1)/3;
-			MOTOR_Servo(0);
-			//k_test = ADC_Get(POT_1);
-			Speed_Propsal_Update(Speed_Proposal_inMain,0,k_test);
+			//UART_println(" CAM datum");
 			
+			laneProcess();
+			/*UART_print("  LANE1 : ");//string_temp);
+			itoa((int32_t)cam1LanePositionReturn(0), string_temp);
+			UART_print(string_temp);
+			UART_print(",  LANE2 : ");//string_temp);
+			itoa((int32_t)cam2LanePositionReturn(0), string_temp);
+			UART_println(string_temp);
+			*/
+			UART_println("");
+			UART_println("cam1 lane");
+			itoa((int32_t)cam1LanePositionReturn(0),LCD_BUFF2);
+			UART_print(LCD_BUFF2); UART_print(" ");
+			itoa((int32_t)cam1LanePositionReturn(1),LCD_BUFF2);
+			UART_print(LCD_BUFF2); UART_print(" ");
+			itoa((int32_t)cam1LanePositionReturn(2),LCD_BUFF2);
+			UART_print(LCD_BUFF2); UART_print(" ");
+			UART_println("");
+			
+			UART_println("");
+			UART_println("cam2 lane");
+			itoa((int32_t)cam2LanePositionReturn(0),LCD_BUFF2);
+			UART_print(LCD_BUFF2); UART_print(" ");
+			itoa((int32_t)cam2LanePositionReturn(1),LCD_BUFF2);
+			UART_print(LCD_BUFF2); UART_print(" ");
+			itoa((int32_t)cam2LanePositionReturn(2),LCD_BUFF2);
+			UART_print(LCD_BUFF2); UART_print(" ");
+			UART_println("");
+			
+			UART_println("");
+			UART_println("------------------------------------------------------");
+
 			LCD_ON();//x, y,*string
-			LCD_string(0, 0, "SP:            ");
-			itoa((int32_t)Speed_Proposal_inMain,LCD_BUFF1);
-			LCD_string(3, 0, LCD_BUFF1);
-			LCD_string(6, 0, "US        ");
-			itoa((int32_t)US_Get(),LCD_BUFF2);
-			LCD_string(8, 0, LCD_BUFF2);
-			LCD_string(11, 0, "IR        ");
-			itoa((int32_t)IRval,LCD_BUFF2);
-			LCD_string(13, 0, LCD_BUFF2);
+			//LCD_string(0, 0, strA);
+			//itoa((int32_t)run_mode,LCD_BUFF1);
+			//LCD_string(5, 0, LCD_BUFF1);
+			//LCD_string(7, 0, "CAM Lane        ");
+			LCD_string(0, 0, "1:              ");
+			itoa((int32_t)cam1LanePositionReturn(0),LCD_BUFF2);
+			LCD_string(2, 0, LCD_BUFF2);
+			itoa((int32_t)cam1LanePositionReturn(1),LCD_BUFF2);
+			LCD_string(6, 0, LCD_BUFF2);
+			itoa((int32_t)cam1LanePositionReturn(2),LCD_BUFF2);
+			LCD_string(10, 0, LCD_BUFF2);
 			
-			LCD_string(0, 1, "SR:              ");
-			itoa((int32_t)MOTOR_Current_Speed_R(),LCD_BUFF2);
-			LCD_string(3, 1, LCD_BUFF2);
-			LCD_string(8, 1, "SL:              ");
-			itoa((int32_t)MOTOR_Current_Speed_L(),LCD_BUFF3);
-			LCD_string(11, 1, LCD_BUFF3);
+			LCD_string(0, 1, "2:              ");
+			itoa((int32_t)cam2LanePositionReturn(0),LCD_BUFF3);
+			LCD_string(2, 1, LCD_BUFF3);
+			itoa((int32_t)cam2LanePositionReturn(1),LCD_BUFF3);
+			LCD_string(6, 1, LCD_BUFF3);
+			itoa((int32_t)cam2LanePositionReturn(2),LCD_BUFF4);
+			LCD_string(10, 1, LCD_BUFF4);
+							
 		}
 			
 		else if(run_mode == 2){	
@@ -284,7 +311,7 @@ void main(void)
 
 /*#############  AEB ##### 그냥 DomainLoop 안에 놓지 말것, ADC 읽어오는 주기가 너무 빨라 멈춤.#################*/
 void AEB(){				//0    10   20   30   40   50   60
-	uint16_t IR_POINT[] ={500, 500, 500, 420, 330, 250, 210};//ADC value data for 10-50cm
+	uint16_t IR_POINT[] ={500, 500, 500, 420, 330, 250, 210};//ADC value datum for 10-50cm
 	int16_t ReverseSpeed = -2047;
 	int16_t AEB_Distance = 30;
 	IRval = ADC_Get(IR_PIN);
@@ -357,23 +384,30 @@ void Button_Select_RunMode(void){
 	}
 }
 
-int16_t ServoAngle = 0;
+
 void Servo_Control(void){/*cam1LanePositionReturn(), cam1LanePositionReturn(), flag*/
-	int16_t Ldatum = 43;//30; 
-	int16_t Rdatum = 74;//100; 
-	int16_t datumline = (Ldatum+Rdatum)/2;
-	int16_t kpServo=1;
+	int16_t rCurrent = 0;
+	int16_t lCurrent = 0;
+	int16_t Currentline = 0;
+	int16_t ServoAngle = 0;
+	int16_t lDatum = 43;//30; left lane location at normal status
+	int16_t rDatum = 74;//100; right lane location at normal status
+	int16_t datumLine = (lDatum+rDatum) / 2; 
+	int16_t kpServo=1; 
 	int16_t kpServo_speed=10;
-	kpServo = Speed_Proposal_inMain/kpServo_speed;
+	kpServo = Speed_Proposal_inMain / kpServo_speed;
+	
 	if( (ifSchoolZone==0) && (ifCrossSection==0) ){
-		int16_t RCurrent = cam1LanePositionReturn(0);
-		int16_t LCurrent = cam2LanePositionReturn(0);
-		int16_t Currentline = (LCurrent+RCurrent)/2;
-		ServoAngle = (datumline - Currentline)*kpServo;
+		rCurrent = cam1LanePositionReturn(0);
+		lCurrent = cam2LanePositionReturn(0);
+		Currentline = (lCurrent+rCurrent) / 2;
+		ServoAngle = (datumline - Currentline) * kpServo;
 	}
+	
 	else if(ifCrossSection()){
 		ServoAngle = 0;
 	}
+	
 	else if(ifSchoolZone()){
 		ServoAngle = 0;//?
 	}
