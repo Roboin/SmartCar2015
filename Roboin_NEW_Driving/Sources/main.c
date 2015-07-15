@@ -52,7 +52,7 @@ void DoMainLoop(void);
 
 void AEB(void);
 void Button_Select_RunMode(void);
-void Servo_Control(int16_t* current_servo_angle_pt);
+void Servo_Control(int16_t* current_servo_pulse_pt);//(int16_t* current_servo_angle_pt);
 
 void cameraSpeedControl ( void );
 
@@ -76,7 +76,8 @@ char LCD_BUFF3[8] = "";
 char LCD_BUFF4[8] = "";
 
 int16_t kServo_for_LCD = -1;
-
+int16_t current_servo_angle = -1;
+int16_t current_servo_pulse = -1;
 /*##### Flags ##########################*/
 uint8_t flag = 1;
 uint8_t flag_US = 0;
@@ -98,8 +99,7 @@ void init_peripherals(void){
 }
 /*********************  DoMainLoop ************************/
 void DoMainLoop(){
-	int16_t current_servo_angle = -1;
-	int16_t current_servo_pulse = -1;
+	
 	
 	//Select Mode with Tact switch button
 	Button_Select_RunMode();
@@ -109,6 +109,8 @@ void DoMainLoop(){
 	if(ifLaneProcessEnd()){//Servo Control
 		Servo_Control(&current_servo_angle);
 		MOTOR_Servo(current_servo_angle);
+		//Servo_Control(&current_servo_pulse);
+		//MOTOR_Servo_withPWM(current_servo_pulse);
 	}
 	
 	if(run_mode != 0)
@@ -145,11 +147,13 @@ void DoMainLoop(){
 			Speed_Propsal_Update(Speed_Proposal_inMain);
 			
 			LCD_ON();//x, y,*string
-			LCD_string(0, 0, "SP   KS          ");
+			LCD_string(0, 0, "SP   KS    A      ");
 			itoa((int32_t)Speed_Proposal_inMain,LCD_BUFF2);
 			LCD_string(2, 0, LCD_BUFF2);
 			itoa((int32_t)kServo_for_LCD,LCD_BUFF2);
 			LCD_string(8, 0, LCD_BUFF2);
+			itoa((int32_t)current_servo_angle,LCD_BUFF2);
+			LCD_string(13, 0, LCD_BUFF2);
 						
 			LCD_string(0, 1, "1:              ");
 			itoa((int32_t)cam1LanePositionReturn(0),LCD_BUFF2);
@@ -270,7 +274,7 @@ void AEB(){				//0    10   20   30   40   50   60
 
 	t_AEB_start = TIMER_GetRuntime();
 	
-	while(US_Get() < 800){//while
+	while(US_Get() < 800){
 		Speed_Propsal_Update(25);
 		Led_Set(3,1);
 		if(ADC_Get(IR_PIN) > (IR_POINT[4])){//is it wall?
@@ -287,8 +291,6 @@ void AEB(){				//0    10   20   30   40   50   60
 			MOTOR_DC_L(ReAccSpeed);
 		}
 		else{//slope, Re Acceleration
-			//GPIO_Set(H_EN,1);
-			//Speed_Propsal_Update(25);
 			Led_Set(4,0);
 			if(flag_Wall){
 				Speed_Propsal_Update(0);
@@ -302,7 +304,6 @@ void AEB(){				//0    10   20   30   40   50   60
 	}
 	//US_Get()>distance, slope end
 	if(!flag_AEB_End){
-		//GPIO_Set(H_EN,1);
 		Led_Set(3,0);
 		Led_Set(4,0);
 		Speed_Propsal_Update(Speed_Proposal_inMain);
@@ -341,64 +342,102 @@ void Button_Select_RunMode(void){
 }
 
 
-int32_t cont_val_I_Servo = 0;
 int32_t cont_val_P_Servo = 0;
+int16_t R_Old[3] = {85,85,85};
+int16_t L_Old[3] = {-85,-85,-85};//37;
 
-void Servo_Control( int16_t* current_servo_angle_pt  ){
+void Servo_Control( int16_t* current_servo_return  ){
 	int16_t ServoAngle = 0;
 	int32_t ServoPulse = 0;
-	int16_t Rdatum = 84;
-	int16_t Ldatum = 38;
-	int16_t datumline = (Ldatum+Rdatum)/2;
-	int16_t datumOffset = (Ldatum+Rdatum)/2 - (0+128)/2;
+	int16_t Rdatum = 85;//85;
+	int16_t Ldatum = -85;//40//37-128;//47;//38;
+	int16_t datumline = (Ldatum+Rdatum);
 	int16_t kpServo=10;
 	int16_t kpServo_speed_and_servoWheelRatio = 10;
 	int16_t RCurrent = 0;
 	int16_t LCurrent = 0;
+	int16_t i = 0;
+	
+	int16_t DistanceParameter = 0;
+	
 	int16_t currentLine = 0;
+	int16_t oldline = 0;
 	int16_t error_center = 0;
+	int16_t error_R = 0;
+	int16_t error_L = 0;
 	char temptStr[8] = " ";
 	
 	if( (ifSchoolZone()==0) && (ifCrossSection()==0) || (cam1LanePositionReturn(0) == -1 || cam2LanePositionReturn(0) == -1) && (cam1LanePositionReturn(0) == -1 || cam2LanePositionReturn(0) == -1) )
 	{
-		RCurrent = cam1LanePositionReturn(0);
-		LCurrent = cam2LanePositionReturn(0);
+		RCurrent = cam1LanePositionReturn(0); // 0-128
+		if(cam2LanePositionReturn(0) != -1 ){
+			LCurrent = cam2LanePositionReturn(0)-128;// -128~0
+		}
+		else{LCurrent = -1;}
 		
+		//error_R = RCurrent - R_Old;
+		//error_L = LCurrent - L_Old;
+		
+		for(i=2; i>0; i--){
+			R_Old[i] = R_Old[i-1]; 
+			L_Old[i] = L_Old[i-1];
+		}
+		
+		if ( (RCurrent != -1) && (LCurrent != -1) )//둘다잡힘
+		{
+			R_Old[0] = RCurrent;
+			L_Old[0] = LCurrent;
+		}
 		if ( RCurrent == -1 ) //&& LCurrent != -1
 		{
-			currentLine = (LCurrent +128)/2;
+			R_Old[0] = R_Old[1]*2 - R_Old[2];
+			RCurrent = R_Old[0]; 
+			//currentLine = (LCurrent + R_Old[0]);//128); //(Ldatum - LCurrent);// +128)/2;
 		}
 		if ( LCurrent == -1 ) //&& RCurrent != -1
 		{
-			currentLine = (RCurrent)/2;
+			L_Old[0] = L_Old[1]*2 - L_Old[2];
+			LCurrent = L_Old[0];
+			//currentLine = (RCurrent + L_Old[0]);//-128);//)/2;//(Rdatum - RCurrent);//)/2;
 		}
-		if ( (RCurrent != -1) && (LCurrent != -1) )//둘다잡힘
-		{
-			currentLine = (LCurrent+RCurrent) / 2;
-		}
+		//RCurrent = (R_Old[0]+R_Old[1]+R_Old[2])/3; 
+		//LCurrent = (L_Old[0]+L_Old[1]+L_Old[2])/3;
+		
+		currentLine = (LCurrent + RCurrent);
 
-		error_center = (datumline - currentLine);
-
+		//DistanceParameter = (LCurrent + 128 - RCurrent);
+		
 		kpServo = ADC_Get(POT_1);
 		kServo_for_LCD = kpServo;
 		
+		oldline = (R_Old[0] + L_Old[0]);
+		
+		error_center = (datumline - currentLine);
+		//error_center = (oldline - currentLine);
+		
+		//cont_val_P_Servo += kpServo*error_center*MOTOR_Current_Speed_R();
 		cont_val_P_Servo = kpServo*error_center*MOTOR_Current_Speed_R();
 		
-		ServoAngle = cont_val_P_Servo/500/100;
+		ServoAngle = cont_val_P_Servo/500/10;
+		//ServoAngle = cont_val_P_Servo*DistanceParameter/63/500/10;
+		ServoPulse = cont_val_P_Servo/100;
 	}
 	if( ifCrossSection() && ifSchoolZone() ) //두꺼운거 잡힌 경우
 	{	
 		// 근데 2개 이상 인식된 경우 
 		{
 			ServoAngle = 0;
+			ServoPulse = 0;
 		}
 	}
 	if( ifCrossSection() )
 	{
 		ServoAngle = 0;
+		ServoPulse = 0;
 	}
 	
-	*current_servo_angle_pt = ServoAngle;
+	*current_servo_return = ServoAngle;
+	//*current_servo_return = ServoPulse;
 }
 
 void cameraSpeedControl ( void )
