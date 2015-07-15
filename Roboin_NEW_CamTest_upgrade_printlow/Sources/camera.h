@@ -49,8 +49,8 @@ void CAM_SI_ON(void);
 #define START_PIXEL	5 			/*start pixel to find max and min luminosity */  
 #define END_PIXEL 	122		//118 /* end pixel to find max and min luminosity */  
 #define EDGE_RATIO 	8//6			//0.166666 /* 기울기,이거보다 급해야 확인, 얕으면 conti// ratio of difference between two successive pixels luminosity to max difference of 128 pixel, which determine that two points are along edge or not*/
-#define TOTAL_EDGE_RATIO 3	/* 최대비, 절반보다 어두움 ratio of difference between pixels luminosity to max difference of 128 pixel, which determine that two points are along edge or not*/
-#define LANE_RATIO 	9			//0.05 /* 어두운상태에서 밝기진폭 전체 5% 이하 ratio of difference between two successive pixels luminosity to max difference of 128 pixel, which determine that two points are along lane or not*/
+#define TOTAL_EDGE_RATIO 4	/* 최대비, 절반보다 어두움 ratio of difference between pixels luminosity to max difference of 128 pixel, which determine that two points are along edge or not*/
+#define LANE_RATIO 	10			//0.05 /* 어두운상태에서 밝기진폭 전체 5% 이하 ratio of difference between two successive pixels luminosity to max difference of 128 pixel, which determine that two points are along lane or not*/
 #define CAM_MAX_LANE_NUM 3		/*number of lane valid per one camera*/
 #define LANE_WIDTH_PIXEL 3 //LANE_WIDTH in PIXEL
 #define THICK_LANE_WIDTH_PIXEL 14 // Thick LANE_WIDTH in PIXEL
@@ -58,6 +58,8 @@ void CAM_SI_ON(void);
 #define CROSS_SCHOOL_RATIO 3 // ratio between gap which determine cross and total view range 
 #define DROP_CHECK_PATIENCE 1 // 몇 번이나 drop 판별시 노이즈 참는지
 #define DROP_VARIATION_RATIO 2 // drop 시 얼마나 노이즈 견디는지
+
+#define MASK_SIZE 5
 
 /*data out function*/
 int16_t cam1LanePositionReturn ( int8_t laneNum );
@@ -72,5 +74,10 @@ int8_t ifError ( void ); // up when some occasion out of our thinking happens
 /* line detecting function */
 void laneProcess( void );
 void laneStatusUpdate( void );
+
+/*filter*/
+int16_t  median( int16_t intArray[] );
+void quicksort( int16_t x , int16_t y, int16_t intArray[] );
+void swap( int16_t i, int16_t j, int16_t intArray[] );
 
 #endif /* CAMERA_H_ */

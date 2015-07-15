@@ -60,6 +60,7 @@ int16_t cam2LanePosition[CAM_MAX_LANE_NUM] = {};
 int16_t CAM_READ1_STORE[NUM_OF_PIXEL] = {}; // CAM_READ1 1대1로 받아오는 어레이
 int16_t CAM_READ2_STORE[NUM_OF_PIXEL] = {};
 
+int16_t medianMask[5];
 
 int8_t cam1LaneNum = 0;
 int8_t cam2LaneNum = 0;
@@ -326,13 +327,23 @@ void laneProcess( void )
 			//print for test
 			itoa(CAM_READ1_STORE[i], camOutTest1);
 			UART_print(camOutTest1); UART_print(", ");
+		}
+		
+		UART_println("filtered value");
+		
+		for ( i = 0; i < NUM_OF_PIXEL - (MASK_SIZE / 2); i ++)
+		{
+			CAM_READ1_STORE[i+2] = median( &CAM_READ1_STORE[i] );
 			
-								
-			if ( (i > (START_PIXEL - 1) ) && (i < (END_PIXEL + 1)) )
+			//print for test
+			itoa(CAM_READ1_STORE[i+2], camOutTest1);
+			UART_print(camOutTest1); UART_print(", ");
+		
+			if ( (i+2 > (START_PIXEL - 1) ) && (i+2 < (END_PIXEL + 1)) )
 			{
 				
-				if ( minPhoto > CAM_READ1_STORE[i] ) minPhoto = CAM_READ1_STORE[i];
-				if ( maxPhoto < CAM_READ1_STORE[i] ) maxPhoto = CAM_READ1_STORE[i];	
+				if ( minPhoto > CAM_READ1_STORE[i+2] ) minPhoto = CAM_READ1_STORE[i+2];
+				if ( maxPhoto < CAM_READ1_STORE[i+2] ) maxPhoto = CAM_READ1_STORE[i+2];	
 			}
 		}
 		
@@ -608,21 +619,31 @@ void laneProcess( void )
 		
 		/*camera 2 min max*/
 		for ( i = 0; i < NUM_OF_PIXEL; i++ ) //0-127 >>> 1-128
-			{
-				CAM_READ2_STORE[i] = CAM_READ2[i];
-				
-				//print for test
-				itoa(CAM_READ2_STORE[i], camOutTest1);
-				UART_print(camOutTest1); UART_print(", ");
-				
-									
-				if ( (i > (START_PIXEL - 1) ) && (i < (END_PIXEL + 1)) )
-				{
+		{
+			CAM_READ2_STORE[i] = CAM_READ2[i];
+			
+			//print for test
+			itoa(CAM_READ2_STORE[i], camOutTest1);
+			UART_print(camOutTest1); UART_print(", ");
+		}
+		
+		UART_println("filtered value");
 					
-					if ( minPhoto > CAM_READ2_STORE[i] ) minPhoto = CAM_READ2_STORE[i];
-					if ( maxPhoto < CAM_READ2_STORE[i] ) maxPhoto = CAM_READ2_STORE[i];	
-				}
+		for ( i = 0; i < NUM_OF_PIXEL - (MASK_SIZE / 2); i ++)
+		{
+			CAM_READ2_STORE[i+2] = median( &CAM_READ2_STORE[i] );
+			
+			//print for test
+			itoa(CAM_READ2_STORE[i+2], camOutTest1);
+			UART_print(camOutTest1); UART_print(", ");
+			
+			if ( (i > (START_PIXEL - 1) ) && (i < (END_PIXEL + 1)) )
+			{
+				
+				if ( minPhoto > CAM_READ2_STORE[i+2] ) minPhoto = CAM_READ2_STORE[i+2];
+				if ( maxPhoto < CAM_READ2_STORE[i+2] ) maxPhoto = CAM_READ2_STORE[i+2];	
 			}
+		}
 		
 		UART_println("");
 		
@@ -907,6 +928,51 @@ void laneProcess( void )
 	}	
 	return;
 }
+
+void swap( int16_t i, int16_t j, int16_t intArray[] )
+{
+	int16_t tempt;
+
+	tempt = intArray[i];
+	intArray[i] = intArray[j];
+	intArray[j] = tempt;
+}
+
+int16_t  median( int16_t intArray[] ) //중간값 출력
+{
+	int16_t i;
+	int16_t temptArr[MASK_SIZE];
+	
+	for( i =0; i < MASK_SIZE; i ++)
+	{
+		temptArr[i] = intArray[i];
+	}
+	quicksort( 0, MASK_SIZE - 1, temptArr );
+	return  temptArr[2];
+}
+
+void quicksort( int16_t x , int16_t y, int16_t intArray[] )
+{
+	int16_t i,last;
+
+	if( x >= y )
+	{
+		return ;
+	}
+	swap( x, ( y + x ) / 2, intArray );
+	last = x ;
+	for( i = x + 1 ; i <= y ; i++ )
+	{
+		if( intArray[i] < intArray[x] )
+			swap( ++last, i, intArray );
+	}
+
+	swap( x, last, intArray );
+	quicksort( x, last - 1, &intArray[x] );
+	quicksort( last + 1, y, &intArray[last +1] );
+}
+
+
 
 /*test 포함
  * lane : LED1
