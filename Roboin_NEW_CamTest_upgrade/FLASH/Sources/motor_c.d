@@ -1,11 +1,11 @@
-Sources/motor_c.obj: C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_printlow\Sources\motor.c \
+Sources/motor_c.obj: C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_print\Sources\motor.c \
 	D:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\lib_ewl.prefix \
 	D:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\common.prefix \
 	D:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\ewl_c_version.h \
-	C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_printlow\Prefix\MPC5606B_FLASH_VLE.prefix \
-	C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_printlow\Sources\motor.h \
-	C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_printlow\Sources\jdp.h \
-	C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_printlow\Sources\typedefs.h \
+	C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_print\Prefix\MPC5606B_FLASH_VLE.prefix \
+	C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_print\Sources\motor.h \
+	C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_print\Sources\jdp.h \
+	C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_print\Sources\typedefs.h \
 	D:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\stdint.h \
 	D:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\ansi_parms.h \
 	D:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\ewlGlobals.h \
@@ -14,6 +14,6 @@ Sources/motor_c.obj: C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_prin
 	D:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\cstdint \
 	D:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\limits_api.h \
 	D:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\ewl_lib_ext1.h \
-	C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_printlow\Sources\gpio.h \
-	C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_printlow\Sources\encoder.h \
-	C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_printlow\Sources\pit_init.h 
+	C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_print\Sources\gpio.h \
+	C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_print\Sources\encoder.h \
+	C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_print\Sources\pit_init.h 

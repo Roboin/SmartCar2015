@@ -191,29 +191,29 @@ Link map of __start
         7] cam1LanePosition (object,global) found in camera_c.obj 
         7] cam2LanePosition (object,global) found in camera_c.obj 
         7] CAM_RAN_FLAG (object,global) found in camera_c.obj 
-        7] @315 (object,local) found in camera_c.obj 
+        7] @321 (object,local) found in camera_c.obj 
         7] CAM_READ1 (object,global) found in camera_c.obj 
         7] CAM_READ1_STORE (object,global) found in camera_c.obj 
         7] itoa (func,global) found in UART_drv_c.obj 
          8] @110 (object,local) found in UART_drv_c.obj 
         7] UART_print (func,global) found in UART_drv_c.obj 
-        7] @316 (object,local) found in camera_c.obj 
-        7] @317 (object,local) found in camera_c.obj 
+        7] @322 (object,local) found in camera_c.obj 
+        7] @323 (object,local) found in camera_c.obj 
         7] median (func,global) found in camera_c.obj 
          8] quicksort (func,global) found in camera_c.obj 
           9] swap (func,global) found in camera_c.obj 
-        7] @318 (object,local) found in camera_c.obj 
-        7] @319 (object,local) found in camera_c.obj 
-        7] @320 (object,local) found in camera_c.obj 
+        7] @324 (object,local) found in camera_c.obj 
+        7] @325 (object,local) found in camera_c.obj 
+        7] @326 (object,local) found in camera_c.obj 
         7] errorFlag (object,global) found in camera_c.obj 
-        7] @321 (object,local) found in camera_c.obj 
+        7] @327 (object,local) found in camera_c.obj 
         7] CAM_READ2 (object,global) found in camera_c.obj 
         7] CAM_READ2_STORE (object,global) found in camera_c.obj 
         7] laneStatusUpdate (func,global) found in camera_c.obj 
-        7] @322 (object,local) found in camera_c.obj 
+        7] @328 (object,local) found in camera_c.obj 
         7] cam1LanePositionReturn (func,global) found in camera_c.obj 
-        7] @323 (object,local) found in camera_c.obj 
-        7] @324 (object,local) found in camera_c.obj 
+        7] @329 (object,local) found in camera_c.obj 
+        7] @330 (object,local) found in camera_c.obj 
         7] cam2LanePositionReturn (func,global) found in camera_c.obj 
        6] Servo_Control (func,global) found in main_c.obj 
         7] @144 (object,local) found in main_c.obj 
@@ -312,7 +312,7 @@ Link map of __start
     3] .text (section,local) found in cansp_init_c.obj 
     3] .text.19 (notype,local) found in cansp_init_c.obj 
     3] .text (section,local) found in camera_c.obj 
-    3] .text.454 (notype,local) found in camera_c.obj 
+    3] .text.460 (notype,local) found in camera_c.obj 
     3] .text (section,local) found in adc_init_c.obj 
     3] .text.37 (notype,local) found in adc_init_c.obj 
     3] .text (section,local) found in adc_drv_c.obj 
@@ -577,7 +577,7 @@ Link map of __start
   00004834 000054 00007834 00004f64  2 cansp_init_fnc 	cansp_init_c.obj 
   UNUSED   000010 ........ ........    cansp_trigger_fnc cansp_init_c.obj 
   00004888 000000 00007888 00004fb8  1 .text.19 	cansp_init_c.obj 
-  00004888 000e24 00007888 00004fb8  1 .text 	camera_c.obj 
+  00004888 000ecc 00007888 00004fb8  1 .text 	camera_c.obj 
   00004888 00002c 00007888 00004fb8  2 CAM_PIT4_ISR 	camera_c.obj 
   000048b4 00006c 000078b4 00004fe4  2 CAM_Init 	camera_c.obj 
   UNUSED   000006 ........ ........    CAM_MICRO_SEC_RETURN camera_c.obj 
@@ -592,60 +592,60 @@ Link map of __start
   UNUSED   000016 ........ ........    CAM_PulseWidth camera_c.obj 
   UNUSED   00006e ........ ........    CAM_UPDATE_DATA camera_c.obj 
   UNUSED   000006 ........ ........    CAM_RUN_MODE_SETUP camera_c.obj 
-  00004928 000b0e 00007928 00005058  2 laneProcess 	camera_c.obj 
-  00005436 000056 00008436 00005b66  2 median 	camera_c.obj 
-  0000548c 000034 0000848c 00005bbc  2 swap 	camera_c.obj 
-  000054c0 0000be 000084c0 00005bf0  2 quicksort 	camera_c.obj 
-  0000557e 0000e6 0000857e 00005cae  2 laneStatusUpdate 	camera_c.obj 
-  00005664 00001e 00008664 00005d94  2 cam1LanePositionReturn 	camera_c.obj 
-  00005682 00001e 00008682 00005db2  2 cam2LanePositionReturn 	camera_c.obj 
+  00004928 000bb6 00007928 00005058  2 laneProcess 	camera_c.obj 
+  000054de 000056 000084de 00005c0e  2 median 	camera_c.obj 
+  00005534 000034 00008534 00005c64  2 swap 	camera_c.obj 
+  00005568 0000be 00008568 00005c98  2 quicksort 	camera_c.obj 
+  00005626 0000e6 00008626 00005d56  2 laneStatusUpdate 	camera_c.obj 
+  0000570c 00001e 0000870c 00005e3c  2 cam1LanePositionReturn 	camera_c.obj 
+  0000572a 00001e 0000872a 00005e5a  2 cam2LanePositionReturn 	camera_c.obj 
   UNUSED   000006 ........ ........    ifLaneProcessEnd camera_c.obj 
-  000056a0 000006 000086a0 00005dd0  2 ifSchoolZone 	camera_c.obj 
-  000056a6 000006 000086a6 00005dd6  2 ifCrossSection 	camera_c.obj 
+  00005748 000006 00008748 00005e78  2 ifSchoolZone 	camera_c.obj 
+  0000574e 000006 0000874e 00005e7e  2 ifCrossSection 	camera_c.obj 
   UNUSED   000006 ........ ........    ifError camera_c.obj 
   UNUSED   000006 ........ ........    cam1LaneNumReturn camera_c.obj 
   UNUSED   000006 ........ ........    cam2LaneNumReturn camera_c.obj 
-  000056ac 000000 000086ac 00005ddc  1 .text.454 	camera_c.obj 
-  000056ac 00068a 000086ac 00005ddc  1 .text 	adc_init_c.obj 
-  000056ac 00001c 000086ac 00005ddc  2 adc_init_fnc 	adc_init_c.obj 
-  000056c8 0000c0 000086c8 00005df8  2 adc_0_init_fnc 	adc_init_c.obj 
-  00005788 0000be 00008788 00005eb8  2 adc_1_init_fnc 	adc_init_c.obj 
-  00005846 0002a2 00008846 00005f76  2 adc_ctuevent_init_fnc 	adc_init_c.obj 
-  00005ae8 000144 00008ae8 00006218  2 adc_0_channel_setup_fnc 	adc_init_c.obj 
-  00005c2c 0000c6 00008c2c 0000635c  2 adc_1_channel_setup_fnc 	adc_init_c.obj 
-  00005cf2 00001e 00008cf2 00006422  2 adc_0_trigger_setup_fnc 	adc_init_c.obj 
-  00005d10 000026 00008d10 00006440  2 adc_1_trigger_setup_fnc 	adc_init_c.obj 
-  00005d36 000000 00008d36 00006466  1 .text.37 	adc_init_c.obj 
-  00005d36 0000c6 00008d36 00006466  1 .text 	adc_drv_c.obj 
-  00005d36 00002e 00008d36 00006466  2 ADC_Get 	adc_drv_c.obj 
+  00005754 000000 00008754 00005e84  1 .text.460 	camera_c.obj 
+  00005754 00068a 00008754 00005e84  1 .text 	adc_init_c.obj 
+  00005754 00001c 00008754 00005e84  2 adc_init_fnc 	adc_init_c.obj 
+  00005770 0000c0 00008770 00005ea0  2 adc_0_init_fnc 	adc_init_c.obj 
+  00005830 0000be 00008830 00005f60  2 adc_1_init_fnc 	adc_init_c.obj 
+  000058ee 0002a2 000088ee 0000601e  2 adc_ctuevent_init_fnc 	adc_init_c.obj 
+  00005b90 000144 00008b90 000062c0  2 adc_0_channel_setup_fnc 	adc_init_c.obj 
+  00005cd4 0000c6 00008cd4 00006404  2 adc_1_channel_setup_fnc 	adc_init_c.obj 
+  00005d9a 00001e 00008d9a 000064ca  2 adc_0_trigger_setup_fnc 	adc_init_c.obj 
+  00005db8 000026 00008db8 000064e8  2 adc_1_trigger_setup_fnc 	adc_init_c.obj 
+  00005dde 000000 00008dde 0000650e  1 .text.37 	adc_init_c.obj 
+  00005dde 0000c6 00008dde 0000650e  1 .text 	adc_drv_c.obj 
+  00005dde 00002e 00008dde 0000650e  2 ADC_Get 	adc_drv_c.obj 
   UNUSED   00005c ........ ........    A2D_GetSingleCh_12bit adc_drv_c.obj 
-  00005d64 000098 00008d64 00006494  2 A2D_GetSingleCh_10bit 	adc_drv_c.obj 
+  00005e0c 000098 00008e0c 0000653c  2 A2D_GetSingleCh_10bit 	adc_drv_c.obj 
   UNUSED   00002a ........ ........    A2D_GetChResult_12bit adc_drv_c.obj 
   UNUSED   000030 ........ ........    A2D_GetChResult_10bit adc_drv_c.obj 
   UNUSED   00001c ........ ........    A2D_SetupCh_12bit adc_drv_c.obj 
   UNUSED   00005e ........ ........    A2D_SetupCh_10bit adc_drv_c.obj 
-  00005dfc 000000 00008dfc 0000652c  1 .text.79 	adc_drv_c.obj 
-  00005dfc 0001ea 00008dfc 0000652c  1 .text 	UART_drv_c.obj 
-  00005dfc 0000b0 00008dfc 0000652c  2 UartTxMsg 	UART_drv_c.obj 
+  00005ea4 000000 00008ea4 000065d4  1 .text.79 	adc_drv_c.obj 
+  00005ea4 0001ea 00008ea4 000065d4  1 .text 	UART_drv_c.obj 
+  00005ea4 0000b0 00008ea4 000065d4  2 UartTxMsg 	UART_drv_c.obj 
   UNUSED   000070 ........ ........    UartRxDataByte UART_drv_c.obj 
   UNUSED   000044 ........ ........    UartRxNewDataSize UART_drv_c.obj 
   UNUSED   00002e ........ ........    UartRxBufEmpty UART_drv_c.obj 
-  00005eac 000018 00008eac 000065dc  2 UartBufInit 	UART_drv_c.obj 
+  00005f54 000018 00008f54 00006684  2 UartBufInit 	UART_drv_c.obj 
   UNUSED   0000a2 ........ ........    UartRxFillBuf UART_drv_c.obj 
-  00005ec4 000074 00008ec4 000065f4  2 itoa 	UART_drv_c.obj 
-  00005f38 000052 00008f38 00006668  2 UART_print 	UART_drv_c.obj 
-  00005f8a 00005c 00008f8a 000066ba  2 UART_println 	UART_drv_c.obj 
-  00005fe6 000000 00008fe6 00006716  1 .text.162 	UART_drv_c.obj 
+  00005f6c 000074 00008f6c 0000669c  2 itoa 	UART_drv_c.obj 
+  00005fe0 000052 00008fe0 00006710  2 UART_print 	UART_drv_c.obj 
+  00006032 00005c 00009032 00006762  2 UART_println 	UART_drv_c.obj 
+  0000608e 000000 0000908e 000067be  1 .text.162 	UART_drv_c.obj 
 
 
 .rodata section layout
   Starting        Virtual  File
   address  Size   address  offset
   ---------------------------------
-  00000000 000024 00008fe8 00006718  1 .rodata 	camera_c.obj 
-  00000000 00000c 00008fe8 00006718  4 @178 	camera_c.obj 
-  0000000c 00000c 00008ff4 00006724  4 @180 	camera_c.obj 
-  00000018 00000c 00009000 00006730  4 @182 	camera_c.obj 
+  00000000 000024 00009090 000067c0  1 .rodata 	camera_c.obj 
+  00000000 00000c 00009090 000067c0  4 @178 	camera_c.obj 
+  0000000c 00000c 0000909c 000067cc  4 @180 	camera_c.obj 
+  00000018 00000c 000090a8 000067d8  4 @182 	camera_c.obj 
 
 
 .ctors section layout
@@ -664,8 +664,8 @@ Link map of __start
   Starting        Virtual  File
   address  Size   address  offset
   ---------------------------------
-  00000000 000008 00009010 00006740  1 .sdata2 	main_c.obj 
-  00000000 000008 00009010 00006740  8 @144 	main_c.obj 
+  00000000 000008 000090b8 000067e8  1 .sdata2 	main_c.obj 
+  00000000 000008 000090b8 000067e8  8 @144 	main_c.obj 
 
 
 .sbss2 section layout
@@ -678,27 +678,27 @@ Link map of __start
   Starting        Virtual  File
   address  Size   address  offset
   ---------------------------------
-  00000000 000192 40000000 00006748  1 .data 	main_c.obj 
-  00000000 000100 40000000 00006748  8 string_temp 	main_c.obj 
-  00000100 000011 40000100 00006848  4 strA 	main_c.obj 
+  00000000 000192 40000000 000067f0  1 .data 	main_c.obj 
+  00000000 000100 40000000 000067f0  8 string_temp 	main_c.obj 
+  00000100 000011 40000100 000068f0  4 strA 	main_c.obj 
   UNUSED   000011 ........ ........    strB main_c.obj 
-  00000114 00000c 40000114 0000685c  4 @79 	main_c.obj 
-  00000120 000011 40000120 00006868  4 @81 	main_c.obj 
-  00000134 000011 40000134 0000687c  4 @82 	main_c.obj 
-  00000148 000014 40000148 00006890  4 @83 	main_c.obj 
-  0000015c 000011 4000015c 000068a4  4 @84 	main_c.obj 
-  00000170 000011 40000170 000068b8  4 @85 	main_c.obj 
-  00000184 00000e 40000184 000068cc  4 @96 	main_c.obj 
-  00000192 000006 40000198 000068e0  8 *fill*
-  00000198 00013e 40000198 000068e0  1 .data 	camera_c.obj 
-  00000198 000100 40000198 000068e0  8 CAM_READ1 	camera_c.obj 
+  00000114 00000c 40000114 00006904  4 @79 	main_c.obj 
+  00000120 000011 40000120 00006910  4 @81 	main_c.obj 
+  00000134 000011 40000134 00006924  4 @82 	main_c.obj 
+  00000148 000014 40000148 00006938  4 @83 	main_c.obj 
+  0000015c 000011 4000015c 0000694c  4 @84 	main_c.obj 
+  00000170 000011 40000170 00006960  4 @85 	main_c.obj 
+  00000184 00000e 40000184 00006974  4 @96 	main_c.obj 
+  00000192 000006 40000198 00006988  8 *fill*
+  00000198 00013e 40000198 00006988  1 .data 	camera_c.obj 
+  00000198 000100 40000198 00006988  8 CAM_READ1 	camera_c.obj 
   UNUSED   00000c ........ ........    filterTest camera_c.obj 
   UNUSED   000100 ........ ........    string_temp2 camera_c.obj 
-  00000298 00000a 40000298 000069e0  4 @315 	camera_c.obj 
-  000002a4 00000f 400002a4 000069ec  4 @317 	camera_c.obj 
-  000002b4 00000a 400002b4 000069fc  4 @321 	camera_c.obj 
-  000002c0 00000a 400002c0 00006a08  4 @322 	camera_c.obj 
-  000002cc 00000a 400002cc 00006a14  4 @324 	camera_c.obj 
+  00000298 00000a 40000298 00006a88  4 @321 	camera_c.obj 
+  000002a4 00000f 400002a4 00006a94  4 @323 	camera_c.obj 
+  000002b4 00000a 400002b4 00006aa4  4 @327 	camera_c.obj 
+  000002c0 00000a 400002c0 00006ab0  4 @328 	camera_c.obj 
+  000002cc 00000a 400002cc 00006abc  4 @330 	camera_c.obj 
 
 
 .j_pdata section layout
@@ -711,108 +711,108 @@ Link map of __start
   Starting        Virtual  File
   address  Size   address  offset
   ---------------------------------
-  00000000 000010 400002d8 00006a20  1 .sdata 	ultra_sonic_c.obj 
+  00000000 000010 400002d8 00006ac8  1 .sdata 	ultra_sonic_c.obj 
   UNUSED   000004 ........ ........    us_echo ultra_sonic_c.obj 
-  00000000 000004 400002d8 00006a20  4 us_tmeans 	ultra_sonic_c.obj 
-  00000004 000004 400002dc 00006a24  4 us_t1 	ultra_sonic_c.obj 
-  00000008 000004 400002e0 00006a28  4 us_t2 	ultra_sonic_c.obj 
-  0000000c 000004 400002e4 00006a2c  4 us_val 	ultra_sonic_c.obj 
+  00000000 000004 400002d8 00006ac8  4 us_tmeans 	ultra_sonic_c.obj 
+  00000004 000004 400002dc 00006acc  4 us_t1 	ultra_sonic_c.obj 
+  00000008 000004 400002e0 00006ad0  4 us_t2 	ultra_sonic_c.obj 
+  0000000c 000004 400002e4 00006ad4  4 us_val 	ultra_sonic_c.obj 
   UNUSED   000004 ........ ........    us_val_old ultra_sonic_c.obj 
-  00000010 000008 400002e8 00006a30  1 .sdata 	motor_c.obj 
-  00000010 000004 400002e8 00006a30  4 current_speed_r 	motor_c.obj 
-  00000014 000004 400002ec 00006a34  4 current_speed_l 	motor_c.obj 
-  00000018 000012 400002f0 00006a38  1 .sdata 	main_c.obj 
-  00000018 000004 400002f0 00006a38  4 time_gap 	main_c.obj 
+  00000010 000008 400002e8 00006ad8  1 .sdata 	motor_c.obj 
+  00000010 000004 400002e8 00006ad8  4 current_speed_r 	motor_c.obj 
+  00000014 000004 400002ec 00006adc  4 current_speed_l 	motor_c.obj 
+  00000018 000012 400002f0 00006ae0  1 .sdata 	main_c.obj 
+  00000018 000004 400002f0 00006ae0  4 time_gap 	main_c.obj 
   UNUSED   000004 ........ ........    USval main_c.obj 
   UNUSED   000004 ........ ........    IRval main_c.obj 
-  0000001c 000002 400002f4 00006a3c  2 Speed_Proposal_inMain 	main_c.obj 
-  0000001e 000002 400002f6 00006a3e  2 kServo_for_LCD 	main_c.obj 
-  00000020 000001 400002f8 00006a40  1 flag 	main_c.obj 
-  00000024 000004 400002fc 00006a44  4 @80 	main_c.obj 
-  00000028 000002 40000300 00006a48  4 @86 	main_c.obj 
-  0000002a 000006 40000308 00006a50  8 *fill*
-  00000030 000004 40000308 00006a50  1 .sdata 	lcd_c.obj 
-  00000030 000004 40000308 00006a50  4 delay_t 	lcd_c.obj 
-  00000034 000004 40000310 00006a58  8 *fill*
-  00000038 00001e 40000310 00006a58  1 .sdata 	encoder_c.obj 
-  00000038 000004 40000310 00006a58  4 enc_val1 	encoder_c.obj 
-  0000003c 000004 40000314 00006a5c  4 enc_val2 	encoder_c.obj 
-  00000040 000004 40000318 00006a60  4 enc_rate1 	encoder_c.obj 
-  00000044 000004 4000031c 00006a64  4 enc_rate2 	encoder_c.obj 
-  00000048 000004 40000320 00006a68  4 DC_Power_R 	encoder_c.obj 
-  0000004c 000004 40000324 00006a6c  4 DC_Power_L 	encoder_c.obj 
-  00000050 000002 40000328 00006a70  2 kpR 	encoder_c.obj 
-  00000052 000002 4000032a 00006a72  2 kpL 	encoder_c.obj 
-  00000054 000002 4000032c 00006a74  2 ki 	encoder_c.obj 
-  00000056 000002 40000330 00006a78  8 *fill*
-  00000058 000026 40000330 00006a78  1 .sdata 	camera_c.obj 
-  00000058 000002 40000330 00006a78  2 TIME_CONST 	camera_c.obj 
-  0000005a 000002 40000332 00006a7a  2 DELAY_SI 	camera_c.obj 
-  0000005c 000002 40000334 00006a7c  2 DELAY_CLK 	camera_c.obj 
-  0000005e 000002 40000336 00006a7e  2 DELAY_WAIT 	camera_c.obj 
+  0000001c 000002 400002f4 00006ae4  2 Speed_Proposal_inMain 	main_c.obj 
+  0000001e 000002 400002f6 00006ae6  2 kServo_for_LCD 	main_c.obj 
+  00000020 000001 400002f8 00006ae8  1 flag 	main_c.obj 
+  00000024 000004 400002fc 00006aec  4 @80 	main_c.obj 
+  00000028 000002 40000300 00006af0  4 @86 	main_c.obj 
+  0000002a 000006 40000308 00006af8  8 *fill*
+  00000030 000004 40000308 00006af8  1 .sdata 	lcd_c.obj 
+  00000030 000004 40000308 00006af8  4 delay_t 	lcd_c.obj 
+  00000034 000004 40000310 00006b00  8 *fill*
+  00000038 00001e 40000310 00006b00  1 .sdata 	encoder_c.obj 
+  00000038 000004 40000310 00006b00  4 enc_val1 	encoder_c.obj 
+  0000003c 000004 40000314 00006b04  4 enc_val2 	encoder_c.obj 
+  00000040 000004 40000318 00006b08  4 enc_rate1 	encoder_c.obj 
+  00000044 000004 4000031c 00006b0c  4 enc_rate2 	encoder_c.obj 
+  00000048 000004 40000320 00006b10  4 DC_Power_R 	encoder_c.obj 
+  0000004c 000004 40000324 00006b14  4 DC_Power_L 	encoder_c.obj 
+  00000050 000002 40000328 00006b18  2 kpR 	encoder_c.obj 
+  00000052 000002 4000032a 00006b1a  2 kpL 	encoder_c.obj 
+  00000054 000002 4000032c 00006b1c  2 ki 	encoder_c.obj 
+  00000056 000002 40000330 00006b20  8 *fill*
+  00000058 000026 40000330 00006b20  1 .sdata 	camera_c.obj 
+  00000058 000002 40000330 00006b20  2 TIME_CONST 	camera_c.obj 
+  0000005a 000002 40000332 00006b22  2 DELAY_SI 	camera_c.obj 
+  0000005c 000002 40000334 00006b24  2 DELAY_CLK 	camera_c.obj 
+  0000005e 000002 40000336 00006b26  2 DELAY_WAIT 	camera_c.obj 
   UNUSED   000001 ........ ........    CAM_TIMER_CH camera_c.obj 
   UNUSED   000001 ........ ........    CAM_SI_FLAG camera_c.obj 
   UNUSED   000001 ........ ........    CAM_CLK_FLAG camera_c.obj 
-  00000060 000002 40000338 00006a80  2 CAM_RUN_MODE 	camera_c.obj 
-  00000064 000003 4000033c 00006a84  4 @316 	camera_c.obj 
-  00000068 000001 40000340 00006a88  4 @318 	camera_c.obj 
-  0000006c 000006 40000344 00006a8c  4 @319 	camera_c.obj 
-  00000074 000006 4000034c 00006a94  4 @320 	camera_c.obj 
-  0000007c 000002 40000354 00006a9c  4 @323 	camera_c.obj 
-  0000007e 000002 40000358 00006aa0  8 *fill*
-  00000080 000007 40000358 00006aa0  1 .sdata 	UART_drv_c.obj 
-  00000080 000002 40000358 00006aa0  4 @110 	UART_drv_c.obj 
-  00000084 000003 4000035c 00006aa4  4 @150 	UART_drv_c.obj 
+  00000060 000002 40000338 00006b28  2 CAM_RUN_MODE 	camera_c.obj 
+  00000064 000003 4000033c 00006b2c  4 @322 	camera_c.obj 
+  00000068 000001 40000340 00006b30  4 @324 	camera_c.obj 
+  0000006c 000006 40000344 00006b34  4 @325 	camera_c.obj 
+  00000074 000006 4000034c 00006b3c  4 @326 	camera_c.obj 
+  0000007c 000002 40000354 00006b44  4 @329 	camera_c.obj 
+  0000007e 000002 40000358 00006b48  8 *fill*
+  00000080 000007 40000358 00006b48  1 .sdata 	UART_drv_c.obj 
+  00000080 000002 40000358 00006b48  4 @110 	UART_drv_c.obj 
+  00000084 000003 4000035c 00006b4c  4 @150 	UART_drv_c.obj 
 
 
 .sbss section layout
   Starting        Virtual  File
   address  Size   address  offset
   ---------------------------------
-  00000000 000004 40000360 00006aa8  1 .sbss 	timer_c.obj 
-  00000000 000004 40000360 00006aa8  4 timer_msec 	timer_c.obj 
-  00000004 000004 40000368 00006ab0  8 *fill*
-  00000008 000029 40000368 00006ab0  1 .sbss 	main_c.obj 
+  00000000 000004 40000360 00006b50  1 .sbss 	timer_c.obj 
+  00000000 000004 40000360 00006b50  4 timer_msec 	timer_c.obj 
+  00000004 000004 40000368 00006b58  8 *fill*
+  00000008 000029 40000368 00006b58  1 .sbss 	main_c.obj 
   UNUSED   000004 ........ ........    i main_c.obj 
-  00000008 000004 40000368 00006ab0  4 t_current 	main_c.obj 
-  0000000c 000004 4000036c 00006ab4  4 t_old 	main_c.obj 
-  00000010 000004 40000370 00006ab8  4 cnt 	main_c.obj 
-  00000014 000002 40000374 00006abc  2 k_test 	main_c.obj 
-  00000018 000008 40000378 00006ac0  8 LCD_BUFF1 	main_c.obj 
-  00000020 000008 40000380 00006ac8  8 LCD_BUFF2 	main_c.obj 
-  00000028 000008 40000388 00006ad0  8 LCD_BUFF3 	main_c.obj 
+  00000008 000004 40000368 00006b58  4 t_current 	main_c.obj 
+  0000000c 000004 4000036c 00006b5c  4 t_old 	main_c.obj 
+  00000010 000004 40000370 00006b60  4 cnt 	main_c.obj 
+  00000014 000002 40000374 00006b64  2 k_test 	main_c.obj 
+  00000018 000008 40000378 00006b68  8 LCD_BUFF1 	main_c.obj 
+  00000020 000008 40000380 00006b70  8 LCD_BUFF2 	main_c.obj 
+  00000028 000008 40000388 00006b78  8 LCD_BUFF3 	main_c.obj 
   UNUSED   000008 ........ ........    LCD_BUFF4 main_c.obj 
   UNUSED   000001 ........ ........    flag_US main_c.obj 
   UNUSED   000001 ........ ........    flag_IR main_c.obj 
   UNUSED   000001 ........ ........    flag_Slope main_c.obj 
   UNUSED   000001 ........ ........    flag_Wall main_c.obj 
-  00000030 000001 40000390 00006ad8  1 run_mode 	main_c.obj 
-  00000031 000007 40000398 00006ae0  8 *fill*
-  00000038 000004 40000398 00006ae0  1 .sbss 	lcd_c.obj 
-  00000038 000004 40000398 00006ae0  4 LCD_timer_ms 	lcd_c.obj 
-  0000003c 000004 400003a0 00006ae8  8 *fill*
-  00000040 000014 400003a0 00006ae8  1 .sbss 	encoder_c.obj 
-  00000040 000002 400003a0 00006ae8  2 Speed_Proposal 	encoder_c.obj 
-  00000044 000004 400003a4 00006aec  4 cont_val_I_R 	encoder_c.obj 
-  00000048 000004 400003a8 00006af0  4 cont_val_I_L 	encoder_c.obj 
-  0000004c 000004 400003ac 00006af4  4 cont_val_P_R 	encoder_c.obj 
-  00000050 000004 400003b0 00006af8  4 cont_val_P_L 	encoder_c.obj 
-  00000054 000004 400003b8 00006b00  8 *fill*
-  00000058 000020 400003b8 00006b00  1 .sbss 	camera_c.obj 
-  00000058 000002 400003b8 00006b00  2 CAM_TIME_TOT 	camera_c.obj 
-  0000005c 000004 400003bc 00006b04  4 CAM_MICRO_SEC 	camera_c.obj 
+  00000030 000001 40000390 00006b80  1 run_mode 	main_c.obj 
+  00000031 000007 40000398 00006b88  8 *fill*
+  00000038 000004 40000398 00006b88  1 .sbss 	lcd_c.obj 
+  00000038 000004 40000398 00006b88  4 LCD_timer_ms 	lcd_c.obj 
+  0000003c 000004 400003a0 00006b90  8 *fill*
+  00000040 000014 400003a0 00006b90  1 .sbss 	encoder_c.obj 
+  00000040 000002 400003a0 00006b90  2 Speed_Proposal 	encoder_c.obj 
+  00000044 000004 400003a4 00006b94  4 cont_val_I_R 	encoder_c.obj 
+  00000048 000004 400003a8 00006b98  4 cont_val_I_L 	encoder_c.obj 
+  0000004c 000004 400003ac 00006b9c  4 cont_val_P_R 	encoder_c.obj 
+  00000050 000004 400003b0 00006ba0  4 cont_val_P_L 	encoder_c.obj 
+  00000054 000004 400003b8 00006ba8  8 *fill*
+  00000058 000020 400003b8 00006ba8  1 .sbss 	camera_c.obj 
+  00000058 000002 400003b8 00006ba8  2 CAM_TIME_TOT 	camera_c.obj 
+  0000005c 000004 400003bc 00006bac  4 CAM_MICRO_SEC 	camera_c.obj 
   UNUSED   000004 ........ ........    CAM_MICRO_SEC_OLD camera_c.obj 
   UNUSED   000002 ........ ........    CAM_CLK_COUNTER camera_c.obj 
-  00000060 000001 400003c0 00006b08  1 CAM_RAN_FLAG 	camera_c.obj 
+  00000060 000001 400003c0 00006bb0  1 CAM_RAN_FLAG 	camera_c.obj 
   UNUSED   000002 ........ ........    i_cam camera_c.obj 
-  00000064 000006 400003c4 00006b0c  4 cam1LanePosition 	camera_c.obj 
-  0000006c 000006 400003cc 00006b14  4 cam2LanePosition 	camera_c.obj 
-  00000072 000001 400003d2 00006b1a  1 cam1LaneNum 	camera_c.obj 
-  00000073 000001 400003d3 00006b1b  1 cam2LaneNum 	camera_c.obj 
-  00000074 000001 400003d4 00006b1c  1 crossSectionFlag 	camera_c.obj 
-  00000075 000001 400003d5 00006b1d  1 schoolZoneFlag 	camera_c.obj 
-  00000076 000001 400003d6 00006b1e  1 errorFlag 	camera_c.obj 
-  00000077 000001 400003d7 00006b1f  1 laneProccessEndFlag 	camera_c.obj 
+  00000064 000006 400003c4 00006bb4  4 cam1LanePosition 	camera_c.obj 
+  0000006c 000006 400003cc 00006bbc  4 cam2LanePosition 	camera_c.obj 
+  00000072 000001 400003d2 00006bc2  1 cam1LaneNum 	camera_c.obj 
+  00000073 000001 400003d3 00006bc3  1 cam2LaneNum 	camera_c.obj 
+  00000074 000001 400003d4 00006bc4  1 crossSectionFlag 	camera_c.obj 
+  00000075 000001 400003d5 00006bc5  1 schoolZoneFlag 	camera_c.obj 
+  00000076 000001 400003d6 00006bc6  1 errorFlag 	camera_c.obj 
+  00000077 000001 400003d7 00006bc7  1 laneProccessEndFlag 	camera_c.obj 
   UNUSED   000004 ........ ........    t0_CAM_WAIT camera_c.obj 
   UNUSED   000004 ........ ........    t0_CAM_CLK_DOWN camera_c.obj 
   UNUSED   000004 ........ ........    t0_CAM_CLK camera_c.obj 
@@ -823,15 +823,15 @@ Link map of __start
   Starting        Virtual  File
   address  Size   address  offset
   ---------------------------------
-  00000000 000300 400003d8 00006aa8  1 .bss 	camera_c.obj 
+  00000000 000300 400003d8 00006b50  1 .bss 	camera_c.obj 
   UNUSED   000102 ........ ........    CAM_TEMP1 camera_c.obj 
   UNUSED   000102 ........ ........    CAM_TEMP2 camera_c.obj 
-  00000000 000100 400003d8 00006aa8  8 CAM_READ2 	camera_c.obj 
-  00000100 000100 400004d8 00006ba8  8 CAM_READ1_STORE 	camera_c.obj 
-  00000200 000100 400005d8 00006ca8  8 CAM_READ2_STORE 	camera_c.obj 
+  00000000 000100 400003d8 00006b50  8 CAM_READ2 	camera_c.obj 
+  00000100 000100 400004d8 00006c50  8 CAM_READ1_STORE 	camera_c.obj 
+  00000200 000100 400005d8 00006d50  8 CAM_READ2_STORE 	camera_c.obj 
   UNUSED   00000a ........ ........    medianMask camera_c.obj 
-  00000300 000104 400006d8 00006da8  1 .bss 	UART_drv_c.obj 
-  00000300 000104 400006d8 00006da8  4 UARTBuf 	UART_drv_c.obj 
+  00000300 000104 400006d8 00006e50  1 .bss 	UART_drv_c.obj 
+  00000300 000104 400006d8 00006e50  4 UARTBuf 	UART_drv_c.obj 
 
 
 .tibss section layout
@@ -854,29 +854,29 @@ Memory map:
              .init_vle 00000020 00000000 00000288 00000020 00000020          0
         .exec_vect_Vle 00001000 000000f4 00000290 00001000 00001000          3
                 .vects 00002000 000003a8 00000388 00002000 00002000         16
-             .text_vle 00003000 00005fe8 00000730 00003000 00003000         63
-               .rodata 00008fe8 00000024 00006718 00008fe8 00008fe8       1291
-                .ctors 0000900c 00000000 0000673c 0000900c 0000900c          0
-                .dtors 0000900c 00000000 0000673c 0000900c 0000900c          0
-               .sdata2 00009010 00000008 00006740 00009010 00009010       1293
-                .sbss2 00009018 00000000 00006748 00009018 00009018          0
-                 .data 40000000 000002d8 00006748 00009018 00009018       1294
-                .sdata 400002d8 00000088 00006a20 000092f0 000092f0       1331
-                 .sbss 40000360 00000078 00006aa8 00009378 00009378          0
-                  .bss 400003d8 00000404 00006aa8 00009378 00009378          0
-      .PPC.EMB.apuinfo 00011f18 00000000 000189c0 0001b290 0001b290          0
-         .debug_abbrev          00000149 00006aa8
-           .debug_info          00004e13 00006bf1
-        .debug_aranges          00000080 0000ba04
-           .debug_line          00008c66 0000ba84
-            .debug_loc          00000c3e 000146ea
-       .debug_pubnames          0000101d 00015328
+             .text_vle 00003000 00006090 00000730 00003000 00003000         63
+               .rodata 00009090 00000024 000067c0 00009090 00009090       1299
+                .ctors 000090b4 00000000 000067e4 000090b4 000090b4          0
+                .dtors 000090b4 00000000 000067e4 000090b4 000090b4          0
+               .sdata2 000090b8 00000008 000067e8 000090b8 000090b8       1301
+                .sbss2 000090c0 00000000 000067f0 000090c0 000090c0          0
+                 .data 40000000 000002d8 000067f0 000090c0 000090c0       1302
+                .sdata 400002d8 00000088 00006ac8 00009398 00009398       1339
+                 .sbss 40000360 00000078 00006b50 00009420 00009420          0
+                  .bss 400003d8 00000404 00006b50 00009420 00009420          0
+      .PPC.EMB.apuinfo 00011d84 00000000 000188e0 0001b1a4 0001b1a4          0
+         .debug_abbrev          00000149 00006b50
+           .debug_info          00004d36 00006c99
+        .debug_aranges          00000080 0000b9cf
+           .debug_line          00008bbe 0000ba4f
+            .debug_loc          00000c3e 0001460d
+       .debug_pubnames          0000101d 0001524b
 
 
 Linker generated symbols:
                    __argv 00003000
                     __env 00003000
-               __DATA_ROM 00009018
+               __DATA_ROM 000090c0
                __DATA_RAM 40000000
                __DATA_END 40000360
               __BSS_START 40000360
@@ -888,7 +888,7 @@ Linker generated symbols:
               ___HEAP_END 40013000
                ___SP_INIT 40014000
                 ___SP_END 40013000
-              ___DATA_ROM 00009018
+              ___DATA_ROM 000090c0
               ___DATA_RAM 40000000
               ___DATA_END 40000360
              ___BSS_START 40000360
@@ -916,39 +916,39 @@ Linker generated symbols:
                   _e_text 00003000
               _f_text_vle 00003000
           _f_text_vle_rom 00003000
-              _e_text_vle 00008fe8
-                _f_rodata 00008fe8
-            _f_rodata_rom 00008fe8
-                _e_rodata 0000900c
-                 _f_ctors 0000900c
-             _f_ctors_rom 0000900c
-                 _e_ctors 0000900c
-                 _f_dtors 0000900c
-             _f_dtors_rom 0000900c
-                 _e_dtors 0000900c
-                _f_sdata2 00009010
-            _f_sdata2_rom 00009010
-                _e_sdata2 00009018
-                 _f_sbss2 00009018
-                 _e_sbss2 00009018
+              _e_text_vle 00009090
+                _f_rodata 00009090
+            _f_rodata_rom 00009090
+                _e_rodata 000090b4
+                 _f_ctors 000090b4
+             _f_ctors_rom 000090b4
+                 _e_ctors 000090b4
+                 _f_dtors 000090b4
+             _f_dtors_rom 000090b4
+                 _e_dtors 000090b4
+                _f_sdata2 000090b8
+            _f_sdata2_rom 000090b8
+                _e_sdata2 000090c0
+                 _f_sbss2 000090c0
+                 _e_sbss2 000090c0
                   _f_data 40000000
-              _f_data_rom 00009018
+              _f_data_rom 000090c0
                   _e_data 400002d8
                _f_j_pdata 400002d8
-           _f_j_pdata_rom 000092f0
+           _f_j_pdata_rom 00009398
                _e_j_pdata 400002d8
                  _f_sdata 400002d8
-             _f_sdata_rom 000092f0
+             _f_sdata_rom 00009398
                  _e_sdata 40000360
                   _f_sbss 40000360
                   _e_sbss 400003d8
                    _f_bss 400003d8
                    _e_bss 400007dc
                  _f_tibss 400007dc
-             _f_tibss_rom 00009378
+             _f_tibss_rom 00009420
                  _e_tibss 400007dc
                 _f_tidata 400007dc
-            _f_tidata_rom 00009378
+            _f_tidata_rom 00009420
                 _e_tidata 400007dc
               _stack_addr 003dfff0
                _stack_end 003d7ff0
@@ -957,9 +957,9 @@ Linker generated symbols:
              _nbfunctions 00000089
            SIZEOF_HEADERS 00000280
                _SDA_BASE_ 400082d8
-              _SDA2_BASE_ 00011010
+              _SDA2_BASE_ 000110b8
            _ABS_SDA_BASE_ 400082d8
-          _ABS_SDA2_BASE_ 00011010
+          _ABS_SDA2_BASE_ 000110b8
                  _SP_INIT 003dfff0
              __HEAP_START 003cfff0
               __mem_limit 003d7ff0

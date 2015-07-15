@@ -1,12 +1,12 @@
-Sources/edma_init_c.obj: C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_printlow\Sources\edma_init.c \
+Sources/edma_init_c.obj: C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_print\Sources\edma_init.c \
 	D:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\lib_ewl.prefix \
 	D:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\common.prefix \
 	D:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\ewl_c_version.h \
-	C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_printlow\Prefix\MPC5606B_FLASH_VLE.prefix \
-	C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_printlow\Sources\rappid_ref.h \
-	C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_printlow\Sources\edma_init.h \
-	C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_printlow\Sources\jdp.h \
-	C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_printlow\Sources\typedefs.h \
+	C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_print\Prefix\MPC5606B_FLASH_VLE.prefix \
+	C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_print\Sources\rappid_ref.h \
+	C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_print\Sources\edma_init.h \
+	C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_print\Sources\jdp.h \
+	C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_print\Sources\typedefs.h \
 	D:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\stdint.h \
 	D:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\ansi_parms.h \
 	D:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\ewlGlobals.h \
@@ -15,5 +15,5 @@ Sources/edma_init_c.obj: C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_
 	D:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\cstdint \
 	D:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\limits_api.h \
 	D:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\ewl_lib_ext1.h \
-	C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_printlow\Sources\dspi_var.h \
-	C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_printlow\Sources\linflex_var.h 
+	C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_print\Sources\dspi_var.h \
+	C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_print\Sources\linflex_var.h 

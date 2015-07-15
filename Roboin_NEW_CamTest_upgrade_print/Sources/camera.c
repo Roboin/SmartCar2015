@@ -411,7 +411,6 @@ void laneProcess( void )
 						
 						if (  abs(totalDropSlope) > (maxDiff / TOTAL_EDGE_RATIO) )
 						{
-							dropCheckPatience = DROP_CHECK_PATIENCE; /* drop check 끝났고 맞다 판별되었으니 초기화 */
 							
 							itoa(i, string_tempt);
 							UART_print(string_tempt);
@@ -506,6 +505,9 @@ void laneProcess( void )
 								}
 								else
 								{
+									dropCheckPatience = DROP_CHECK_PATIENCE;
+									flag_disconti = 0;
+									
 									itoa(i, string_tempt);
 									UART_print(string_tempt);
 									UART_println(": there was drop but not steady after that");
@@ -516,6 +518,8 @@ void laneProcess( void )
 						}
 						else
 						{
+							dropCheckPatience = DROP_CHECK_PATIENCE;
+							
 							itoa(i, string_tempt);
 							UART_print(string_tempt);
 							UART_println(": drop was not sufficient but");
@@ -724,8 +728,7 @@ void laneProcess( void )
 						
 						if (  abs(totalDropSlope) > (maxDiff / TOTAL_EDGE_RATIO) )
 						{
-							dropCheckPatience = DROP_CHECK_PATIENCE; /* drop check 끝났고 맞다 판별되었으니 초기화 */
-							
+							 
 							itoa(i, string_tempt);
 							UART_print(string_tempt);
 							UART_println(": drop is sufficient");
@@ -744,7 +747,7 @@ void laneProcess( void )
 								UART_print(string_tempt);
 								UART_println(": steady appear right after drop");
 								
-								
+								dropCheckPatience = DROP_CHECK_PATIENCE; /* drop check 끝났고 맞다 판별되었으니 초기화 */
 								
 								if ( flag_LaneEnd )//lane이 끝났는가, 처음에는 0 아래 else부터.
 								{
@@ -805,9 +808,28 @@ void laneProcess( void )
 							{ //abs(slope) >= (maxDiff / LANE_RATIO)5보다 변동이 크냐 
 								itoa(i, string_tempt);
 								UART_print(string_tempt);
-								UART_println(": there was drop but not steady after that");
-								//index_DropStart = 0;
-								//index_DropEnd = 0;
+								UART_println(": it does not seems like lane but");
+								
+								if ( dropCheckPatience > 0)
+								{
+									itoa(i, string_tempt);
+									UART_print(string_tempt);
+									UART_println(": i will give one more chance");
+									
+									flag_disconti = 1;
+									dropCheckPatience --;
+								}
+								else
+								{
+									dropCheckPatience = DROP_CHECK_PATIENCE;
+									flag_disconti = 0;
+									
+									itoa(i, string_tempt);
+									UART_print(string_tempt);
+									UART_println(": there was drop but not steady after that");
+									//index_DropStart = 0;
+									//index_DropEnd = 0;
+								}
 							}
 						}
 						else
