@@ -1,9 +1,9 @@
-Sources/romcopy_c.obj: C:\Users\jounghoo\workspace\Roboin_NEW_Cornering_Tune2113\Sources\romcopy.c \
+Sources/romcopy_c.obj: C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_printlow\Sources\romcopy.c \
 	D:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\lib_ewl.prefix \
 	D:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\common.prefix \
 	D:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\ewl_c_version.h \
-	C:\Users\jounghoo\workspace\Roboin_NEW_Cornering_Tune2113\Prefix\MPC5606B_FLASH_VLE.prefix \
-	C:\Users\jounghoo\workspace\Roboin_NEW_Cornering_Tune2113\Sources\typedefs.h \
+	C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_printlow\Prefix\MPC5606B_FLASH_VLE.prefix \
+	C:\Users\jounghoo\workspace\Roboin_NEW_CamTest_upgrade_printlow\Sources\typedefs.h \
 	D:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\stdint.h \
 	D:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\ansi_parms.h \
 	D:\Freescale\CW\ MCU\ v10.6\MCU\PA_Support\ewl\EWL_C\include\ewlGlobals.h \
