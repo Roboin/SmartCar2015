@@ -60,6 +60,7 @@ int16_t cam2LanePosition[CAM_MAX_LANE_NUM] = {};
 int16_t CAM_READ1_STORE[NUM_OF_PIXEL] = {}; // CAM_READ1 1대1로 받아오는 어레이
 int16_t CAM_READ2_STORE[NUM_OF_PIXEL] = {};
 
+int16_t medianMask[5];
 
 int8_t cam1LaneNum = 0;
 int8_t cam2LaneNum = 0;
@@ -68,6 +69,8 @@ int8_t schoolZoneFlag = 0;
 int8_t errorFlag = 0;
 
 int8_t laneProccessEndFlag = 0;
+
+char filterTest [12] = " ";
 
 
 /*#### Function Declaration #########*/
@@ -245,239 +248,23 @@ void CAM_RUN_MODE_SETUP(int16_t mode)
 	CAM_RUN_MODE = mode;
 }
 
-/*삭제 무필요
-//int16_t CAM_MAX(void){
-//	int16_t max_value = maxPhoto;//CAM_READ1[0];
-//	/*for(i_cam=0; i_cam < (NUM_OF_PIXEL); i_cam++){
-//		if(max_value < CAM_READ1[i_cam])
-//			max_value = CAM_READ1[i_cam];
-//	}*/
-//	return max_value;
-//}
-//
-//int16_t CAM_MIN(void){
-//	int16_t min_value = minPhoto;//CAM_READ1[0];
-//	/*for(i_cam=0; i_cam < (NUM_OF_PIXEL); i_cam++){
-//		if(min_value > CAM_READ1[i_cam])
-//			min_value = CAM_READ1[i_cam];
-//	}*/
-//	return min_value;
-//}
+
+
+
+
+
+
+
+
+
+
+
 /*###############  Lane Detecting  ####################*/
 /* with camera data array CAM_READ change LANE_PIXEL_INDEX 1 and 2 value
  * and change lane status flags*/
 /* lane status*/
 
 char string_temp2[256] = " ";
-
-void laneProcess21( void ){
-	int16_t index_DropStart = 0; /* drop start index */
-	int16_t index_DropEnd = 0; /* drop end index*/
-	int16_t index_LaneStart = 0;
-	int16_t index_LaneEnd = 0;
-	
-	uint8_t flag_disconti = 0;
-	uint8_t flag_LaneEnd = 0;
-	uint8_t flag_firstLane = 1;//is first pixels high or low, usually high, 
-	
-	uint16_t lanePixelCount = 0;
-	
-	int16_t i = 0, j=0;//for for문
-	int16_t maxPhoto = 0;
-	int16_t minPhoto = 1000;
-	int16_t maxDiff = 0; /* slopeerence between maxphoto and minPhoto */
-	int32_t slope = 0;
-	int32_t totalDropSlope = 0;
-	int16_t CAM_1_Status[NUM_OF_PIXEL] = {}; // CAM_Status, -1 dark, 1 bright, 2 up, -2 drop
-	//int16_t CAM_2_Status[NUM_OF_PIXEL] = {};
-	char camOutTest1[12] = " ";
-	char camOutTest2[12] = " ";
-	
-	
-	cam1LaneNum = 0;
-	crossSectionFlag = 0;
-	schoolZoneFlag = 0;
-	laneProccessEndFlag = 0;
-	
-	for ( i= 0; i < 3; i ++)//lane position initialisation
-	{
-		cam1LanePosition[i] = 0;
-	}
-	
-	/*################ FOR TEST #######################*/
-	//CAM_RAN_FLAG = 1;
-	
-	if ( CAM_RAN_FLAG )
-	{
-		UART_println( "Camera 1" );
-		//################# Cam 1 processing###################
-		/*find max and min vlaue of 128 pixels of camera 1 */
-		minPhoto = 1000; maxPhoto = 0;
-		for ( i = 0; i < NUM_OF_PIXEL; i++ ){ //cam data get{
-			CAM_READ1_STORE[i] = CAM_READ1[i];
-			if ( (i > (START_PIXEL - 1) ) && (i < (END_PIXEL + 1)) ){
-				if ( minPhoto > CAM_READ1_STORE[i] ){
-					minPhoto = CAM_READ1_STORE[i];
-				}
-				if ( maxPhoto < CAM_READ1_STORE[i] ){
-					maxPhoto = CAM_READ1_STORE[i];
-				}
-			}
-		}
-		
-		maxDiff = maxPhoto - minPhoto;
-		
-		//print max min
-		itoa(maxPhoto, camOutTest1);
-		UART_print("maxPhoto = "); UART_println(camOutTest1);
-		itoa(minPhoto, camOutTest2);
-		UART_print("minPhoto = "); UART_println(camOutTest2);
-		itoa(maxDiff, camOutTest1);
-		UART_print("maxDiff = "); UART_println(camOutTest1);
-		
-		//drop or up
-		for ( i = START_PIXEL-1 ; i < END_PIXEL - 1; i++ ){
-			slope = (CAM_READ1_STORE[i] - CAM_READ1_STORE[i+1]);
-			
-			if( slope > (maxDiff/EDGE_RATIO) )//drop  = -2
-				CAM_1_Status[i+1] = -2;
-			else if( slope < -(maxDiff/EDGE_RATIO))//up 2
-				CAM_1_Status[i+1] = 2;
-			
-			itoa(CAM_1_Status[i+1], camOutTest1);
-			UART_print(camOutTest1);
-		}
-		
-		//find line
-		j=0;
-		for( i = START_PIXEL-1 ; i < END_PIXEL; i++ ){//( i = 0 ; i < NUM_OF_PIXEL-1; i++ ){
-			if(CAM_1_Status[i] == -2){
-				index_LaneStart = i+1;
-			}
-			else if(CAM_1_Status[i] == 2){
-				index_LaneEnd = i+1;
-			}
-			
-			if( (index_LaneEnd - index_LaneStart) > CAM_MAX_LANE_NUM){
-				cam1LanePosition[j] = (index_LaneEnd + index_LaneStart)/2;
-				j++;
-			}
-		}
-	
-		UART_println("LanePosition Cam1");
-		itoa(cam1LanePosition[0], string_temp2);
-		UART_print(string_temp2); UART_print(", ");
-		itoa(cam1LanePosition[1], string_temp2);
-		UART_print(string_temp2); UART_print(", ");
-		itoa(cam1LanePosition[2], string_temp2);
-		UART_print(string_temp2); UART_print(", ");
-	}
-}
-void laneProcess22( void ){//for cam 2
-	int16_t index_DropStart = 0; /* drop start index */
-	int16_t index_DropEnd = 0; /* drop end index*/
-	int16_t index_LaneStart = 0;
-	int16_t index_LaneEnd = 0;
-	
-	uint8_t flag_disconti = 0;
-	uint8_t flag_LaneEnd = 0;
-	uint8_t flag_firstLane = 1;//is first pixels high or low, usually high, 
-	
-	uint16_t lanePixelCount = 0;
-	
-	int16_t i = 0, j=0;//for for문
-	int16_t maxPhoto = 0;
-	int16_t minPhoto = 1000;
-	int16_t maxDiff = 0; /* slopeerence between maxphoto and minPhoto */
-	int32_t slope = 0;
-	int32_t totalDropSlope = 0;
-	//int16_t CAM_1_Status[NUM_OF_PIXEL] = {}; // CAM_Status, -1 dark, 1 bright, 2 up, -2 drop
-	int16_t CAM_2_Status[NUM_OF_PIXEL] = {};
-	char camOutTest1[12] = " ";
-	char camOutTest2[12] = " ";
-	
-	cam2LaneNum = 0;
-	crossSectionFlag = 0;
-	schoolZoneFlag = 0;
-	laneProccessEndFlag = 0;
-	
-	for ( i= 0; i < 3; i ++)//lane position initialisation
-	{
-		cam2LanePosition[i] = 0;
-	}
-	
-	/*################ FOR TEST #######################*/
-	//CAM_RAN_FLAG = 1;
-	
-	if ( CAM_RAN_FLAG )
-	{
-		UART_println( "Camera 2" );
-		//################# Cam 2 processing###################
-		/*find max and min vlaue of 128 pixels of camera 1 */
-		minPhoto = 1000; maxPhoto = 0;
-		for ( i = 0; i < NUM_OF_PIXEL; i++ ){ //cam data get{
-			CAM_READ2_STORE[i] = CAM_READ2[i];
-			if ( (i > (START_PIXEL - 1) ) && (i < (END_PIXEL + 1)) ){
-				if ( minPhoto > CAM_READ2_STORE[i] ){
-					minPhoto = CAM_READ2_STORE[i];
-				}
-				if ( maxPhoto < CAM_READ2_STORE[i] ){
-					maxPhoto = CAM_READ2_STORE[i];
-				}
-			}
-		}
-		
-		maxDiff = maxPhoto - minPhoto;
-		
-		//print max min
-		itoa(maxPhoto, camOutTest1);
-		UART_print("maxPhoto = "); UART_println(camOutTest1);
-		itoa(minPhoto, camOutTest2);
-		UART_print("minPhoto = "); UART_println(camOutTest2);
-		itoa(maxDiff, camOutTest1);
-		UART_print("maxDiff = "); UART_println(camOutTest1);
-		
-		//drop or up
-		for ( i = START_PIXEL-1 ; i < END_PIXEL - 1; i++ ){
-			slope = (CAM_READ2_STORE[i] - CAM_READ2_STORE[i+1]);
-			
-			if( slope > (maxDiff/EDGE_RATIO) )//drop  = -2
-				CAM_2_Status[i+1] = -2;
-			else if( slope < -(maxDiff/EDGE_RATIO))//up 2
-				CAM_2_Status[i+1] = 2;
-			
-			itoa(CAM_2_Status[i+1], camOutTest1);
-			UART_print(camOutTest1);
-		}
-		
-		//find line
-		j=0;
-		for( i = START_PIXEL-1 ; i < END_PIXEL; i++ ){//( i = 0 ; i < NUM_OF_PIXEL-1; i++ ){
-			if(CAM_2_Status[i] == -2){
-				index_LaneStart = i+1;
-			}
-			else if(CAM_2_Status[i] == 2){
-				index_LaneEnd = i+1;
-			}
-			
-			if( (index_LaneEnd - index_LaneStart) > CAM_MAX_LANE_NUM){
-				cam2LanePosition[j] = (index_LaneEnd + index_LaneStart)/2;
-				j++;
-			}
-		}
-	
-		UART_println("LanePosition Cam2");
-		itoa(cam2LanePosition[0], string_temp2);
-		UART_print(string_temp2); UART_print(", ");
-		itoa(cam2LanePosition[1], string_temp2);
-		UART_print(string_temp2); UART_print(", ");
-		itoa(cam2LanePosition[2], string_temp2);
-		UART_print(string_temp2); UART_print(", ");
-	}
-	
-}
-
-
 void laneProcess( void )
 {
 
@@ -547,7 +334,6 @@ void laneProcess( void )
 		
 			if ( (i+2 > (START_PIXEL - 1) ) && (i+2 < (END_PIXEL + 1)) )
 			{
-				
 				if ( minPhoto > CAM_READ1_STORE[i+2] ) minPhoto = CAM_READ1_STORE[i+2];
 				if ( maxPhoto < CAM_READ1_STORE[i+2] ) maxPhoto = CAM_READ1_STORE[i+2];	
 			}
@@ -571,10 +357,6 @@ void laneProcess( void )
 		for ( i = START_PIXEL - 3 ; i < END_PIXEL + 3; i++ )//( i = 1; i < NUM_OF_PIXEL; i++ )
 		{
 			slope = CAM_READ1_STORE[i+1] - CAM_READ1_STORE[i];//calc just once
-			
-			itoa((int32_t)slope, string_temp2);
-			UART_print(string_temp2);
-			UART_print("=s : ");
 			
 			if ( lanePixelCount == 0 )
 			{	
@@ -644,15 +426,15 @@ void laneProcess( void )
 									cam1LaneNum ++;
 									
 					//#########################################################	
-									itoa(i, string_tempt);
-									UART_print(string_tempt);
-									UART_println("lane ended");
-									UART_print("  L1S : ");
-									itoa((int32_t)index_LaneStart, string_temp2);
-									UART_print(string_temp2);
-									UART_print("  L1E : ");
-									itoa((int32_t)index_LaneEnd, string_temp2);
-									UART_println(string_temp2);
+//									itoa(i, string_tempt);
+//									UART_print(string_tempt);
+//									UART_println("lane ended");
+//									UART_print("  L1S : ");
+//									itoa((int32_t)index_LaneStart, string_temp2);
+//									UART_print(string_temp2);
+//									UART_print("  L1E : ");
+//									itoa((int32_t)index_LaneEnd, string_temp2);
+//									UART_println(string_temp2);
 					//#########################################################
 									
 									if ( cam1LaneNum > 3 )
@@ -776,7 +558,6 @@ void laneProcess( void )
 //						itoa(i, string_tempt);
 //						UART_print(string_tempt);
 //						UART_println(": 4<lane pixel<14");
-
 						flag_LaneEnd = 1;
 						index_LaneStart = index_DropStart;//index_DropEnd;
 						i --;
@@ -838,8 +619,8 @@ void laneProcess( void )
 			CAM_READ2_STORE[i+2] = median( &CAM_READ2_STORE[i] );
 			
 			//print for test
-//			itoa(CAM_READ2_STORE[i+2], camOutTest1);
-//			UART_print(camOutTest1); UART_print(", ");
+			itoa(CAM_READ2_STORE[i+2], camOutTest1);
+			UART_print(camOutTest1); UART_print(", ");
 			
 			if ( (i > (START_PIXEL - 1) ) && (i < (END_PIXEL + 1)) )
 			{
@@ -941,15 +722,15 @@ void laneProcess( void )
 									cam2LaneNum ++;
 									
 					//#########################################################	
-									itoa(i, string_tempt);
-									UART_print(string_tempt);
-									UART_println("lane ended");
-									UART_print("  L2S : ");
-									itoa((int32_t)index_LaneStart, string_temp2);
-									UART_print(string_temp2);
-									UART_print("  L2E : ");
-									itoa((int32_t)index_LaneEnd, string_temp2);
-									UART_println(string_temp2);
+//									itoa(i, string_tempt);
+//									UART_print(string_tempt);
+//									UART_println("lane ended");
+//									UART_print("  L2S : ");
+//									itoa((int32_t)index_LaneStart, string_temp2);
+//									UART_print(string_temp2);
+//									UART_print("  L2E : ");
+//									itoa((int32_t)index_LaneEnd, string_temp2);
+//									UART_println(string_temp2);
 					//#########################################################
 									
 									if ( cam2LaneNum > 3 )
@@ -992,9 +773,9 @@ void laneProcess( void )
 							}
 							else
 							{ //abs(slope) >= (maxDiff / LANE_RATIO)5보다 변동이 크냐 
-								itoa(i, string_tempt);
-								UART_print(string_tempt);
-								UART_println(": there was drop but not steady after that");
+//								itoa(i, string_tempt);
+//								UART_print(string_tempt);
+//								UART_println(": there was drop but not steady after that");
 								//index_DropStart = 0;
 								//index_DropEnd = 0;
 							}
@@ -1047,9 +828,9 @@ void laneProcess( void )
 			//lanePixelCount
 			else 
 			{
-				itoa(i, string_tempt);
-				UART_print(string_tempt);
-				UART_println(": 0 < lane pixel");
+//				itoa(i, string_tempt);
+//				UART_print(string_tempt);
+//				UART_println(": 0 < lane pixel");
 				if ( abs(slope) < (maxDiff/LANE_RATIO) )
 				{//25%변동이내 계속 어두운 채인가.
 //					itoa(i, string_tempt);
@@ -1133,14 +914,6 @@ void laneProcess( void )
 	return;
 }
 
-void swap( int16_t i, int16_t j, int16_t intArray[] )
-{
-	int16_t tempt;
-
-	tempt = intArray[i];
-	intArray[i] = intArray[j];
-	intArray[j] = tempt;
-}
 
 int16_t  median( int16_t intArray[] ) //중간값 출력
 {
@@ -1152,7 +925,27 @@ int16_t  median( int16_t intArray[] ) //중간값 출력
 		temptArr[i] = intArray[i];
 	}
 	quicksort( 0, MASK_SIZE - 1, temptArr );
+	
+	//print for test
+//	for( i =0; i < MASK_SIZE; i ++)
+//	{
+//		
+//		itoa(temptArr[i], filterTest);
+//		UART_print(filterTest);
+//		UART_print(", "); 
+//
+//	}
+	
 	return  temptArr[2];
+}
+
+void swap( int16_t i, int16_t j, int16_t intArray[] )
+{
+	int16_t tempt;
+
+	tempt = intArray[i];
+	intArray[i] = intArray[j];
+	intArray[j] = tempt;
 }
 
 void quicksort( int16_t x , int16_t y, int16_t intArray[] )
@@ -1172,8 +965,8 @@ void quicksort( int16_t x , int16_t y, int16_t intArray[] )
 	}
 
 	swap( x, last, intArray );
-	quicksort( x, last - 1, &intArray[x] );
-	quicksort( last + 1, y, &intArray[last +1] );
+	quicksort( x, last - 1, intArray );
+	quicksort( last + 1, y, intArray );
 }
 
 

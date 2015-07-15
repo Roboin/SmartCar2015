@@ -51,8 +51,8 @@ vuint16_t CAM_TEMP2[NUM_OF_PIXEL+1] = {};
 //{144,905,1023,1022,1023,1022,1022,1022,1021,1021,1021,1023,1022,1023,1022,1020,1023,1022,1023,1022,1022,1023,1023,1023,1023,1021,1021,1022,1023,1022,1022,1021,1023,1023,1022,1022,1022,1022,1022,1021,1023,1023,1023,1022,1023,1023,1022,1023,1022,1023,1022,1022,1022,767,456,353,300,286,253,238,246,235,229,228,223,204,214,227,254,277,369,336,413,446,826,1022,1023,1022,1023,1022,1023,1023,1023,1023,1022,1023,1023,1022,1023,1022,1022,1023,1023,1022,1021,1022,1022,1021,1023,1022,1021,1022,1022,1021,1021,1021,1022,1022,1023,1022,1021,1022,1023,1023,1021,1022,1023,1023,954,865,867,1022,862,809,759,792,723,672};
 
 //보고서-카메라그래프 viewtrack
-vuint16_t CAM_READ1[NUM_OF_PIXEL] = {69, 77, 85, 91, 97, 101, 108, 117, 116, 119, 124, 125, 131, 134, 133, 135, 131, 140, 140, 140, 144, 145, 147, 148, 150, 147, 150, 152, 153, 152, 153, 156, 157, 157, 155, 158, 160, 160, 161, 162, 160, 159, 160, 161, 159, 160, 159, 160, 161, 162, 158, 157, 158, 160, 160, 161, 161, 160, 161, 161, 161, 163, 161, 160, 160, 156, 159, 159, 157, 157, 156, 157, 156, 156, 155, 155, 152, 154, 158, 156, 153, 153, 152, 155, 155, 153, 153, 153, 152, 150, 151, 149, 148, 147, 146, 146, 144, 143, 144, 137, 140, 139, 134, 134, 131, 130, 130, 129, 119, 93, 64, 57, 56, 55, 57, 71, 97, 102, 98, 92, 87, 84, 78, 71, 64, 58, 52, 3};
-vuint16_t CAM_READ2[NUM_OF_PIXEL] = {48, 52, 58, 65, 66, 68, 70, 74, 72, 69, 73, 84, 86, 88, 80, 69, 69, 84, 91, 96, 98, 99, 96, 99, 94, 92, 107, 110, 99, 97, 101, 107, 109, 107, 106, 115, 116, 114, 117, 115, 121, 124, 120, 117, 120, 116, 116, 125, 122, 125, 116, 117, 120, 118, 116, 109, 98, 113, 108, 115, 120, 114, 112, 115, 115, 114, 107, 118, 104, 101, 122, 121, 115, 116, 124, 119, 106, 140, 163, 166, 163, 163, 158, 110, 72, 70, 69, 69, 69, 104, 155, 160, 160, 158, 160, 160, 157, 154, 154, 157, 153, 151, 149, 149, 148, 141, 145, 143, 142, 142, 139, 140, 131, 114, 138, 129, 127, 112, 96, 100, 105, 100, 89, 85, 77, 70, 62, 5};
+vuint16_t CAM_READ1[NUM_OF_PIXEL] = {};
+vuint16_t CAM_READ2[NUM_OF_PIXEL] = {};
 int16_t i_cam=0;// for for반복문
 
 int16_t cam1LanePosition[CAM_MAX_LANE_NUM] = {};
@@ -326,6 +326,10 @@ void laneProcess( void )
 		
 		for ( i = 0; i < NUM_OF_PIXEL - (MASK_SIZE / 2); i ++)
 		{
+			////print for test
+//			itoa(i, camOutTest1);
+//			UART_print("i="); UART_print(camOutTest1); 
+			
 			CAM_READ1_STORE[i+2] = median( &CAM_READ1_STORE[i] );
 			
 			//print for test
@@ -358,8 +362,15 @@ void laneProcess( void )
 		{
 			slope = CAM_READ1_STORE[i+1] - CAM_READ1_STORE[i];//calc just once
 			
+//			itoa((int32_t)slope, string_temp2);
+//			UART_print(string_temp2);
+//			UART_print("=s : ");
+			
 			if ( lanePixelCount == 0 )
 			{	
+//				itoa(i, string_tempt);
+//				UART_print(string_tempt);
+//				UART_println(": Lane pixel = 0");
 				if ( !flag_disconti )// 연속
 				{
 					
@@ -398,7 +409,6 @@ void laneProcess( void )
 						
 						if (  abs(totalDropSlope) > (maxDiff / TOTAL_EDGE_RATIO) )
 						{
-							dropCheckPatience = DROP_CHECK_PATIENCE; /* drop check 끝났고 맞다 판별되었으니 초기화 */
 							
 //							itoa(i, string_tempt);
 //							UART_print(string_tempt);
@@ -417,7 +427,8 @@ void laneProcess( void )
 //								itoa(i, string_tempt);
 //								UART_print(string_tempt);
 //								UART_println(": steady appear right after drop");
-								
+//								
+								dropCheckPatience = DROP_CHECK_PATIENCE;
 								
 								
 								if ( flag_LaneEnd )//lane이 끝났는가, 처음에는 0 아래 else부터.
@@ -471,6 +482,7 @@ void laneProcess( void )
 //										itoa(i, string_tempt);
 //										UART_print(string_tempt);
 //										UART_println(": yes, it was not up!");
+										
 										lanePixelCount ++;
 									}
 								}
@@ -479,13 +491,33 @@ void laneProcess( void )
 							{ //abs(slope) >= (maxDiff / LANE_RATIO)5보다 변동이 크냐 
 //								itoa(i, string_tempt);
 //								UART_print(string_tempt);
-//								UART_println(": there was drop but not steady after that");
-								//index_DropStart = 0;
-								//index_DropEnd = 0;
+//								UART_println(": it does not seems like lane but");
+								
+								if ( dropCheckPatience > 0)
+								{
+//									itoa(i, string_tempt);
+//									UART_print(string_tempt);
+//									UART_println(": i will give one more chance");
+//									
+									flag_disconti = 1;
+									dropCheckPatience --;
+								}
+								else
+								{									dropCheckPatience = DROP_CHECK_PATIENCE;
+									flag_disconti = 0;
+									
+//									itoa(i, string_tempt);
+//									UART_print(string_tempt);
+//									UART_println(": there was drop but not steady after that");
+									//index_DropStart = 0;
+									//index_DropEnd = 0;
+								}
 							}
 						}
 						else
 						{
+							dropCheckPatience = DROP_CHECK_PATIENCE;
+							
 //							itoa(i, string_tempt);
 //							UART_print(string_tempt);
 //							UART_println(": drop was not sufficient but");
@@ -540,6 +572,7 @@ void laneProcess( void )
 //					itoa(i, string_tempt);
 //					UART_print(string_tempt);
 //					UART_println(": still steady");
+					
 					lanePixelCount ++;
 				}
 				else
@@ -549,6 +582,7 @@ void laneProcess( void )
 //						itoa(i, string_tempt);
 //						UART_print(string_tempt);
 //						UART_println(": lane width is too narrow, it is not lane");
+						
 						index_DropStart = 0;
 						index_DropEnd = 0;
 						lanePixelCount = 0;
@@ -558,6 +592,7 @@ void laneProcess( void )
 //						itoa(i, string_tempt);
 //						UART_print(string_tempt);
 //						UART_println(": 4<lane pixel<14");
+						
 						flag_LaneEnd = 1;
 						index_LaneStart = index_DropStart;//index_DropEnd;
 						i --;
@@ -572,7 +607,7 @@ void laneProcess( void )
 //						itoa(i, string_tempt);
 //						UART_print(string_tempt);
 //						UART_println(": 14<lane pixel -> ");
-						
+//						
 						flag_LaneEnd = 1;
 						index_LaneStart = index_DropStart;//index_DropEnd;
 						schoolZoneFlag = 1;
@@ -663,7 +698,7 @@ void laneProcess( void )
 					{	/* cur index save, flag_disconti up */
 						index_DropStart = i;//불연속이면 DropStart 기록.
 						flag_disconti = 1; 
-						
+//						
 //						itoa(i, string_tempt);
 //						UART_print(string_tempt); UART_println(": drop started?");
 					}
@@ -694,8 +729,7 @@ void laneProcess( void )
 						
 						if (  abs(totalDropSlope) > (maxDiff / TOTAL_EDGE_RATIO) )
 						{
-							dropCheckPatience = DROP_CHECK_PATIENCE; /* drop check 끝났고 맞다 판별되었으니 초기화 */
-							
+							 
 //							itoa(i, string_tempt);
 //							UART_print(string_tempt);
 //							UART_println(": drop is sufficient");
@@ -714,7 +748,7 @@ void laneProcess( void )
 //								UART_print(string_tempt);
 //								UART_println(": steady appear right after drop");
 								
-								
+								dropCheckPatience = DROP_CHECK_PATIENCE; /* drop check 끝났고 맞다 판별되었으니 초기화 */
 								
 								if ( flag_LaneEnd )//lane이 끝났는가, 처음에는 0 아래 else부터.
 								{
@@ -767,6 +801,7 @@ void laneProcess( void )
 //										itoa(i, string_tempt);
 //										UART_print(string_tempt);
 //										UART_println(": yes, it was not up!");
+										
 										lanePixelCount ++;
 									}
 								}
@@ -775,9 +810,28 @@ void laneProcess( void )
 							{ //abs(slope) >= (maxDiff / LANE_RATIO)5보다 변동이 크냐 
 //								itoa(i, string_tempt);
 //								UART_print(string_tempt);
-//								UART_println(": there was drop but not steady after that");
-								//index_DropStart = 0;
-								//index_DropEnd = 0;
+//								UART_println(": it does not seems like lane but");
+								
+								if ( dropCheckPatience > 0)
+								{
+//									itoa(i, string_tempt);
+//									UART_print(string_tempt);
+//									UART_println(": i will give one more chance");
+									
+									flag_disconti = 1;
+									dropCheckPatience --;
+								}
+								else
+								{
+									dropCheckPatience = DROP_CHECK_PATIENCE;
+									flag_disconti = 0;
+									
+//									itoa(i, string_tempt);
+//									UART_print(string_tempt);
+//									UART_println(": there was drop but not steady after that");
+									//index_DropStart = 0;
+									//index_DropEnd = 0;
+								}
 							}
 						}
 						else
@@ -836,6 +890,7 @@ void laneProcess( void )
 //					itoa(i, string_tempt);
 //					UART_print(string_tempt);
 //					UART_println(": still steady");
+					
 					lanePixelCount ++;
 				}
 				else
@@ -845,6 +900,7 @@ void laneProcess( void )
 //						itoa(i, string_tempt);
 //						UART_print(string_tempt);
 //						UART_println(": lane width is too narrow, it is not lane");
+						
 						index_DropStart = 0;
 						index_DropEnd = 0;
 						lanePixelCount = 0;
@@ -854,6 +910,7 @@ void laneProcess( void )
 //						itoa(i, string_tempt);
 //						UART_print(string_tempt);
 //						UART_println(": 4<lane pixel<14");
+						
 						flag_LaneEnd = 1;
 						index_LaneStart = index_DropStart;//index_DropEnd;
 						i --;
